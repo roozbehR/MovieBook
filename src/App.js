@@ -1,13 +1,19 @@
+import React from 'react';
 import './App.css';
-import { Images } from "./themes";
+import { Images } from "./react-components/themes";
 import styled from 'styled-components';
 
-function App() {
-  return (
+import { Button } from 'antd';
+import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
+
+class App extends React.Component {
+  render() {
+    return (
       <BackgroundWrapper>
-        hello
+        <Button type="primary">A button!</Button>
       </BackgroundWrapper>
-  );
+    );
+  }
 }
 
 const BackgroundWrapper = styled.div`

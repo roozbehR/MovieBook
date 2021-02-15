@@ -1,4 +1,4 @@
-import movieBackground from "../images/movie-cinema-background.png";
+import movieBackground from "./images/movie-cinema-background.png";
 
 const images = {
   movieBackground: movieBackground,
