@@ -1,3 +1,6 @@
+import { getRandomReview } from "./review";
+import { getRandomUser } from "./user";
+
 class Comment {
     constructor(id, review, user, text) {
         this.id = id;
@@ -16,10 +19,10 @@ let Comments = [
     new Comment(5, getRandomReview(), getRandomUser(), 'Hey, I am a big fan of this movie. I dont think its that bad!')
 ];
 
-function getRandomComment() {
+export function getRandomComment() {
     return Comments[Math.floor(Math.random() * Comments.length)];
 }
 
-function getComment(id) {
+export function getComment(id) {
     return Comments.filter(m => m.id == id);
 }

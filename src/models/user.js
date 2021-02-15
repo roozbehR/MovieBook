@@ -1,3 +1,5 @@
+import { getMovie } from "./movie";
+
 class User {
     constructor(id, username, password, fullName, picture, biography, isAdmin) {
         this.id = id;
@@ -31,10 +33,10 @@ let Users = [
     new User(5, 'jdoe', 'test123', 'Jane Doe', 'https://randomuser.me/api/portraits/women/57.jpg', 'I dont know but sure why not', false),
 ];
 
-function getRandomUser() {
+export function getRandomUser() {
     return Users[Math.floor(Math.random() * Users.length)];
 }
 
-function getUser(id) {
+export function getUser(id) {
     return Users.filter(m => m.id == id);
 }

@@ -1,3 +1,6 @@
+import { getRandomUser } from "./user";
+import { getRandomMovie } from "./movie";
+
 class Review {
     constructor(id, user, movie, rating, text) {
         this.id = id;
@@ -18,10 +21,10 @@ let Reviews = [
     new Review(5, getRandomUser(), getRandomMovie(), 3.8, 'Lorem ipsum is a very interesting word that I still do not understand')
 ];
 
-function getRandomReview() {
+export function getRandomReview() {
     return Reviews[Math.floor(Math.random() * Reviews.length)];
 }
 
-function getReview(id) {
+export function getReview(id) {
     return Reviews.filter(m => m.id == id);
 }

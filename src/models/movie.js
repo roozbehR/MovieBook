@@ -24,10 +24,10 @@ let Movies = [
     new Movie(10, 'Oh Lucy!', 2017, "The drama-comedy tells the story of Setsuko Kawashima (Terajima), a lonely, chain-smoking office lady in Tokyo who is past her prime. After deciding to take an English class, she discovers a new identity in her American alter ego, 'Lucy,' and falls for her instructor, John (Hartnett). When John suddenly disappears, Setsuko earnestly sets out on a quest to find him, eventually leading her to the outskirts of Southern California.", 'https://www.youtube.com/watch?v=U_fuaIMeJTI', 4.6, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTUzMjcwMDExOV5BMl5BanBnXkFtZTgwMjU4Njk2NDM@._V1_SY377_CR0,0,254,377_AL_.jpg')
 ];
 
-function getRandomMovie() {
+export function getRandomMovie() {
     return Movies[Math.floor(Math.random() * Movies.length)];
 }
 
-function getMovie(id) {
+export function getMovie(id) {
     return Movies.filter(m => m.id == id);
 }
