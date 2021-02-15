@@ -1,25 +1,22 @@
-import logo from './logo.svg';
 import './App.css';
+import { Images } from "./themes";
+import styled from 'styled-components';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <BackgroundWrapper>
+        hello
+      </BackgroundWrapper>
   );
 }
+
+const BackgroundWrapper = styled.div`
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.43), rgba(0, 0, 0, 0.43)),
+    url(${Images.movieBackground});
+`;
 
 export default App;
