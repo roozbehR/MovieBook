@@ -1,0 +1,94 @@
+/* .ant-card {
+    background: #00000038;
+}
+
+.ant-card-bordered {
+    border: 1px solid #ffffff2e;
+}
+
+.ant-card-head {
+    border-bottom: 1px solid #ffffff2e;
+}
+
+.ant-card-head-title {
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    font-size: 40px;
+} */
+
+.slick-track {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.slick-slide {
+    transition: transform 1s ease-out;
+}
+
+.slick-center {
+    opacity: 1;
+    -ms-transform: scale(1.08);
+    transform: scale(1.08);
+}
+
+.slick-img {
+    height: 300px;
+    width: auto i !important;
+}
+
+.slick-next:before {
+    font-size: 50px;
+}
+
+.slick-prev {
+    left: -16px;
+}
+
+.slick-next {
+    right: 11px;
+}
+
+.slick-prev:before {
+    font-size: 50px;
+}
+
+.center {
+    padding: 0 35px;
+}
+
+.slick-overlay {
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transition: opacity 0.2s ease-out;
+    background-color: #00000087;
+}
+
+.slick-overlay-content {
+    position: relative;
+    top: 50%;
+    text-align: center;
+    padding: 0 30px 0 30px;
+    transform: translateY(-50%);
+}
+
+.slick-overlay-content h5 {
+    color: white;
+    word-wrap: break-word;
+    font-size: 22px;
+    transition: transform 0.3s ease-out;
+}
+
+.slick-current:hover .slick-overlay {
+    opacity: 1;
+}
+
+.slick-current:hover h5 {
+    transform: scale(1.1);
+}
+
+.slick-button {
+    margin-top: 10px;
+}
