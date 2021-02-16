@@ -1,10 +1,10 @@
-import React from 'react';
-import './App.css';
+import React from "react";
+import "./App.css";
 import { Images } from "./react-components/themes";
-import styled from 'styled-components';
+import styled from "styled-components";
 
-import { Button } from 'antd';
-import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
+import { Button } from "antd";
+import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
 
 class App extends React.Component {
   render() {
