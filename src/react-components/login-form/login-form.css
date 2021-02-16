@@ -1,0 +1,10 @@
+.login-container {
+  width: 400px;
+  height: 500px;
+  border-radius: 15px;
+}
+.Input {
+  padding-left: 100px;
+  margin: 15px 0px;
+  border-radius: 10px;
+}
