@@ -1,0 +1,11 @@
+.movie-img {
+  background-color: blue;
+}
+
+.Hi {
+  background-color: black !important;
+}
+img {
+  max-width: 100%;
+  max-height: 100%;
+}
