@@ -9,9 +9,17 @@ From CLI run the command `git clone https://github.com/csc309-winter-2021/team02
 
 ### Run the Front-End
 From CLI navigate into the cloned directory
+
+
 Run the command `npm install`
+
+
 Wait for all the dependencies to be installed
+
+
 Run the command `npm start`
+
+
 The web application will be availble on `http://localhost:3000`
 
 ### Running the Back-End
