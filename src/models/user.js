@@ -71,6 +71,24 @@ let Users = [
     "I dont know but sure why not",
     false
   ),
+  new User(
+    6,
+    "user",
+    "user",
+    "Test User",
+    "https://randomuser.me/api/portraits/women/32.jpg",
+    "Lorem ipsum whatever",
+    false
+  ),
+  new User(
+    7,
+    "admin",
+    "admin",
+    "Test Admin",
+    "https://randomuser.me/api/portraits/women/31.jpg",
+    "Lorem ipsum Admin",
+    true
+  ),
 ];
 
 export function getRandomUser() {
