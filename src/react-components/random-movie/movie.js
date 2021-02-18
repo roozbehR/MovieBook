@@ -20,8 +20,6 @@ class Movie extends React.Component {
                         <div className="movie-des">
                             <h3>Due Date</h3>
                             <span>{year}</span>
-                            <br></br>
-                            <br></br>
                             <span>Description</span>
                             <p>{description}</p>
                         </div>

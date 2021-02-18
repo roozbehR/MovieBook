@@ -12,14 +12,15 @@ import "./style.css";
 
 class RandomMovie extends React.Component {
     state = { 
-        randomMovie: getRandomMovie(),
-        randomReviews: getRandomReview()
+        randomReviews: getRandomReview(),
+        randomMovie: getRandomMovie()
      }
+     
     render() { 
         return ( 
-            <Card title={ this.state.randomMovie.title } style={{width: "800px"}}>
+            <Card title={ this.state.randomMovie.title } style={{width: "600px"}}>
                  <Movie movie={ this.state.randomMovie } />
-                 <Review review={ this.state.randomReviews } />
+                 <Review review={this.state.randomReviews}/>
             </Card>
          );
     }
