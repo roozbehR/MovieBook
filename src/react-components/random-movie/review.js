@@ -1,11 +1,12 @@
 import React from "react";
 import { Comment } from "antd";
 
+import './style.css';
 
 class Review extends React.Component {
-    state = { 
-     }
-    render() { 
+    state = {
+    }
+    render() {
         const {
             id,
             user,
@@ -13,16 +14,16 @@ class Review extends React.Component {
             rating,
             text
         } = this.props.review;
-        return ( 
+        return (
             <div>
                 <Comment
-                author={user.username}
-                content={text}
-                avatar={user.picture}>
+                    author={user.username}
+                    content={text}
+                    avatar={user.picture}>
                 </Comment>
             </div>
-         );
+        );
     }
 }
- 
+
 export default Review;

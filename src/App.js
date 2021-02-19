@@ -5,12 +5,16 @@ import styled from "styled-components";
 
 import { Button } from "antd";
 import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
+import Movie from './react-components/movie/movie'
+import RandomMovie from './react-components/random-movie/random-movie'
 
 class App extends React.Component {
   render() {
     return (
       <BackgroundWrapper>
-        <Button type="primary">A button!</Button>
+        <div style={{ width: "80%", left: "50%", transform: "translateX(-50%)", position: "relative" }}>
+          <RandomMovie />
+        </div>
       </BackgroundWrapper>
     );
   }
