@@ -3,7 +3,7 @@ import { Row, Col, Card } from "antd";
 import { getRandomReview, getReview } from "../../models/review";
 import { getRandomMovie, getMovie } from "../../models/movie";
 import Movie from "./movie";
-import Review from "./review";
+import Review from "../review/review";
 import "./style.css";
 
 

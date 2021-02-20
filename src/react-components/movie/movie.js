@@ -6,7 +6,7 @@ import './style.css';
 import { getRandomMovie } from '../../models/movie';
 import { getRandomReview } from '../../models/review';
 
-import Review from '../random-movie/review';
+import Review from '../review/review';
 
 class Movie extends React.Component {
     state = {

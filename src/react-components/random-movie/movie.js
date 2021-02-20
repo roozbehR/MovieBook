@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Card } from "antd";
+import { Row, Col, Rate } from "antd";
 import "./style.css"
 
 
@@ -40,7 +40,7 @@ class Movie extends React.Component {
                 <Col xs={14} sm={14} md={16} lg={16} xl={20}>
                         <div className="movie-des">
                             <h3 className="movie-name">{this.state.title}</h3>
-                            <p className="release-date">{this.state.year}</p>
+                            <p className="release-date">{this.state.year}  <span className="movie-rate"><Rate disabled="true" value={this.state.rating} allowHalf="true" /></span></p>
                             <p className="description">{this.state.description}</p>
                         </div>
                 </Col>
