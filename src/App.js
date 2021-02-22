@@ -5,7 +5,6 @@ import styled from "styled-components";
 
 import { Button } from "antd";
 import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
-import Movie from './react-components/movie/movie'
 import RandomMovie from './react-components/random-movie/random-movie'
 
 class App extends React.Component {
@@ -21,7 +20,7 @@ class App extends React.Component {
 }
 
 const BackgroundWrapper = styled.div`
-  height: 100vh;
+  min-height: 100vh;  
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
