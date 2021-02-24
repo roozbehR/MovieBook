@@ -1,8 +1,8 @@
-import React from 'react';
-import SearchBar from './search-bar';
+import React from "react";
+import SearchBar from "./search-bar";
 import "./styles.css";
 
-export default function NavBar(){
+export default function NavBar() {
   return (
     <div>
       <div className="flex-box">
