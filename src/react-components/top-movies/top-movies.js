@@ -60,4 +60,4 @@ class TopMovies extends React.Component {
     }
 }
 
-export default TopMovies
+export default TopMovies;
