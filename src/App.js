@@ -10,6 +10,7 @@ import HomePage from './HomePage'
 import { Button } from "antd";
 import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
 import RandomMovie from "./react-components/random-movie/random-movie";
+import MovieGalleryPage from "./react-components/movie-gallery-page/movie-gallery-page";
 
 class App extends React.Component {
   render() {
@@ -34,6 +35,9 @@ class App extends React.Component {
               </Route>
               <Route exact path='/profile' render={() =>
                                         (<ProfilePage/>)}>
+              </Route>
+              <Route exact path='/movies' render={() =>
+                                        (<MovieGalleryPage/>)}>
               </Route>
             </Switch>
         </BrowserRouter>
