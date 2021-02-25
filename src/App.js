@@ -2,6 +2,7 @@ import React from "react";
 import "./App.css";
 import { Images } from "./react-components/themes";
 import styled from "styled-components";
+import ProfilePage from "./react-components/profile_page/ProfilePage"
 
 import { Button } from "antd";
 import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
@@ -10,7 +11,7 @@ class App extends React.Component {
   render() {
     return (
       <BackgroundWrapper>
-        <Button type="primary">A button!</Button>
+        <ProfilePage />
       </BackgroundWrapper>
     );
   }

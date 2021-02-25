@@ -1,0 +1,30 @@
+.test{
+    color: white;
+    text-align: center;
+}
+
+.section{
+    text-align: center;
+    color: white;
+}
+
+.profilephoto{
+    margin-left: 90px;
+}
+
+.Biograph{
+    margin-top: 45px;
+    margin-bottom: 45px;
+}
+
+.body{
+    border-radius: 75%;
+    border: black;
+    margin-left: 20px
+}
+
+.photo{
+    border-radius: 50%;
+    border-color: white;
+    width: 200px
+}
