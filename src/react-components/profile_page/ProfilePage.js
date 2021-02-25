@@ -1,9 +1,7 @@
 import React from "react";
 import  NavBar  from "../navbar/navbar";
-import { Images } from "../themes";
 import { Layout, Divider, Tabs, Descriptions, Avatar, Card, Row, Col, Button, Comment } from 'antd';
 import "./ProfilePage.css"
-import Column from "antd/lib/table/Column";
 
 const { Header, Content } = Layout;
 const { TabPane } = Tabs;
@@ -39,7 +37,7 @@ class ProfilePage extends React.Component {
                                         <Col style={{ marginLeft: 30}}>
                                             <Row>
                                                 <Col>
-                                                    <h1>Shisei Naka</h1>
+                                                    <h2 className="name">Shisei Naka</h2>
                                                 </Col>
                                                 <Col style={{marginLeft: 30}}>
                                                     <Button type="primary" shape="round" onClick={this.clicked}>+ Follow</Button>

@@ -1,0 +1,39 @@
+.ant-card {
+  background: #00000038 !important;
+  color: white !important;
+}
+
+.ant-card-bordered {
+  border: 1px solid #ffffff2e !important;
+  border-radius: 15px !important;
+}
+
+.ant-card-head {
+  border-bottom: 1px solid #ffffff2e !important;
+}
+
+.ant-card-head-title {
+  text-align: center !important;
+  color: white !important;
+  font-weight: bold !important;
+  font-size: 24px !important;
+  padding-top: 5px;
+}
+
+.login-form-container {
+  height: 100% !important;
+}
+
+.top-movies-random-movies-container {
+  margin-left: 2%;
+  margin-bottom: 2%;
+}
+
+.home{
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.43), rgba(0, 0, 0, 0.43)),
+    url("./react-components/themes/images/movie-cinema-background.png");
+}

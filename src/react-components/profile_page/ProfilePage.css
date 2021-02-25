@@ -1,5 +1,5 @@
 .test{
-    color: white;
+    
     text-align: center;
 }
 
@@ -19,7 +19,12 @@
 .body{
     border-radius: 75%;
     border: black;
-    margin-left: 20px
+    margin-left: 20px;
+    color: white;
+}
+
+.body h2{
+    color: aqua;
 }
 
 .photo{
@@ -39,4 +44,9 @@
   background-attachment: fixed;
   background-image: linear-gradient(rgba(0, 0, 0, 0.43), rgba(0, 0, 0, 0.43)),
     url("../themes/images/movie-cinema-background.png");
+    color: white
+}
+
+.name{
+    color: white;
 }

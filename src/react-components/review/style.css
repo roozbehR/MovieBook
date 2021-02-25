@@ -1,0 +1,46 @@
+.parent-comment {
+  background-color: #ffffff1c !important;
+  padding-left: 20px;
+  border-radius: 50px;
+  margin-top: 10px;
+}
+
+.ant-comment-content-author-name {
+  color: white;
+  font-weight: bold;
+  display: block;
+  width: 100%;
+}
+
+.username {
+  float: left;
+  color: white;
+}
+
+.review-rating {
+  float: right;
+  margin-right: 5%;
+  transform: scale(0.7);
+}
+
+.btn-comment {
+  float: right;
+  color: white;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.btn-comment-right {
+  margin-right: 30px;
+}
+
+.comment-text {
+  background-color: #ffffff1c !important;
+  border-radius: 20px;
+  padding: 20px;
+  overflow: hidden;
+  color: white;
+  resize: none;
+  position: relative;
+  right: 34px;
+}
