@@ -1,7 +1,7 @@
 import React from "react";
 import  NavBar  from "../navbar/navbar";
 import { Layout, Divider, Tabs, Descriptions, Avatar, Card, Row, Col, Button, Comment } from 'antd';
-import "./ProfilePage.css"
+import "./style.css";
 
 const { Header, Content } = Layout;
 const { TabPane } = Tabs;
@@ -56,24 +56,24 @@ class ProfilePage extends React.Component {
                                         <TabPane tab="Favourite Movies" key="1">
                                             <Row >
                                                 <Col span={3}>
-                                                    <Card 
-                                                        style={{ maxWidth: 200 }}
+                                                    <Card
+                                                        style={{ marginLeft: "20px", maxWidth: 200 }}
                                                         cover={<img alt="trailer" className="movieImage" src="https://images-na.ssl-images-amazon.com/images/M/MV5BMTg1MTY2MjYzNV5BMl5BanBnXkFtZTgwMTc4NTMwNDI@._V1_SY500_CR0,0,337,500_AL_.jpg" />}>
-                                                            <Meta title="Black Panther" />  
+                                                            <Meta style={{ backgroundColor: "white" }} title="Black Panther" />  
                                                     </Card>
                                                 </Col>
                                                 <Col span={3}>
                                                     <Card 
-                                                    style={{ maxWidth: 200 }}
-                                                    cover={<img alt="trailer" className="movieImage" src="https://images-na.ssl-images-amazon.com/images/M/MV5BMjI1NTk0NTc1OV5BMl5BanBnXkFtZTgwNTMwMTE4NDM@._V1_SY500_CR0,0,281,500_AL_.jpg" />}>
-                                                        <Meta title="Aiyaary" />  
+                                                        style={{ marginLeft: "20px", maxWidth: 200 }}
+                                                        cover={<img alt="trailer" className="movieImage" src="https://images-na.ssl-images-amazon.com/images/M/MV5BMjI1NTk0NTc1OV5BMl5BanBnXkFtZTgwNTMwMTE4NDM@._V1_SY500_CR0,0,281,500_AL_.jpg" />}>
+                                                        <Meta style={{ backgroundColor: "white" }} title="Aiyaary" />  
                                                     </Card>
                                                 </Col>
-                                                <Col span={3}>
+                                                <Col span={4}>
                                                     <Card 
-                                                        style={{ maxWidth: 200 }}
+                                                        style={{ marginLeft: "20px", maxWidth: 200 }}
                                                         cover={<img alt="trailer" className="movieImage" src="https://images-na.ssl-images-amazon.com/images/M/MV5BMjQyMjEwOTIwNV5BMl5BanBnXkFtZTgwOTkzNTMxNDM@._V1_SY500_CR0,0,337,500_AL_.jpg" />}>
-                                                            <Meta title="The Post" />  
+                                                            <Meta style={{ backgroundColor: "white" }} title="The Post" />  
                                                     </Card>
                                                 </Col>
                                             </Row>     
@@ -90,14 +90,14 @@ class ProfilePage extends React.Component {
                                             />
                                         </TabPane>
                                         <TabPane tab="Recent Activity" key="3">
-                                            No Activity
+                                            <p className="name">No Activity</p>
                                         </TabPane>
                                         <TabPane tab="Profile Info" key="4">
-                                            <Descriptions title="User Info" style ={{ 'color': 'white'}}>
-                                                <Descriptions.Item label="Username" style ={{ 'color': 'white'}}>shisein</Descriptions.Item>
-                                                <Descriptions.Item label="Full Name">Shisei Naka</Descriptions.Item>
-                                                <Descriptions.Item label="Followers">5</Descriptions.Item>
-                                                <Descriptions.Item label="Liked Movies">3</Descriptions.Item>
+                                            <Descriptions title="User Info" contentStyle ={{ 'color': 'white'}} labelStyle ={{ color: 'white' }}>
+                                                <Descriptions.Item label="Username" labelStyle ={{ color: 'white' }}>shisein</Descriptions.Item>
+                                                <Descriptions.Item label="Full Name" labelStyle ={{ color: 'white' }}>Shisei Naka</Descriptions.Item>
+                                                <Descriptions.Item label="Followers" labelStyle ={{ color: 'white' }}>5</Descriptions.Item>
+                                                <Descriptions.Item label="Liked Movies" labelStyle ={{ color: 'white' }}>3</Descriptions.Item>
                                             </Descriptions>
                                         </TabPane>
                                     </Tabs>
