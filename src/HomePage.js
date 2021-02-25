@@ -5,13 +5,6 @@ import RandomMovie from "./react-components/random-movie/random-movie";
 import TopMovies from "./react-components/top-movies/top-movies";
 import "./home-style.css";
 
-
-
-
-
-
-
-
 class HomePage extends React.Component {
     state = {  }
     render() { 

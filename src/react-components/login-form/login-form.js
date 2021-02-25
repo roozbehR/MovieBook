@@ -23,21 +23,21 @@ class LoginForm extends React.Component {
                 title="Sign In With MovieBook"
                 /> */}
                 <Input
-                className="Input"
+                className="login-input"
                 placeholder="Enter your username"
                 />
                 <Input
-                className="Input"
+                className="login-input"
                 placeholder="Enter your password"
                 />
                 <Button
-                className="Button"
+                className="login-button"
                 type="primary"
                 shape="round"
                 >
                     Sign In
                 </Button>
-                <p>
+                <p className="make-account-text">
                     Don't have an account yet? Create an account
                 </p>
                 </Card>

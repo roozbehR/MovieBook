@@ -33,8 +33,9 @@
 }
 
 .slick-img {
-  height: 300px;
-  width: auto i !important;
+  height: auto;
+  max-height: 250px;
+  width: auto !important;
 }
 
 .slick-next:before {

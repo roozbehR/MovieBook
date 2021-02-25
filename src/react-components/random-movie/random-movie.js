@@ -17,10 +17,10 @@ class RandomMovie extends React.Component {
      }
     render() { 
         return ( 
-            <Card title="Random Movie">
-                 <Movie movie={ this.state.randomMovie } 
+            <Card title="Random Movie" className="random-movie-card">
+                 <Movie className="random-movie-movie" movie={ this.state.randomMovie } 
                  description={this.sliceDescription} />
-                 <Review review={this.state.randomReviews}/>
+                 <Review className="random-movie-review" review={this.state.randomReviews}/>
             </Card>
          );
     }
