@@ -9,12 +9,11 @@
 }
 
 .profilephoto{
-    margin-left: 90px;
+    margin-left: 30px;
 }
 
 .Biograph{
-    margin-top: 45px;
-    margin-bottom: 45px;
+    margin-top: 10px;
 }
 
 .body{
@@ -27,4 +26,8 @@
     border-radius: 50%;
     border-color: white;
     width: 200px
+}
+
+.movieImage{
+    height: 300px
 }
