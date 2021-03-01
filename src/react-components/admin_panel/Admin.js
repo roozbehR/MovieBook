@@ -19,7 +19,7 @@ class Admin extends React.Component {
     render() {
       return (
         <div className="AdminPage">
-          Hello
+          <div><NavBar /></div>
         </div>
       );
     }

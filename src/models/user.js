@@ -98,3 +98,7 @@ export function getRandomUser() {
 export function getUser(id) {
   return Users.filter((m) => m.id == id);
 }
+
+export function getAllUsers(){
+  return Users;
+}
