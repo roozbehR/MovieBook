@@ -1,16 +1,10 @@
-import React from "react";
+import React from 'react';
 import NavBar from "../navbar/navbar";
 import {
-  Layout,
-  Divider,
   Tabs,
-  Descriptions,
-  Avatar,
   Card,
-  Row,
-  Col,
   Button,
-  Comment,
+  Modal
 } from "antd";
 import "./style.css";
 import { getAllUsers } from "../../models/user";
@@ -28,10 +22,12 @@ class Admin extends React.Component {
 
     state = {
         users: getAllUsers(),
-        movies: getAllMovies()
+        movies: getAllMovies(),
+        movi: "",
+        isModalVisible: false,
       };
 
-    clicked = (val) => {
+    clickedUser = (val) => {
         console.log("clicked");
         console.log(val)
 
@@ -40,8 +36,31 @@ class Admin extends React.Component {
         user.isAdmin = !user.isAdmin;
         users[val-1] = user
         this.setState({users});
+    };
+
+    clickedMovie = (val) => {
+        console.log("clicked");
+        console.log(val)
+        let movies = [...this.state.movies]
+        let movi = {...movies[val-1]}
+        this.setState({movi})
+        let isModalVisible = true
+        this.setState({isModalVisible})
         
-    }
+    };
+
+    handleOk = () => {
+        console.log("Ok")
+        let isModalVisible = false
+        this.setState({isModalVisible})
+    };
+
+    handleCancel = () => {
+        console.log("Cancel")
+        let isModalVisible = false
+        this.setState({isModalVisible})
+    };
+
     render() {
       return (
         <div className="AdminPage">
@@ -58,32 +77,74 @@ class Admin extends React.Component {
                     onChange={callback}
                     size="large"
                     centered="true"
+                    tabBarStyle={{ marginLeft: 30, marginTop: 30, marginRight: 30 }}
                 >
-                    <TabPane tab="Users" key="1"></TabPane>
-                    <TabPane tab="Movies" key="2"></TabPane>
+                    <TabPane tab="Users" key="1">
+                        <Card style={{ marginLeft: 30, marginTop: 30, marginRight: 30 }}>
+                            <table className="Table">
+                                <tbody>
+                                    <tr>
+                                        <th className="cell">Full Name</th>
+                                        <th className="cell">Username</th>
+                                        <th className="cell">Admin Rights</th>
+                                        <th className="cell">Switch Role</th>
+                                    </tr>
+                                    {this.state.users.map(user => {
+                                        return (
+                                            <tr key={uid(user)}>
+                                                <td className="cell">{user.fullName}</td>
+                                                <td className="cell">{user.username}</td>
+                                                <td className="cell">{user.isAdmin ? <p>Yes</p> : <p>No</p>}</td>
+                                                <td className="cell"><Button type="primary"
+                                                        shape="round"
+                                                        onClick={() => this.clickedUser(user.id)}>
+                                                            {user.isAdmin
+                                                                ? <p>Demote to User</p>
+                                                                : <p>Promote to Admin</p>
+                                                            }
+                                                    </Button>
+                                                </td>
+                                            </tr>
+                                        )
+                                    })}
+                                </tbody>    
+                            </table>
+                        </Card>
+                    </TabPane>
+                    <TabPane tab="Movies" key="2">
+                        <Card style={{ marginLeft: 30, marginTop: 30, marginRight: 30 }}>
+                                <table className="Table">
+                                    <tbody>
+                                        <tr>
+                                            <th className="cell">Title</th>
+                                            <th className="cell">Year Released</th>
+                                            <th className="cell">Rating</th>
+                                            <th className="cell">Edit</th>
+                                        </tr>
+                                        {this.state.movies.map(movie => {
+                                            return (
+                                                <tr key={uid(movie)}>
+                                                    <td className="cell">{movie.title}</td>
+                                                    <td className="cell">{movie.year}</td>
+                                                    <td className="cell">{movie.rating}</td>
+                                                    <td className="cell">{movie.isAdmin ? <p>Yes</p> : <p>No</p>}</td>
+                                                    <td className="cell"><Button type="primary"
+                                                            shape="round"
+                                                            onClick={() => this.clickedMovie(movie.id)}>
+                                                                Edit
+                                                        </Button>
+                                                        <Modal title={this.state.movi.title} visible={this.state.isModalVisible} onOk={this.handleOk} onCancel={this.handleCancel}>
+                                                            <p>{this.state.movi.title}</p>
+                                                        </Modal>
+                                                    </td>
+                                                </tr>
+                                            )
+                                        })}
+                                    </tbody> 
+                                </table>
+                            </Card>
+                    </TabPane>
                 </Tabs>
-          </div>
-          <div>
-              {this.state.users.map(user => {
-                  return (
-                      <div>
-                        <p key={uid(user)}>{user.fullName} - {user.isAdmin}</p>
-                        {user.isAdmin
-                            ? <p>Yes</p>
-                            : <p>no</p>
-                        }
-                        <Button type="primary"
-                                shape="round"
-                                onClick={() => this.clicked(user.id)}>
-                                    {user.isAdmin
-                                        ? <p>Demote to User</p>
-                                        : <p>Promote to Admin</p>
-                                    }
-                                </Button>
-
-                      </div>
-                  )
-              })} 
           </div>
         </div>
       );

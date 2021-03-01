@@ -2,8 +2,6 @@ import React from "react";
 import "./App.css";
 // Importing react-router-dom to use the React Router
 import { Route, Switch, BrowserRouter } from "react-router-dom";
-import { Images } from "./react-components/themes";
-import styled from "styled-components";
 import ProfilePage from "./react-components/profile_page/ProfilePage";
 import HomePage from "./HomePage";
 import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
