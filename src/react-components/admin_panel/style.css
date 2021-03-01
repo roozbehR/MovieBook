@@ -1,0 +1,9 @@
+.AdminPage{
+    height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.43), rgba(0, 0, 0, 0.43)),
+    url("../themes/images/movie-cinema-background.png");
+    color: white
+}
