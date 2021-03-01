@@ -4,7 +4,7 @@ import Movie from "./react-components/movie/movie";
 
 import "./movie.css";
 
-class HomePage extends React.Component {
+class MoviePage extends React.Component {
   render() {
     return (
       <div className="movie-container">
@@ -14,4 +14,4 @@ class HomePage extends React.Component {
   }
 }
 
-export default HomePage;
+export default MoviePage;

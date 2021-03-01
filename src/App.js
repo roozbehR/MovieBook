@@ -6,27 +6,13 @@ import { Images } from "./react-components/themes";
 import styled from "styled-components";
 import ProfilePage from "./react-components/profile_page/ProfilePage";
 import HomePage from "./HomePage";
-
-import { Button } from "antd";
 import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
-import RandomMovie from "./react-components/random-movie/random-movie";
 import MovieGalleryPage from "./react-components/movie-gallery-page/movie-gallery-page";
+import MoviePage from "./Movie"
 
 class App extends React.Component {
   render() {
     return (
-      /*<BackgroundWrapper>
-        <div
-          style={{
-            width: "80%",
-            left: "50%",
-            transform: "translateX(-50%)",
-            position: "relative",
-          }}
-        >
-          <RandomMovie />
-        </div>
-      </BackgroundWrapper>*/
       <div>
         <BrowserRouter>
           <Switch>
@@ -37,6 +23,7 @@ class App extends React.Component {
               path="/movies"
               render={() => <MovieGalleryPage />}
             ></Route>
+            <Route exact path="/movie" render={() => <MoviePage />}></Route>
           </Switch>
         </BrowserRouter>
       </div>
@@ -44,13 +31,6 @@ class App extends React.Component {
   }
 }
 
-const BackgroundWrapper = styled.div`
-  min-height: 100vh;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.43), rgba(0, 0, 0, 0.43)),
-    url(${Images.movieBackground});
-`;
+
 
 export default App;
