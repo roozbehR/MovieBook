@@ -4,7 +4,8 @@ import {
   Tabs,
   Card,
   Button,
-  Modal
+  Modal,
+  message
 } from "antd";
 import "./style.css";
 import { getAllUsers } from "../../models/user";
@@ -25,6 +26,7 @@ class Admin extends React.Component {
         movies: getAllMovies(),
         movi: "",
         isModalVisible: false,
+        movDesc: "",
       };
 
     clickedUser = (val) => {
@@ -36,6 +38,7 @@ class Admin extends React.Component {
         user.isAdmin = !user.isAdmin;
         users[val-1] = user
         this.setState({users});
+        message.success('Role Updated');
     };
 
     clickedMovie = (val) => {
@@ -51,15 +54,28 @@ class Admin extends React.Component {
 
     handleOk = () => {
         console.log("Ok")
+        let movieDesc = this.setState.movieDesc
+        let movi = this.state.movi
+        movi.description = movieDesc
+        this.setState({movi})
+        console.log({movi})
         let isModalVisible = false
         this.setState({isModalVisible})
+        message.success('Description Updated');
     };
 
     handleCancel = () => {
         console.log("Cancel")
         let isModalVisible = false
         this.setState({isModalVisible})
+        message.error('Action Cancelled');
     };
+
+    handleChange = (event) => {
+        let movDesc = event.target.value
+        //console.log(movDesc)
+        this.setState({movDesc}) 
+    }
 
     render() {
       return (
@@ -134,7 +150,10 @@ class Admin extends React.Component {
                                                                 Edit
                                                         </Button>
                                                         <Modal title={this.state.movi.title} visible={this.state.isModalVisible} onOk={this.handleOk} onCancel={this.handleCancel}>
-                                                            <p>{this.state.movi.title}</p>
+                                                            <h2>Current Description</h2>
+                                                            <p>{this.state.movi.description}</p>
+                                                            <h2>New Description</h2>
+                                                            <textarea value={this.state.movDesc} onChange={this.handleChange}></textarea>
                                                         </Modal>
                                                     </td>
                                                 </tr>
