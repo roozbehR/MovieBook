@@ -3,6 +3,18 @@
 Welcome to MovieBook, a social media application for Movie Users.
 Here is how to setup the web application and user it.
 
+## Table of Contents
+- [Setting Up MovieBook](#setting-up-moviebook)
+  - [Running the Front-End](#run-the-front-end)
+  - [Running the Back-End](#run-the-Back-end)
+- [User Credentials](#user-credentials)
+- [How To Use The Application](#how-to-use-the-application)
+  - [Logging In](#logging-in)
+  - [Looking At Movies](#looking-at-movies)
+  - [Viewing Profiles](#viewing-profiles)
+  - [Administration Panel](#administration-panel-admins-only)
+- [Libraries & Frameworks Used](#libraries--frameworks-used)
+
 ## Setting up MovieBook
 
 From CLI run the command `git clone https://github.com/csc309-winter-2021/team02.git`
@@ -33,19 +45,19 @@ To login to the application, here are two sets of credentials
 | Username | Password | Role |
 | -------- | -------- | ---- |
 | user | user | Regular User |
-| admin | admin | Admin User | 
+| admin | admin | Admin User |
 
-## Documentation
+## How To Use The Application
 
 ### Logging in
 
 
 ### Looking at Movies
 
-### View Profile
+### Viewing Profiles
 
 ### Administration Panel **(Admins Only)**
 
-## Libraries & Frameworks
+## Libraries & Frameworks Used
 - React
 - Ant Design
