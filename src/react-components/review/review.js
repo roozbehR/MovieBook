@@ -80,7 +80,7 @@ class Review extends React.Component {
 
     const movieTitle = (
       <div>
-        <span className="username">{user.username}</span>
+        <a href="profile" className="username">{user.username}</a>
         <Rate
           className="review-rating"
           disabled="true"
@@ -100,7 +100,7 @@ class Review extends React.Component {
           {this.state.showComments &&
             this.state.comments.map((comment) => (
               <Comment
-                author={comment.user.username}
+                author={<a className="username" href="profile">{comment.user.username}</a>}
                 content={comment.text}
                 avatar={comment.user.picture}
               ></Comment>
