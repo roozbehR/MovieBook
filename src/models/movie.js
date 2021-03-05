@@ -111,3 +111,7 @@ export function getRandomMovie() {
 export function getMovie(id) {
   return Movies.filter((m) => m.id == id);
 }
+
+export function getAllMovies() {
+  return Movies;
+}

@@ -13,6 +13,7 @@ import {
   Comment,
 } from "antd";
 import "./style.css";
+import { getRandomUser } from "../../models/user"
 
 const { Header, Content } = Layout;
 const { TabPane } = Tabs;
@@ -27,9 +28,14 @@ class ProfilePage extends React.Component {
     console.log("Clicked");
   };
 
+  state = {
+    user: getRandomUser()
+  };
+
   render() {
     return (
       <div className="page">
+        
         <div>
           <NavBar />
         </div>
@@ -44,14 +50,14 @@ class ProfilePage extends React.Component {
                         <Avatar
                           size={256}
                           className="photo"
-                          src="https://randomuser.me/api/portraits/men/28.jpg"
+                          src={ this.state.user.picture }
                         />
                       </span>
                     </Col>
                     <Col style={{ marginLeft: 30 }}>
                       <Row>
                         <Col>
-                          <h2 className="name">Shisei Naka</h2>
+                          <h2 className="name">{ this.state.user.fullName }</h2>
                         </Col>
                         <Col style={{ marginLeft: 30 }}>
                           <Button
@@ -64,10 +70,7 @@ class ProfilePage extends React.Component {
                         </Col>
                       </Row>
                       <Row>
-                        <p>
-                          A critic that enjoys writing movies reviews,
-                          especially on superhero movies
-                        </p>
+                        <p>{ this.state.user.biography }</p>
                       </Row>
                     </Col>
                   </Row>
@@ -140,8 +143,8 @@ class ProfilePage extends React.Component {
                     <Comment
                       avatar={
                         <Avatar
-                          src="https://randomuser.me/api/portraits/men/28.jpg"
-                          alt="Shisei Naka"
+                          src={ this.state.user.picture }
+                          alt={ this.state.user.fullName }
                         />
                       }
                       content={
@@ -166,25 +169,25 @@ class ProfilePage extends React.Component {
                         label="Username"
                         labelStyle={{ color: "white" }}
                       >
-                        shisein
+                        { this.state.user.username }
                       </Descriptions.Item>
                       <Descriptions.Item
                         label="Full Name"
                         labelStyle={{ color: "white" }}
                       >
-                        Shisei Naka
+                        { this.state.user.fullName }
                       </Descriptions.Item>
                       <Descriptions.Item
                         label="Followers"
                         labelStyle={{ color: "white" }}
                       >
-                        5
+                        { this.state.user.followingUsers.length }
                       </Descriptions.Item>
                       <Descriptions.Item
                         label="Liked Movies"
                         labelStyle={{ color: "white" }}
                       >
-                        3
+                        { this.state.user.likedMovies.length }
                       </Descriptions.Item>
                     </Descriptions>
                   </TabPane>

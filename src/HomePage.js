@@ -14,6 +14,7 @@ class HomePage extends React.Component {
         <div className="nav-bar">
           <NavBar />
         </div>
+        <br />
         <Row className="content" justify="center">
           <Col md={12} lg={12}>
             <Row
