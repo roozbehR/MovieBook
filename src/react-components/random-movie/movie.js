@@ -27,7 +27,7 @@ class Movie extends React.Component {
     }
   }
   render() {
-    const {} = this.props.movie;
+    const { } = this.props.movie;
     return (
       <Row>
         <Col xs={10} sm={10} md={8} lg={8} xl={4}>
@@ -37,7 +37,9 @@ class Movie extends React.Component {
         </Col>
         <Col xs={14} sm={14} md={16} lg={16} xl={20}>
           <div className="movie-des">
-            <h3 className="movie-name">{this.state.title}</h3>
+            <h3 className="movie-name">
+              <a href="movie">{this.state.title}</a>
+            </h3>
             <p className="release-date">
               {this.state.year}{" "}
               <span className="movie-rate">

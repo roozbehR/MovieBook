@@ -14,7 +14,12 @@
 
 .username {
   float: left;
-  color: white;
+  color: white  !important;
+}
+
+.username:hover {
+  text-decoration: underline;
+  color: #1890ff !important;
 }
 
 .review-rating {
