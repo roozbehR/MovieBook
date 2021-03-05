@@ -13,7 +13,7 @@ import {
   Comment,
 } from "antd";
 import "./style.css";
-import { getRandomUser } from "../../models/user"
+import { getRandomUser } from "../../models/user";
 
 const { Header, Content } = Layout;
 const { TabPane } = Tabs;
@@ -29,7 +29,7 @@ class ProfilePage extends React.Component {
   };
 
   state = {
-    user: getRandomUser()
+    user: getRandomUser(),
   };
 
   render() {
@@ -50,14 +50,14 @@ class ProfilePage extends React.Component {
                         <Avatar
                           size={256}
                           className="photo"
-                          src={ this.state.user.picture }
+                          src={this.state.user.picture}
                         />
                       </span>
                     </Col>
                     <Col style={{ marginLeft: 30 }}>
                       <Row>
                         <Col>
-                          <h2 className="name">{ this.state.user.fullName }</h2>
+                          <h2 className="name">{this.state.user.fullName}</h2>
                         </Col>
                         <Col style={{ marginLeft: 30 }}>
                           <Button
@@ -70,7 +70,7 @@ class ProfilePage extends React.Component {
                         </Col>
                       </Row>
                       <Row>
-                        <p>{ this.state.user.biography }</p>
+                        <p>{this.state.user.biography}</p>
                       </Row>
                     </Col>
                   </Row>
@@ -143,8 +143,8 @@ class ProfilePage extends React.Component {
                     <Comment
                       avatar={
                         <Avatar
-                          src={ this.state.user.picture }
-                          alt={ this.state.user.fullName }
+                          src={this.state.user.picture}
+                          alt={this.state.user.fullName}
                         />
                       }
                       content={
@@ -169,25 +169,25 @@ class ProfilePage extends React.Component {
                         label="Username"
                         labelStyle={{ color: "white" }}
                       >
-                        { this.state.user.username }
+                        {this.state.user.username}
                       </Descriptions.Item>
                       <Descriptions.Item
                         label="Full Name"
                         labelStyle={{ color: "white" }}
                       >
-                        { this.state.user.fullName }
+                        {this.state.user.fullName}
                       </Descriptions.Item>
                       <Descriptions.Item
                         label="Followers"
                         labelStyle={{ color: "white" }}
                       >
-                        { this.state.user.followingUsers.length }
+                        {this.state.user.followingUsers.length}
                       </Descriptions.Item>
                       <Descriptions.Item
                         label="Liked Movies"
                         labelStyle={{ color: "white" }}
                       >
-                        { this.state.user.likedMovies.length }
+                        {this.state.user.likedMovies.length}
                       </Descriptions.Item>
                     </Descriptions>
                   </TabPane>
