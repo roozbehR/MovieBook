@@ -45,3 +45,7 @@ To login to the application, here are two sets of credentials
 ### View Profile
 
 ### Administration Panel **(Admins Only)**
+
+## Libraries & Frameworks
+- React
+- Ant Design
