@@ -9,7 +9,6 @@ import MovieGalleryPage from "./react-components/movie-gallery-page/movie-galler
 import MoviePage from "./Movie";
 import Admin from "./react-components/admin_panel/Admin";
 
-
 class App extends React.Component {
   render() {
     return (
@@ -18,7 +17,11 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/" render={() => <HomePage />}></Route>
             <Route exact path="/profile" render={() => <ProfilePage />}></Route>
-            <Route exact path="/movies" render={() => <MovieGalleryPage />}></Route>
+            <Route
+              exact
+              path="/movies"
+              render={() => <MovieGalleryPage />}
+            ></Route>
             <Route exact path="/movie" render={() => <MoviePage />}></Route>
             <Route exact path="/admin" render={() => <Admin />}></Route>
           </Switch>
