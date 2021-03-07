@@ -76,6 +76,8 @@ In the Scroll bar, hover over a movie poster and it will give you the option to 
 This will take you the movie page.
 ![Movie Page](documentationImages\movies\individual\moviepage.PNG)
 
+*Note: the movie that will show up is currently random but this will display the movie that is clicked once the back-end is implemented*
+
 Here you will be able to view details and leave a comment or post.
 
 ##### Leaving a Review
@@ -118,6 +120,8 @@ clicking on the button will update the state.
 
 ![User Profile](documentationImages\profiles\Following_toggle.PNG)
 
+*Note: the user that will show up is currently random but this will display the user that is clicked once the back-end is implemented*
+
 ### Administration Panel **(Admins Only)**
 
 The admin panel is only available through the admin tab in the navigation bar (only appears for admins).
@@ -138,6 +142,7 @@ When an Admin clicks on edit (to edit the movie description), a popup appears wi
 ![Edit](documentationImages\admin\edit description.PNG)
 
 The description will only be updated if the user clicks on *OK*.
+
 
 ## Libraries & Frameworks Used
 - React
