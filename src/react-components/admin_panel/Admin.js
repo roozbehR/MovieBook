@@ -30,7 +30,11 @@ class Admin extends React.Component {
     user.isAdmin = !user.isAdmin;
     users[val - 1] = user;
     this.setState({ users });
-    message.success("Role Updated");
+    {user.isAdmin ? (
+      message.success("Promoted")
+    ) : (
+      message.success("Demoted")
+    )}
   };
 
   clickedMovie = (val) => {

@@ -11,6 +11,7 @@ import {
   Col,
   Button,
   Comment,
+  message,
 } from "antd";
 import "./style.css";
 import { getRandomUser } from "../../models/user";
@@ -34,6 +35,11 @@ class ProfilePage extends React.Component {
     let isFollowing = this.state.isFollowing;
     isFollowing = !isFollowing;
     this.setState({ isFollowing });
+    {this.state.isFollowing ? (
+      message.success("Unfollowed")
+    ) : (
+      message.success("Following")
+    )}
   };
 
   render() {
