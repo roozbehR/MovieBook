@@ -50,13 +50,94 @@ To login to the application, here are two sets of credentials
 ## How To Use The Application
 
 ### Logging in
+To login use the credentials provided above. User are *user* or *admin*
+Enter the credentials in the login form on the home page.
+![Login Form](documentationImages\logging_in\login form.PNG)
 
+Then click on the **Sign In** button
+
+![Sign in Button](documentationImages\logging_in\click sign in.PNG)
+
+If the login in successful you will be redirected to the movies page.
 
 ### Looking at Movies
 
+The Default movies page is the gallery. This shows images of movies.
+![Movie Gallery](documentationImages\movies\Recent\Capture.PNG)
+
+Another way to get to this page is to click on the Movies Tab in the navigation bar.
+![Movie Tab NavBar](documentationImages\movies\Recent\tempsnip.png)
+
+#### Individual Movies
+To look at individual movies, this can be done from the homepage.
+In the Scroll bar, hover over a movie poster and it will give you the option to *view more*
+![View More](documentationImages\movies\individual\hover.PNG)
+
+This will take you the movie page.
+![Movie Page](documentationImages\movies\individual\moviepage.PNG)
+
+Here you will be able to view details and leave a comment or post.
+
+##### Leaving a Review
+To leave a review, click on the button that says **+ Add A Review**
+This will give you at text box where you can enter your email and leave a rating.
+To save the review click on **Post Review** or to cancel click **Cancel Review**
+![Movie Page](documentationImages\movies\individual\add review.PNG)
+
+On the Movie page we can see comments and reviews that other users have left about the movie.
+
+A review looks like this:
+![Comment](documentationImages\movies\individual\comment.PNG)
+
+##### Leaving a Review
+
+We add a comment to this review, click on the **Add a Comment** button located in the bottom right of the review.
+This will open a textbox that will allow you to leave a comment.  
+If you click on **Post Comment** the comment will be appended to the end of the thread.
+![Comment Added](![Comment](documentationImages\movies\individual\comment.PNG)
+
 ### Viewing Profiles
 
+We can visit profiles from comment threads by clicking on the user's username.
+![User Username](documentationImages\profiles\hyperlink.PNG)
+
+Clicking on this will take us to the user profile.
+
+Here you will see an image of the user, a follow button and several tabs.
+The tabs show:
+- Favourite Movies
+- Review
+- Recent Activity
+- Profile Info
+
+An example of a user profile is below:
+![User Profile](documentationImages\profiles\profile.PNG)
+
+The follow button will toggle to the state of follow, that means that if you are following the user it will say *Unfollow* otherwise it will say *Follow*,
+clicking on the button will update the state.
+
+![User Profile](documentationImages\profiles\Following_toggle.PNG)
+
 ### Administration Panel **(Admins Only)**
+
+The admin panel is only available through the admin tab in the navigation bar (only appears for admins).
+It can also be viewed from `http:localhost:3000/admin`
+
+An example of the Admin Tab in the navigation bar is below:
+![Admin Navbar](documentationImages\admin\admin navbar.png)
+
+The Admin panel has two tabs:
+- Users
+- Movies
+
+The users table can be used to promote users to admins or remote admin to regular users.
+The admin just needs to click on the button.
+
+For movies, admins are able to update the description of the movies.
+When an Admin clicks on edit (to edit the movie description), a popup appears with the current description of the movie and a textbox to edit the description.
+![Edit](documentationImages\admin\edit description.PNG)
+
+The description will only be updated if the user clicks on *OK*.
 
 ## Libraries & Frameworks Used
 - React
