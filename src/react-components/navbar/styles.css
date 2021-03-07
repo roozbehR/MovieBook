@@ -3,13 +3,9 @@
   font-size: 20px;
 }
 
-.movie-box{
-  padding-left: 100px;
-  padding-right: 10px;
-}
-
-.reviews-box{
-  padding-left: 50px;
+.menu-box{
+  padding-left: 30px;
+  padding-right: 30px;
 }
 
 .flex-box{
@@ -49,3 +45,9 @@
   color: #fff;
   background: #0A2544;
 }
+
+.header-menu{
+  display: flex;
+  margin-left: 30px;
+}
+
