@@ -51,7 +51,9 @@ class TopMovies extends React.Component {
                       value={movie.rating}
                       allowHalf="true"
                     />
-                    <Button href="movie" className="slick-button">View Movie</Button>
+                    <Button href="movie" className="slick-button">
+                      View Movie
+                    </Button>
                   </div>
                 </div>
                 <img className="slick-img" src={movie.image} />

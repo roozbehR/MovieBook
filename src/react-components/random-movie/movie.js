@@ -27,7 +27,7 @@ class Movie extends React.Component {
     }
   }
   render() {
-    const { } = this.props.movie;
+    const {} = this.props.movie;
     return (
       <Row>
         <Col xs={10} sm={10} md={8} lg={8} xl={4}>
