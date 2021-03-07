@@ -30,7 +30,11 @@ class Admin extends React.Component {
     user.isAdmin = !user.isAdmin;
     users[val - 1] = user;
     this.setState({ users });
-    message.success("Role Updated");
+    {user.isAdmin ? (
+      message.success("Promoted")
+    ) : (
+      message.success("Demoted")
+    )}
   };
 
   clickedMovie = (val) => {
@@ -45,12 +49,17 @@ class Admin extends React.Component {
 
   handleOk = () => {
     console.log("Ok");
-    let movieDesc = this.setState.movieDesc;
+    let movieDescr = this.state.movDesc;
     let movi = this.state.movi;
-    movi.description = movieDesc;
+    let movies = [...this.state.movies];
+    movi.description = movieDescr;
+    movies[movi.id - 1] = movi;
     this.setState({ movi });
-    console.log({ movi });
+    movies[movi.id - 1] = movi;
+    this.setState({ movies })
     let isModalVisible = false;
+    let movDesc = "";
+    this.setState({ movDesc });
     this.setState({ isModalVisible });
     message.success("Description Updated");
   };

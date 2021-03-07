@@ -11,6 +11,7 @@ import {
   Col,
   Button,
   Comment,
+  message,
 } from "antd";
 import "./style.css";
 import { getRandomUser } from "../../models/user";
@@ -24,12 +25,21 @@ function callback(key) {
 }
 
 class ProfilePage extends React.Component {
-  clicked = (e) => {
-    console.log("Clicked");
-  };
-
   state = {
     user: getRandomUser(),
+    isFollowing: false,
+  };
+
+  clicked = (e) => {
+    console.log("Clicked");
+    let isFollowing = this.state.isFollowing;
+    isFollowing = !isFollowing;
+    this.setState({ isFollowing });
+    {this.state.isFollowing ? (
+      message.success("Unfollowed")
+    ) : (
+      message.success("Following")
+    )}
   };
 
   render() {
@@ -64,7 +74,11 @@ class ProfilePage extends React.Component {
                             shape="round"
                             onClick={this.clicked}
                           >
-                            + Follow
+                            {this.state.isFollowing ? (
+                                <p>Unfollow</p>
+                              ) : (
+                                <p>+ Follow</p>
+                              )}
                           </Button>
                         </Col>
                       </Row>
