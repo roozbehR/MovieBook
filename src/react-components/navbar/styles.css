@@ -3,13 +3,9 @@
   font-size: 20px;
 }
 
-.movie-box{
-  padding-left: 100px;
-  padding-right: 10px;
-}
-
-.reviews-box{
-  padding-left: 50px;
+.menu-box{
+  padding-left: 30px;
+  padding-right: 30px;
 }
 
 .flex-box{
@@ -25,19 +21,30 @@
   background: #F2F1F9;
   padding-left: 15px;
   border-radius: 30px;
+  position: relative;
+}
+
+.not-authed-search-box{
   position: absolute;
   top: 12px;
-  right: 50px;
+  right: -30px;
+}
+
+.authed-search-box{
+  display: flex;
+  position: absolute;
+  top: 12px;
+  right: 100px;
 }
 
 .search-bar-box{
-  padding: 30px;
+  display: flex;
+  align-items: center;
 }
 
 .search-button-box{
-  position: absolute;
-  right: 60px;
-  top: 20px;
+  position: relative;
+  right: 100px;
 }
 
 .button {
@@ -48,4 +55,19 @@
   padding: 0 16px;
   color: #fff;
   background: #0A2544;
+}
+
+.header-menu{
+  display: flex;
+  margin-left: 30px;
+}
+
+
+.user-info-box{
+  display: flex;
+  align-items: center;
+}
+
+.user-photo-box{
+  padding-left: 30px;
 }
