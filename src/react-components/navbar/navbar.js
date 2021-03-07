@@ -20,11 +20,15 @@ export default function NavBar() {
 
   return (
     <div>
-      { user?
-          <AuthenticatedNavBar userName={user.fullName} profileImagePath={user.picture} isAdmin={user.isAdmin}/>
-        :
-          <NotAuthenticatedNavBar />
-      }
+      {user ? (
+        <AuthenticatedNavBar
+          userName={user.fullName}
+          profileImagePath={user.picture}
+          isAdmin={user.isAdmin}
+        />
+      ) : (
+        <NotAuthenticatedNavBar />
+      )}
     </div>
   );
 }
