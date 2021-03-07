@@ -1,6 +1,6 @@
 import React from "react";
 import Movie from "./react-components/movie/movie";
-import NavBar from './react-components/navbar/navbar';
+import NavBar from "./react-components/navbar/navbar";
 
 import "./movie.css";
 
