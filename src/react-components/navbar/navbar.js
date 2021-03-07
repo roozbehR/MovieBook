@@ -21,7 +21,7 @@ export default function NavBar() {
   return (
     <div>
       { user?
-          <AuthenticatedNavBar userName={user.fullName} profileImagePath={user.picture}/>
+          <AuthenticatedNavBar userName={user.fullName} profileImagePath={user.picture} isAdmin={user.isAdmin}/>
         :
           <NotAuthenticatedNavBar />
       }
