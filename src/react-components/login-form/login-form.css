@@ -18,6 +18,9 @@
   padding: 3% !important;
   background-color: rgb(190 190 190 / 21%) !important;
 }
+.login-password > input {
+  background-color: transparent;
+}
 .login-button {
   background-color: green !important;
   border: white !important;
