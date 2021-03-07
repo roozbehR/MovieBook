@@ -1,5 +1,6 @@
 import React from "react";
 import { PageHeader, Input, Button } from "antd";
+import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { Card } from "antd";
 import "./login-form.css";
 
@@ -7,6 +8,8 @@ class LoginForm extends React.Component {
   state = {
     status: true,
   };
+
+
   render() {
     return (
       <div>
@@ -16,7 +19,7 @@ class LoginForm extends React.Component {
                 title="Sign In With MovieBook"
                 /> */}
           <Input className="login-input" placeholder="Enter your username" />
-          <Input className="login-input" placeholder="Enter your password" />
+          <Input.Password className="login-password" placeholder="Enter your password" iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} />
           <Button className="login-button" type="primary" shape="round">
             Sign In
           </Button>
@@ -28,5 +31,6 @@ class LoginForm extends React.Component {
     );
   }
 }
+
 
 export default LoginForm;
