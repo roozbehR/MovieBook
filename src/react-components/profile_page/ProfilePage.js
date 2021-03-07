@@ -24,12 +24,16 @@ function callback(key) {
 }
 
 class ProfilePage extends React.Component {
-  clicked = (e) => {
-    console.log("Clicked");
-  };
-
   state = {
     user: getRandomUser(),
+    isFollowing: false,
+  };
+
+  clicked = (e) => {
+    console.log("Clicked");
+    let isFollowing = this.state.isFollowing;
+    isFollowing = !isFollowing;
+    this.setState({ isFollowing });
   };
 
   render() {
@@ -64,7 +68,11 @@ class ProfilePage extends React.Component {
                             shape="round"
                             onClick={this.clicked}
                           >
-                            + Follow
+                            {this.state.isFollowing ? (
+                                <p>Unfollow</p>
+                              ) : (
+                                <p>+ Follow</p>
+                              )}
                           </Button>
                         </Col>
                       </Row>
