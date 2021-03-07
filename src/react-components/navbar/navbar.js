@@ -24,6 +24,7 @@ export default function NavBar() {
         <AuthenticatedNavBar
           userName={user.fullName}
           profileImagePath={user.picture}
+          isAdmin={user.isAdmin}
         />
       ) : (
         <NotAuthenticatedNavBar />
