@@ -33,7 +33,9 @@ export default function AuthenticatedNavBar({
           <SearchBar />
         </div>
         <div className="user-info-box">
-          <div onClick={handleLogout} className="defaultText">{passedUserName}</div>
+          <div onClick={handleLogout} className="defaultText">
+            {passedUserName}
+          </div>
           <div className="user-photo-box">
             <Avatar
               src={passedProfileImagePath}
