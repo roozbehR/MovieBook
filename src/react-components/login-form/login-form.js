@@ -35,7 +35,13 @@ class LoginForm extends React.Component {
   handleLogin = () => {
     const username = this.state.login.username;
     const password = this.state.login.password;
-    getUsernamePassword(username, password).length > 0 ? message.success("Welcome") : message.error("Wrong username or password");
+    if (getUsernamePassword(username, password).length > 0) {
+      localStorage["user"]  = username;
+      console.log(localStorage["user"]);
+      message.success("Welcome");
+    } else {
+      message.error("Wrong username or password");
+    }
 
   }
 
