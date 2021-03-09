@@ -102,3 +102,7 @@ export function getUser(id) {
 export function getAllUsers() {
   return Users;
 }
+
+export function getUsernamePassword(username, password) {
+  return Users.filter((m) => m.username == username && m.password == password);
+}
