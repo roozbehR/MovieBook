@@ -8,8 +8,7 @@ export const NotAuthenticatedNavBar = () => {
     <div className="flex-box">
       <div className="header-menu">
         <MenuTab path="/">Home</MenuTab>
-        <MenuTab path="/movies">Movie</MenuTab>
-        <MenuTab path="/movie">Review</MenuTab>
+        <MenuTab path="/movies">Movies</MenuTab>
       </div>
       <div className="not-authed-search-box">
         <SearchBar />

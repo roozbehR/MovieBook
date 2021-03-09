@@ -1,6 +1,12 @@
 .defaultText{
   color: aliceblue;
   font-size: 20px;
+  cursor: pointer;
+  transition: color ease-out 200ms;
+}
+
+.defaultText:hover {
+  color: red;
 }
 
 .menu-box{
@@ -27,7 +33,7 @@
 .not-authed-search-box{
   position: absolute;
   top: 12px;
-  right: -30px;
+  right: 0;
 }
 
 .authed-search-box{

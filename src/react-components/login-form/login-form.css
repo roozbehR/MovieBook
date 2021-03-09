@@ -1,17 +1,15 @@
-.login-container {
-  width: 100%;
-  height: 30%;
-  border-radius: 15px;
-  color: white;
-}
-.login-input {
+.login-input,
+.signup-input {
   padding-left: 100px !important;
   margin: 15px 0px !important;
   border-radius: 10px !important;
   padding: 3% !important;
   background-color: rgb(190 190 190 / 21%) !important;
+  color: white !important;
 }
-.login-password {
+
+.login-password,
+.signup-password {
   padding-left: 100px !important;
   margin: 15px 0px !important;
   border-radius: 10px !important;
@@ -21,14 +19,18 @@
 .login-password > input {
   background-color: transparent;
 }
+
 .login-button {
+  background-color: transparent !important;
+}
+.signup-password > input {
+  background-color: transparent !important;
+}
+.login-button,
+.signup-button {
   background-color: green !important;
   border: white !important;
   float: right;
-}
-.make-account-text {
-  margin-top: 10%;
-  color: yellow;
 }
 
 .login-input:hover {
@@ -36,4 +38,26 @@
 }
 .login-button:hover {
   transform: scale(1.1) !important;
+}
+.login-password:hover {
+  transform: scale(1.05) !important;
+}
+.signup-input:hover {
+  transform: scale(1.05);
+}
+
+.signup-password:hover {
+  transform: scale(1.05);
+}
+
+.signup-email:hover {
+  transform: scale(1.05);
+}
+.signup-button:hover {
+  transform: scale(1.1) !important;
+}
+
+.welcome {
+  margin: 0;
+  text-align: center;
 }

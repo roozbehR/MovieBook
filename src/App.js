@@ -5,7 +5,7 @@ import { Route, Switch, BrowserRouter } from "react-router-dom";
 import ProfilePage from "./react-components/profile_page/ProfilePage";
 import HomePage from "./HomePage";
 import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
-import MovieGalleryPage from "./react-components/movie-gallery-page/movie-gallery-page";
+import MovieGalleryPage from "./MovieGallery";
 import MoviePage from "./Movie";
 import Admin from "./react-components/admin_panel/Admin";
 
