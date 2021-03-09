@@ -35,11 +35,11 @@ class ProfilePage extends React.Component {
     let isFollowing = this.state.isFollowing;
     isFollowing = !isFollowing;
     this.setState({ isFollowing });
-    {this.state.isFollowing ? (
-      message.success("Unfollowed")
-    ) : (
-      message.success("Following")
-    )}
+    {
+      this.state.isFollowing
+        ? message.success("Unfollowed")
+        : message.success("Following");
+    }
   };
 
   render() {
@@ -75,10 +75,10 @@ class ProfilePage extends React.Component {
                             onClick={this.clicked}
                           >
                             {this.state.isFollowing ? (
-                                <p>Unfollow</p>
-                              ) : (
-                                <p>+ Follow</p>
-                              )}
+                              <p>Unfollow</p>
+                            ) : (
+                              <p>+ Follow</p>
+                            )}
                           </Button>
                         </Col>
                       </Row>

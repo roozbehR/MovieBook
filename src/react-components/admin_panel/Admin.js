@@ -32,11 +32,7 @@ class Admin extends React.Component {
     users[val - 1] = user;
     this.setState({ users });
     {
-      user.isAdmin ? (
-        message.success("Promoted")
-      ) : (
-        message.success("Demoted")
-      )
+      user.isAdmin ? message.success("Promoted") : message.success("Demoted");
     }
   };
 
@@ -59,7 +55,7 @@ class Admin extends React.Component {
     movies[movi.id - 1] = movi;
     this.setState({ movi });
     movies[movi.id - 1] = movi;
-    this.setState({ movies })
+    this.setState({ movies });
     let isModalVisible = false;
     let movDesc = "";
     this.setState({ movDesc });
@@ -98,7 +94,9 @@ class Admin extends React.Component {
               tabBarStyle={{ marginLeft: 30, marginTop: 30, marginRight: 30 }}
             >
               <TabPane tab="Users" key="1">
-                <Card style={{ marginLeft: 30, marginTop: 30, marginRight: 30 }}>
+                <Card
+                  style={{ marginLeft: 30, marginTop: 30, marginRight: 30 }}
+                >
                   <table className="Table">
                     <tbody>
                       <tr>
@@ -136,7 +134,9 @@ class Admin extends React.Component {
                 </Card>
               </TabPane>
               <TabPane tab="Movies" key="2">
-                <Card style={{ marginLeft: 30, marginTop: 30, marginRight: 30 }}>
+                <Card
+                  style={{ marginLeft: 30, marginTop: 30, marginRight: 30 }}
+                >
                   <table className="Table">
                     <tbody>
                       <tr>
@@ -161,7 +161,7 @@ class Admin extends React.Component {
                                 onClick={() => this.clickedMovie(movie.id)}
                               >
                                 Edit
-                            </Button>
+                              </Button>
                               <Modal
                                 title={this.state.movi.title}
                                 visible={this.state.isModalVisible}

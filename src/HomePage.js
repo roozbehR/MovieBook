@@ -32,16 +32,13 @@ class HomePage extends React.Component {
               </Col>
             </Row>
           </Col>
-          {!authenticated &&
+          {!authenticated && (
             <Col md={12} lg={12}>
-              <Row
-                className="login-form-container"
-                justify="center"
-              >
+              <Row className="login-form-container" justify="center">
                 <LoginForm />
               </Row>
             </Col>
-          }
+          )}
         </Row>
       </BackgroundWrapper>
     );

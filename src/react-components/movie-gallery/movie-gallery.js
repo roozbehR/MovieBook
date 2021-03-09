@@ -1,7 +1,7 @@
 import React from "react";
 import { Images } from "../themes";
 import "./style.css";
-import { Card } from 'antd'
+import { Card } from "antd";
 
 export default function MovieGallery() {
   return (
