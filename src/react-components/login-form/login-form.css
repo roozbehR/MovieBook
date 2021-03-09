@@ -1,17 +1,28 @@
-.login-container {
+.login-signup-card {
   width: 100%;
-  height: 30%;
+  min-height: 400px;
+  max-height: 500px;
   border-radius: 15px;
+}
+
+.login-container,
+.signup-container {
+  width: 100% !important;
+  height: 100% !important;
   color: white;
 }
-.login-input {
+
+.login-input,
+.signup-input {
   padding-left: 100px !important;
   margin: 15px 0px !important;
   border-radius: 10px !important;
   padding: 3% !important;
   background-color: rgb(190 190 190 / 21%) !important;
 }
-.login-password {
+
+.login-password,
+.signup-password {
   padding-left: 100px !important;
   margin: 15px 0px !important;
   border-radius: 10px !important;
@@ -19,21 +30,38 @@
   background-color: rgb(190 190 190 / 21%) !important;
 }
 .login-password > input {
-  background-color: transparent;
+  background-color: transparent !important;
 }
-.login-button {
+.signup-password > input {
+  background-color: transparent !important;
+}
+.login-button,
+.signup-button {
   background-color: green !important;
   border: white !important;
   float: right;
-}
-.make-account-text {
-  margin-top: 10%;
-  color: yellow;
 }
 
 .login-input:hover {
   transform: scale(1.05);
 }
 .login-button:hover {
+  transform: scale(1.1) !important;
+}
+.login-password:hover {
+  transform: scale(1.05) !important;
+}
+.signup-input:hover {
+  transform: scale(1.05);
+}
+
+.signup-password:hover {
+  transform: scale(1.05);
+}
+
+.signup-email:hover {
+  transform: scale(1.05);
+}
+.signup-button:hover {
   transform: scale(1.1) !important;
 }
