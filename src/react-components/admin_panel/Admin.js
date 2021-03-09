@@ -30,11 +30,9 @@ class Admin extends React.Component {
     user.isAdmin = !user.isAdmin;
     users[val - 1] = user;
     this.setState({ users });
-    {user.isAdmin ? (
-      message.success("Promoted")
-    ) : (
-      message.success("Demoted")
-    )}
+    {
+      user.isAdmin ? message.success("Promoted") : message.success("Demoted");
+    }
   };
 
   clickedMovie = (val) => {
@@ -56,7 +54,7 @@ class Admin extends React.Component {
     movies[movi.id - 1] = movi;
     this.setState({ movi });
     movies[movi.id - 1] = movi;
-    this.setState({ movies })
+    this.setState({ movies });
     let isModalVisible = false;
     let movDesc = "";
     this.setState({ movDesc });
