@@ -13,6 +13,7 @@ Here is how to setup the web application and user it.
   - [Looking At Movies](#looking-at-movies)
   - [Viewing Profiles](#viewing-profiles)
   - [Viewing User Feed](#viewing-user-feed)
+  - [Logging Out](#sign-out)
   - [Administration Panel](#administration-panel-admins-only)
 - [Libraries & Frameworks Used](#libraries--frameworks-used)
 
@@ -133,6 +134,13 @@ users can also add comments to others' reviews.
 
 ![User Feed](documentationImages/user-feed/feed.png)
 
+### Logging Out
+
+To log out, simply click on your name in the Navigation bar and you will be redirected to the log in page.
+*When you hover over the name it will turn red*
+
+![Log Out](documentationImages/signout/signout.png)
+
 ### Administration Panel **(Admins Only)**
 
 The admin panel is only available through the admin tab in the navigation bar (only appears for admins).
@@ -153,13 +161,6 @@ When an Admin clicks on edit (to edit the movie description), a popup appears wi
 ![Edit](documentationImages/admin/edit-description.png)
 
 The description will only be updated if the user clicks on *OK*.
-
-### Sign Out
-
-To sign out, simply click on your name in the Navigation bar.
-*When you hover over the name it will turn red*
-
-![Sign Out](documentationImages/signout/signout.png)
 
 ## Libraries & Frameworks Used
 - React
