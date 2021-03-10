@@ -9,6 +9,11 @@ export default function AuthenticatedNavBar({
   profileImagePath,
   isAdmin,
 }) {
+  const handleLogout = async () => {
+    localStorage.removeItem("user");
+    window.location.reload();
+  };
+
   // if userName and profileImagePath are not passed, set default values
   const passedUserName = userName ? userName : "John doe";
   const passedProfileImagePath = profileImagePath
@@ -19,7 +24,7 @@ export default function AuthenticatedNavBar({
     <div className="flex-box">
       <div className="header-menu">
         <MenuTab path="/">Home</MenuTab>
-        <MenuTab path="/movies">Movie</MenuTab>
+        <MenuTab path="/movies">Movies</MenuTab>
         <MenuTab path="/movie">Review</MenuTab>
         {isAdmin && <MenuTab path="/admin">Admin</MenuTab>}
       </div>
@@ -28,7 +33,9 @@ export default function AuthenticatedNavBar({
           <SearchBar />
         </div>
         <div className="user-info-box">
-          <div className="defaultText">{passedUserName}</div>
+          <div onClick={handleLogout} className="defaultText">
+            {passedUserName}
+          </div>
           <div className="user-photo-box">
             <Avatar
               src={passedProfileImagePath}

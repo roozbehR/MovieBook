@@ -1,17 +1,3 @@
-.login-signup-card {
-  width: 100%;
-  min-height: 400px;
-  max-height: 500px;
-  border-radius: 15px;
-}
-
-.login-container,
-.signup-container {
-  width: 100% !important;
-  height: 100% !important;
-  color: white;
-}
-
 .login-input,
 .signup-input {
   padding-left: 100px !important;
@@ -19,6 +5,7 @@
   border-radius: 10px !important;
   padding: 3% !important;
   background-color: rgb(190 190 190 / 21%) !important;
+  color: white !important;
 }
 
 .login-password,
@@ -29,12 +16,11 @@
   padding: 3% !important;
   background-color: rgb(190 190 190 / 21%) !important;
 }
+
 .login-password > input {
-  background-color: transparent !important;
+  background-color: transparent;
 }
-.signup-password > input {
-  background-color: transparent !important;
-}
+
 .login-button,
 .signup-button {
   background-color: green !important;
@@ -64,4 +50,9 @@
 }
 .signup-button:hover {
   transform: scale(1.1) !important;
+}
+
+.welcome {
+  margin: 0;
+  text-align: center;
 }

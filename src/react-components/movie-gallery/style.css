@@ -11,16 +11,6 @@
   font-size: 25px;
 }
 
-.contentsContainer{
-  width: 1400px;
-  height: 750px;
-  left: 150px;
-  top: 392px;
-  margin:auto;
-  background: rgba(0, 0, 0, 0.37);
-  border-radius: 177px;
-}
-
 .row{
   display: flex;
   justify-content: space-around;

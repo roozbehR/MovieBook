@@ -43,8 +43,8 @@ class TopMovies extends React.Component {
           <Slider {...settings}>
             {this.state.movies.map((movie) => (
               <div key={uid(movie)}>
-                <div class="slick-overlay">
-                  <div class="slick-overlay-content">
+                <div className="slick-overlay">
+                  <div className="slick-overlay-content">
                     <h5>{movie.title}</h5>
                     <Rate
                       disabled="true"

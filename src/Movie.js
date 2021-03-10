@@ -1,18 +1,17 @@
 import React from "react";
+import BackgroundWrapper from "./react-components/background-wrapper/background-wrapper";
 import Movie from "./react-components/movie/movie";
 import NavBar from "./react-components/navbar/navbar";
-
-import "./movie.css";
 
 class MoviePage extends React.Component {
   render() {
     return (
-      <div>
+      <BackgroundWrapper>
         <NavBar />
-        <div className="movie-container">
+        <div className="page-container">
           <Movie />
         </div>
-      </div>
+      </BackgroundWrapper>
     );
   }
 }

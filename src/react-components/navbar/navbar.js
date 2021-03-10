@@ -9,12 +9,12 @@ export default function NavBar() {
 
   useEffect(() => {
     // remove it later. test purpose
-    setUser(getRandomUser());
+    // setUser(getRandomUser());
 
     const json = localStorage.getItem("user");
     const savedUser = JSON.parse(json);
     if (savedUser) {
-      setUser(savedUser);
+      setUser(savedUser[0]);
     }
   }, []);
 

@@ -1,6 +1,6 @@
 
 .backgroundWrapper{
-  height: 100vh;
+  min-height: 100vh;
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;

@@ -1,15 +1,12 @@
 import React from "react";
 import { Images } from "../themes";
 import "./style.css";
+import { Card } from "antd";
 
 export default function MovieGallery() {
   return (
-    <div className="contentsContainer">
+    <Card title="Recent Movies">
       <div>
-        <div className="titleContainer">
-          <div className="titleText">Recent Movies</div>
-        </div>
-
         <div className="imagesContainer">
           <div className="row">
             <div>
@@ -56,6 +53,6 @@ export default function MovieGallery() {
           </div>
         </div>
       </div>
-    </div>
+    </Card>
   );
 }
