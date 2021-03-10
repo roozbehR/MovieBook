@@ -165,4 +165,3 @@ To sign out, simply click on your name in the Navigation bar.
 - React
 - Ant Design
 - React Slick
-
