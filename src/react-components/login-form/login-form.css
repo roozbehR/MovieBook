@@ -21,6 +21,13 @@
   background-color: transparent;
 }
 
+.login-button {
+  background-color: transparent !important;
+}
+.signup-password > input {
+  background-color: transparent !important;
+}
+
 .login-button,
 .signup-button {
   background-color: green !important;

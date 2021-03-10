@@ -2,7 +2,7 @@ import React from "react";
 import SearchBar from "./search-bar";
 import { MenuTab } from "./menu-tab";
 import "./styles.css";
-import { Avatar } from "antd";
+import { Avatar, message } from "antd";
 
 export default function AuthenticatedNavBar({
   userName,
@@ -12,6 +12,7 @@ export default function AuthenticatedNavBar({
   const handleLogout = async () => {
     localStorage.removeItem("user");
     window.location.reload();
+    message.success("Promoted")
   };
 
   // if userName and profileImagePath are not passed, set default values
@@ -25,7 +26,7 @@ export default function AuthenticatedNavBar({
       <div className="header-menu">
         <MenuTab path="/">Home</MenuTab>
         <MenuTab path="/movies">Movies</MenuTab>
-        <MenuTab path="/movie">Review</MenuTab>
+        <MenuTab path="/feed">Feed</MenuTab>
         {isAdmin && <MenuTab path="/admin">Admin</MenuTab>}
       </div>
       <div className="authed-search-box">
@@ -33,9 +34,7 @@ export default function AuthenticatedNavBar({
           <SearchBar />
         </div>
         <div className="user-info-box">
-          <div onClick={handleLogout} className="defaultText">
-            {passedUserName}
-          </div>
+          <div onClick={handleLogout} className="defaultText">{passedUserName}</div>
           <div className="user-photo-box">
             <Avatar
               src={passedProfileImagePath}

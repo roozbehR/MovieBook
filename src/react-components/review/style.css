@@ -15,6 +15,12 @@
 .username {
   float: left;
   color: white  !important;
+  font-size: 16px;
+}
+
+.username-review {
+  color: white;
+  font-size: 16px;
 }
 
 .username:hover {
@@ -30,7 +36,7 @@
 
 .btn-comment {
   float: right;
-  color: white;
+  color: white !important;
   margin-top: 10px;
   margin-bottom: 10px;
 }
@@ -41,11 +47,11 @@
 
 .comment-text {
   background-color: #ffffff1c !important;
-  border-radius: 20px;
+  border-radius: 20px !important;
   padding: 20px;
   overflow: hidden;
-  color: white;
+  color: white !important;
   resize: none;
-  position: relative;
+  position: relative !important;
   right: 34px;
 }

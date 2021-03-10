@@ -1,0 +1,59 @@
+.test{
+    
+    text-align: center;
+}
+
+.section{
+    text-align: center;
+    color: white;
+}
+
+.profilephoto{
+    margin-left: 30px;
+}
+
+.Biograph{
+    margin-top: 10px;
+}
+
+.body{
+    border-radius: 75%;
+    border: black;
+    margin-left: 20px;
+    color: white;
+}
+
+.body h2{
+    color: aqua;
+}
+
+.photo{
+    border-radius: 50%;
+    border-color: white;
+    width: 200px
+}
+
+.movieImage{
+    height: 300px
+}
+
+.name{
+    color: white;
+}
+
+.ant-comment-content {
+    color: white;
+    
+}
+
+.ant-tabs-tab{
+    color:white
+}
+
+.ant-descriptions-title{
+    color: white
+}
+
+.ant-card-meta{
+    color: white
+}

@@ -91,6 +91,7 @@ class Movie extends React.Component {
   render() {
     const { Panel } = Collapse;
     const { TextArea } = Input;
+    const userAuthenticated = localStorage["user"] != null;
 
     return (
       <Card title="Movie">
@@ -119,41 +120,44 @@ class Movie extends React.Component {
         </Row>
 
         <Divider>Reviews</Divider>
-
-        <Row>
-          <Col span={24}>
-            <Button className="btn-review" onClick={this.toggleAddReview}>
-              {this.state.reviewButton.icon}
-              {this.state.reviewButton.text}
-            </Button>
-            {!this.state.reviewButton.enabled && (
-              <Button className="btn-review" onClick={this.postReview}>
-                <CheckCircleTwoTone twoToneColor="#52c41a" />
-                Post Review
-              </Button>
-            )}
-          </Col>
-        </Row>
-        <Row>
-          <Col span={24}>
-            <Collapse activeKey={!this.state.reviewButton.enabled} ghost>
-              <Panel key="true" showArrow="false" style={{ width: "100%" }}>
-                <Rate
-                  className="review-rate"
-                  allowHalf="true"
-                  value={this.state.reviewRating}
-                  onChange={this.handleReviewRating}
-                />
-                <TextArea
-                  className="review-text"
-                  onChange={this.handleReviewText}
-                  maxLength="250"
-                  value={this.state.reviewText}
-                ></TextArea>
-              </Panel>
-            </Collapse>
-          </Col>
-        </Row>
+        {userAuthenticated &&
+          <div>
+            <Row>
+              <Col span={24}>
+                <Button className="btn-review" onClick={this.toggleAddReview}>
+                  {this.state.reviewButton.icon}
+                  {this.state.reviewButton.text}
+                </Button>
+                {!this.state.reviewButton.enabled && (
+                  <Button className="btn-review" onClick={this.postReview}>
+                    <CheckCircleTwoTone twoToneColor="#52c41a" />
+              Post Review
+                  </Button>
+                )}
+              </Col>
+            </Row>
+            <Row>
+              <Col span={24}>
+                <Collapse activeKey={!this.state.reviewButton.enabled} ghost>
+                  <Panel key="true" showArrow="false" style={{ width: "100%" }}>
+                    <Rate
+                      className="review-rate"
+                      allowHalf="true"
+                      value={this.state.reviewRating}
+                      onChange={this.handleReviewRating}
+                    />
+                    <TextArea
+                      className="review-text"
+                      onChange={this.handleReviewText}
+                      maxLength="250"
+                      value={this.state.reviewText}
+                    ></TextArea>
+                  </Panel>
+                </Collapse>
+              </Col>
+            </Row>
+          </div>
+        }
         <Row>
           <Col span={24}>
             {this.state.reviews.map((review) => (
