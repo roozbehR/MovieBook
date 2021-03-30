@@ -26,7 +26,7 @@ const { User } = require("./models/users");
 const { ObjectID } = require("mongodb");
 
 // body-parser: middleware for parsing parts of the request into a usable object (onto req.body)
-const bodyParser = require('body-parser') 
+const bodyParser = require('body-parser')
 app.use(bodyParser.json()) // parsing JSON body
 app.use(bodyParser.urlencoded({ extended: true })); // parsing URL-encoded form data (from form POST requests)
 
@@ -48,29 +48,65 @@ const mongoChecker = (req, res, next) => {
         res.status(500).send('Internal server error')
         return;
     } else {
-        next()  
-    }   
+        next()
+    }
 }
 
-// Middleware for authentication of resources
-const authenticate = (req, res, next) => {
-
+// Middleware for user authentication
+const authenticateAdmin = async (req, res, next) => {
     if (req.session.user) {
-        User.findById(req.session.user).then((user) => {
-            if (!user) {
-                return Promise.reject()
+        try {
+            const user = await User.findById(req.session.user);
+            if (user && user.isAdmin) {
+                req.user = user;
+                next();
             } else {
-                req.user = user
-                next()
+                res.status(401).send("Unauthorized");
             }
-        }).catch((error) => {
+        } catch (error) {
+            log(error);
+            res.status(401).send("Unauthorized");
+        }
+    } else {
+        res.status(401).send("Unauthorized");
+    }
+}
+
+// Middleware for user authentication
+const authenticate = async (req, res, next) => {
+    if (req.session.user) {
+        try {
+            const user = await User.findById(req.session.user);
+            if (!user) {
+                res.status(401).send("Unauthorized")
+            } else {
+                req.user = user;
+                next();
+            }
+        } catch (error) {
             res.status(401).send("Unauthorized")
-        })
+        }
     } else {
         res.status(401).send("Unauthorized")
     }
 }
 
+// Middleware for have no users authenticated
+const unauthenticate = async (req, res, next) => {
+    if (req.session.user) {
+        try {
+            const user = await User.findById(req.session.user);
+            if (user)
+                res.status(401).send("Unauthorized")
+            else
+                next();
+        } catch (error) {
+            res.status(401).send("Unauthorized")
+        }
+    } else {
+        next();
+    }
+}
 
 /*** Session handling **************************************/
 // Create a session and session cookie
@@ -85,10 +121,65 @@ app.use(
         },
         // store the sessions on the database in production
         store: MongoStore.create({
-                                                mongoUrl: process.env.MONGODB_URI || 'mongodb+srv://team02:fv5Num8l3vLB59m7@cluster0.pooiy.mongodb.net/MOVIEBOOK?retryWrites=true&w=majority'
-                                 })
+            mongoUrl: process.env.MONGODB_URI || 'mongodb+srv://team02:fv5Num8l3vLB59m7@cluster0.pooiy.mongodb.net/MOVIEBOOK?retryWrites=true&w=majority'
+        })
     })
 );
+
+// A route to login and create a session
+app.post("/user/login", mongoChecker, unauthenticate, async (req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+
+    try {
+        const user = await User.findByUsernamePassword(username, password);
+        req.session.user = user._id;
+        res.send({ username: user.username });
+    } catch (error) {
+        if (isMongoError(error)) {
+            res.status(500).send('Internal server error')
+        } else {
+            log(error)
+            res.status(400).send('Bad Request');
+        }
+    }
+});
+
+// A route to logout a user
+app.get("/user/logout", mongoChecker, authenticate, (req, res) => {
+    req.session.destroy(error => {
+        if (error) {
+            res.status(500).send(error);
+        } else {
+            res.send()
+        }
+    });
+});
+
+// A route to register and create a session
+app.post("/user/register", mongoChecker, unauthenticate, async (req, res) => {
+    const user = new User({
+        username: req.body.username,
+        password: req.body.password
+    });
+
+    try {
+        const newUser = await User.createUser(user);
+        if (newUser) {
+            req.session.user = newUser._id;
+            res.send({ username: newUser.username });
+        } else {
+            res.send({ exists: true });
+        }
+    } catch (error) {
+        if (isMongoError(error)) {
+            res.status(500).send('Internal server error')
+        } else {
+            log(error)
+            res.status(400).send('Bad Request');
+        }
+    }
+});
 
 /*********************************************************/
 
@@ -96,28 +187,37 @@ app.use(
 
 // use mongoChecker everywhere that you have/require a database connection and use authenticate everywhere you need to authenticate a user
 
-app.get('/students', mongoChecker, (req, res) => {
-    res.send('Successful  connection');
+app.patch('/api/admin/user/:id', mongoChecker, authenticateAdmin, async (req, res) => {
+    const id = req.params.id;
+
+    if (!ObjectID.isValid(id)) {
+        res.status(404).send();
+        return;
+    }
+
+    const fieldsToUpdate = {};
+    req.body.map((change) => {
+        const propertyToChange = change.path.substr(1);
+        fieldsToUpdate[propertyToChange] = change.value;
+    })
+
+    try {
+        const user = await User.findOneAndUpdate({ _id: id }, { $set: fieldsToUpdate }, { new: true, useFindAndModify: false })
+        if (!user) {
+            res.status(404).send('Resource not found');
+        } else {
+            res.send(user);
+        }
+    } catch (error) {
+        if (isMongoError(error)) {
+            res.status(500).send('Internal server error');
+        } else {
+            res.status(400).send('Bad Request');
+        }
+    }
 })
 
-
-
-// app.get('/api/students', mongoChecker, authenticate, async (req, res) => {
-
-//     // Get the students
-//     try {
-//         const students = await Student.find({creator: req.user._id})
-//         // res.send(students) // just the array
-//         res.send({ students }) // can wrap students in object if want to add more properties
-//     } catch(error) {
-//         log(error)
-//         res.status(500).send("Internal Server Error")
-//     }
-
-// })
-
-// other student API routes can go here...
-// ...
+// Add routes below
 
 /*** Webpage routes below **********************************/
 // Serve the build
