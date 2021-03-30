@@ -1,7 +1,7 @@
 /* Comments Mongoose Model */
 const mongoose = require('mongoose')
 
-const CommentSchema = new mongooseSchema({
+const CommentSchema = new mongoose.Schema({
   name: String,
   email: String,
   user_id: mongoose.Schema.Types.ObjectId,

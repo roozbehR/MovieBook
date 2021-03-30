@@ -1,7 +1,7 @@
 /* Reviews Mongoose Model */
 const mongoose = require('mongoose')
 
-const ReviewsSchema = new mongooseSchema({
+const ReviewsSchema = new mongoose.Schema({
   rating: Number,
   user_id: mongoose.Schema.Types.ObjectId,
   movie_id: mongoose.Schema.Types.ObjectId,
