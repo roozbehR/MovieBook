@@ -219,7 +219,7 @@ app.patch('/api/admin/user/:id', mongoChecker, authenticateAdmin, async (req, re
 
 // Add routes below
 
-app.delete('api/admin/user/:id', mongoChecker, authenticateAdmin, (req, res) => {
+app.delete('/api/admin/user/:id', mongoChecker, authenticateAdmin, (req, res) => {
     const id = req.params.id;
 
     if (!ObjectID.isValid(id)) {
