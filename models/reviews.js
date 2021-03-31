@@ -9,6 +9,21 @@ const ReviewsSchema = new mongoose.Schema({
   comments: [mongoose.Schema.Types.ObjectId]
 });
 
+ReviewsSchema.statics.findOneByMovieId = async function (movieId) {
+  const Review = this;
+  return Review.findOne({movie_id: movieId});
+};
+
+ReviewsSchema.statics.findAllByMovieId = async function (movieId) {
+  const Review = this;
+  return Review.find({movie_id: movieId});
+};
+
+ReviewsSchema.statics.findOneReview = async function (movieId) {
+  const Review = this;
+  return Review.findOne({movie_id: movieId});
+}
+
 const Review = mongoose.model('Review', ReviewsSchema);
 
 module.exports = { Review };

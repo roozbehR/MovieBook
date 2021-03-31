@@ -10,6 +10,11 @@ const CommentSchema = new mongoose.Schema({
   date: Date
 });
 
+CommentSchema.statics.findAllByReviewId = async function (movieId) {
+  const Review = this;
+  return Review.find({movie_id: movieId});
+};
+
 const Comment = mongoose.model('comment', CommentSchema);
 
 module.exports = { Comment };
