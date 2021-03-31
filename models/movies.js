@@ -37,5 +37,10 @@ MovieSchema.statics.recentMovies = async function () {
   return Movie.aggregate([{ $sort: { released: -1}}, { $limit: 6 }]);
 }
 
+MovieSchema.statics.topMovies = async function () {
+  const Movie = this;
+  return Movie.aggregate([{ $sort: { "tomatoes.viewer.rating": -1}}, { $limit: 5 }]);
+}
+
 const Movie = mongoose.model('movies', MovieSchema);
 module.exports = { Movie }

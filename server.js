@@ -295,6 +295,16 @@ app.get('/api/movie/new/movies', mongoChecker, async(req, res) => {
     }
 })
 
+app.get('/api/movie/top/movies', mongoChecker, async(req, res) => {
+
+    try {
+        const movies = await Movie.topMovies();
+        res.send(movies);
+    } catch (error) {
+        log(error);
+    }
+})
+
 /// Route for adding review to a particular movie.
 /*
 Request body expects:
