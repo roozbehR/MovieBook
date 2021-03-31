@@ -219,6 +219,28 @@ app.patch('/api/admin/user/:id', mongoChecker, authenticateAdmin, async (req, re
 
 // Add routes below
 
+app.delete('api/admin/user/:id', mongoChecker, authenticateAdmin, (req, res) => {
+    const id = req.params.id;
+
+    if (!ObjectID.isValid(id)) {
+        res.status(404).send();
+        return;
+    }
+
+    User.findByIdAndRemove(id).then((user) => {
+        if (!user) {
+            res.status(404).send('Resource not found')
+        } else {
+            res.send(user);
+        }
+    })
+    .catch((error) => {
+        log(error)
+        res.status(500).send('Internal Server Error')
+    }) 
+    
+})
+
 /*** Webpage routes below **********************************/
 // Serve the build
 app.use(express.static(path.join(__dirname, "/client/build")));
