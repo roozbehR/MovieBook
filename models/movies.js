@@ -1,7 +1,7 @@
 /* Movies Mongoose Model */
 const mongoose = require('mongoose')
 
-const Movie = mongoose.model('movies', {
+const MovieSchema = new mongoose.Schema({
   plot: String,
   genres: [String],
   runtime: Number,
@@ -20,5 +20,17 @@ const Movie = mongoose.model('movies', {
   tomatoes: Object,
   type: String,
   num_mflix_comments: Number
-})
+});
+
+MovieSchema.statics.findByMovieId = async function (movie_id) {
+  const Movie = this;
+  const existingMovie = Movie.findOne({})
+}
+
+MovieSchema.statics.findOneRandom =  async function() {
+  const Movie = this;
+  return Movie.aggregate([{$sample: {size: 1}}]);
+}
+
+const Movie = mongoose.model('movies', MovieSchema);
 module.exports = { Movie }
