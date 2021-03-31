@@ -32,5 +32,10 @@ MovieSchema.statics.findOneRandom =  async function() {
   return Movie.aggregate([{$sample: {size: 1}}]);
 }
 
+MovieSchema.statics.recentMovies = async function () {
+  const Movie = this;
+  return Movie.aggregate([{ $sort: { released: -1}}, { $limit: 6 }]);
+}
+
 const Movie = mongoose.model('movies', MovieSchema);
 module.exports = { Movie }

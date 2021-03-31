@@ -229,7 +229,7 @@ const fetchCommentsByReviewId = async comment_ids => {
     return review_comments;
 }
 
-app.get('/movie/:id', mongoChecker, async (req, res) => {
+app.get('/api/movie/:id', mongoChecker, async (req, res) => {
     const movie_id = req.params.id;
 
     if (!ObjectID.isValid(movie_id)) {
@@ -254,7 +254,7 @@ app.get('/movie/:id', mongoChecker, async (req, res) => {
 })
 
 //get 1 random movie and fetch 1 corresponding random review
-app.get('/movie/random', mongoChecker, async(req, res) => {
+app.get('/api/movie/random/movie', mongoChecker, async(req, res) => {
   try {
     const fetched_movie_data = await Movie.findOneRandom();
     const movie_id = fetched_movie_data[0]._id;
@@ -268,7 +268,7 @@ app.get('/movie/random', mongoChecker, async(req, res) => {
 });
 
 // get 1 random review by movie ID
-app.get('/movie/:id/review/random', mongoChecker, async(req, res) => {
+app.get('/api/movie/:id/review/random', mongoChecker, async(req, res) => {
     const movie_id = req.params.id;
 
     if (!ObjectID.isValid(movie_id)) {
@@ -285,6 +285,16 @@ app.get('/movie/:id/review/random', mongoChecker, async(req, res) => {
     }
 });
 
+app.get('/api/movie/new/movies', mongoChecker, async(req, res) => {
+
+    try {
+        const movies = await Movie.recentMovies();
+        res.send(movies);
+    } catch (error) {
+        res.status(500).send("Internal Server Error Has Occured");
+    }
+})
+
 /// Route for adding review to a particular movie.
 /*
 Request body expects:
@@ -294,7 +304,7 @@ Request body expects:
 	"review": string <review text>
 }
 */
-app.post('/movie/:id/review', mongoChecker, async(req, res) => {
+app.post('/api/movie/:id/review', mongoChecker, async(req, res) => {
     const movie_id = req.params.id;
 
     if (!ObjectID.isValid(movie_id)) {
@@ -321,7 +331,7 @@ app.post('/movie/:id/review', mongoChecker, async(req, res) => {
 });
 
 // get comments based on review id
-app.get('/review/:id/comments', mongoChecker, async(req, res) => {
+app.get('/api/review/:id/comments', mongoChecker, async(req, res) => {
     const review_id = req.params.id;
 
     if (!ObjectID.isValid(review_id)) {
