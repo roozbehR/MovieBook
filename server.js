@@ -241,6 +241,7 @@ app.delete('/api/admin/user/:id', mongoChecker, authenticateAdmin, (req, res) =>
     
 })
 
+
 /*** Webpage routes below **********************************/
 // Serve the build
 app.use(express.static(path.join(__dirname, "/client/build")));
