@@ -9,23 +9,32 @@ import MovieGallery from "./MovieGallery";
 import Admin from "./AdminPanel";
 import UserFeed from "./UserFeed";
 import Movie from './Movie'
+import { checkSession } from './actions/user'
 
 class App extends React.Component {
+  state = {
+    user: null
+  }
+
+  componentDidMount() {
+    checkSession(this);
+  }
+
   render() {
     return (
       <div>
         <BrowserRouter>
           <Switch>
-            <Route exact path="/" render={() => <HomePage />}></Route>
-            <Route exact path="/profile" render={() => <ProfilePage />}></Route>
+            <Route exact path="/" render={() => <HomePage user={this.state.user} />}></Route>
+            <Route exact path="/profile" render={() => <ProfilePage user={this.state.user} />}></Route>
             <Route
               exact
               path="/feed"
-              render={() => <UserFeed />}
+              render={() => <UserFeed user={this.state.user} />}
             ></Route>
-            <Route exact path="/movies" render={() => <MovieGallery />}></Route>
-            <Route exact path="/movie" render={() => <Movie />}></Route>
-            <Route exact path="/admin" render={() => <Admin />}></Route>
+            <Route exact path="/movies" render={() => <MovieGallery user={this.state.user} />}></Route>
+            <Route exact path="/movie" render={() => <Movie user={this.state.user} />}></Route>
+            <Route exact path="/admin" render={() => <Admin user={this.state.user} />}></Route>
           </Switch>
         </BrowserRouter>
       </div>

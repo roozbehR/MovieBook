@@ -10,7 +10,7 @@ const app = express();
 
 // enable CORS if in development, for React local development server to connect to the web server.
 const cors = require('cors')
-// app.use(cors()) enable for production only
+app.use(cors({ origin: 'http://localhost:3000', credentials: true })); // enable for development only
 
 // mongoose and mongo connection
 const { mongoose } = require("./db/mongoose");
@@ -133,8 +133,9 @@ app.post("/user/login", mongoChecker, unauthenticate, async (req, res) => {
 
     try {
         const user = await User.findByUsernamePassword(username, password);
-        req.session.user = user._id;
-        res.send({ username: user.username });
+        const returnedUser = { id: user._id, username: user.username };
+        req.session.user = returnedUser;
+        res.send(returnedUser);
     } catch (error) {
         if (isMongoError(error)) {
             res.status(500).send('Internal server error')
@@ -166,8 +167,9 @@ app.post("/user/register", mongoChecker, unauthenticate, async (req, res) => {
     try {
         const newUser = await User.createUser(user);
         if (newUser) {
-            req.session.user = newUser._id;
-            res.send({ username: newUser.username });
+            const returnedUser = { id: newUser._id, username: newUser.username };
+            req.session.user = returnedUser;
+            res.send(returnedUser);
         } else {
             res.send({ exists: true });
         }
@@ -178,6 +180,15 @@ app.post("/user/register", mongoChecker, unauthenticate, async (req, res) => {
             log(error)
             res.status(400).send('Bad Request');
         }
+    }
+});
+
+// A route to check if a user is logged in on the session
+app.get("/user/check-session", (req, res) => {
+    if (req.session.user) {
+        res.send(req.session.user);
+    } else {
+        res.status(401).send();
     }
 });
 
@@ -247,28 +258,28 @@ app.get('/api/movie/:id', mongoChecker, async (req, res) => {
             review_comments_dict[review_info] = fetchCommentsByReviewId(review_info._id);
         }))
 
-        res.send({movie: movie, reviews: reviews, comments: review_comments_dict});
-    } catch (error){
+        res.send({ movie: movie, reviews: reviews, comments: review_comments_dict });
+    } catch (error) {
         res.status(500).send("Internal Server Error");
     }
 })
 
 //get 1 random movie and fetch 1 corresponding random review
-app.get('/api/movie/random/movie', mongoChecker, async(req, res) => {
-  try {
-    const fetched_movie_data = await Movie.findOneRandom();
-    const movie_id = fetched_movie_data[0]._id;
-    const fetched_single_review = await Review.findOneReview(movie_id);
+app.get('/api/movie/random/movie', mongoChecker, async (req, res) => {
+    try {
+        const fetched_movie_data = await Movie.findOneRandom();
+        const movie_id = fetched_movie_data[0]._id;
+        const fetched_single_review = await Review.findOneReview(movie_id);
 
-    res.send({movie: fetched_movie_data, review: fetched_single_review});
-  } catch (error) {
-    log(error);
-    res.status(500).send(error);
-  }
+        res.send({ movie: fetched_movie_data, review: fetched_single_review });
+    } catch (error) {
+        log(error);
+        res.status(500).send(error);
+    }
 });
 
 // get 1 random review by movie ID
-app.get('/api/movie/:id/review/random', mongoChecker, async(req, res) => {
+app.get('/api/movie/:id/review/random', mongoChecker, async (req, res) => {
     const movie_id = req.params.id;
 
     if (!ObjectID.isValid(movie_id)) {
@@ -278,14 +289,14 @@ app.get('/api/movie/:id/review/random', mongoChecker, async(req, res) => {
 
     try {
         const fetched_review_data = await Review.findOneByMovieId(movie_id);
-        res.send({movie: movie_id, review: fetched_review_data});
+        res.send({ movie: movie_id, review: fetched_review_data });
     } catch (error) {
         log(error);
         res.status(500).send(error);
     }
 });
 
-app.get('/api/movie/new/movies', mongoChecker, async(req, res) => {
+app.get('/api/movie/new/movies', mongoChecker, async (req, res) => {
 
     try {
         const movies = await Movie.recentMovies();
@@ -295,7 +306,7 @@ app.get('/api/movie/new/movies', mongoChecker, async(req, res) => {
     }
 })
 
-app.get('/api/movie/top/movies', mongoChecker, async(req, res) => {
+app.get('/api/movie/top/movies', mongoChecker, async (req, res) => {
 
     try {
         const movies = await Movie.topMovies();
@@ -309,12 +320,12 @@ app.get('/api/movie/top/movies', mongoChecker, async(req, res) => {
 /*
 Request body expects:
 {
-	"rating" Number <rating of the movie>
-	"user_id" ObjectId <unique user id>
-	"review": string <review text>
+    "rating" Number <rating of the movie>
+    "user_id" ObjectId <unique user id>
+    "review": string <review text>
 }
 */
-app.post('/api/movie/:id/review', mongoChecker, async(req, res) => {
+app.post('/api/movie/:id/review', mongoChecker, async (req, res) => {
     const movie_id = req.params.id;
 
     if (!ObjectID.isValid(movie_id)) {
@@ -325,23 +336,23 @@ app.post('/api/movie/:id/review', mongoChecker, async(req, res) => {
     log(req.body);
 
     const requested_review = new Review({
-      rating: req.body.rating,
-      user_id: req.body.user_id,
-      movie_id: movie_id,
-      review: req.body.review,
-      comments: [],
+        rating: req.body.rating,
+        user_id: req.body.user_id,
+        movie_id: movie_id,
+        review: req.body.review,
+        comments: [],
     });
 
     try {
-      const output = await requested_review.save();
-      res.send(output);
-    } catch (error){
-      res.status(500).send("Internal Server Error");
+        const output = await requested_review.save();
+        res.send(output);
+    } catch (error) {
+        res.status(500).send("Internal Server Error");
     }
 });
 
 // get comments based on review id
-app.get('/api/review/:id/comments', mongoChecker, async(req, res) => {
+app.get('/api/review/:id/comments', mongoChecker, async (req, res) => {
     const review_id = req.params.id;
 
     if (!ObjectID.isValid(review_id)) {
@@ -353,7 +364,7 @@ app.get('/api/review/:id/comments', mongoChecker, async(req, res) => {
         const review_info = await Review.findById(review_id);
         const comment_ids = review_info.comments;
         const review_comments = await fetchCommentsByReviewId(comment_ids);
-        res.send({review: review_id, comment_ids: review_comments});
+        res.send({ review: review_id, comment_ids: review_comments });
     } catch (error) {
         log(error);
         res.status(500).send("Internal Server Error");
@@ -375,11 +386,11 @@ app.delete('/api/admin/user/:id', mongoChecker, authenticateAdmin, (req, res) =>
             res.send(user);
         }
     })
-    .catch((error) => {
-        log(error)
-        res.status(500).send('Internal Server Error')
-    }) 
-    
+        .catch((error) => {
+            log(error)
+            res.status(500).send('Internal Server Error')
+        })
+
 })
 
 //Searching APIs

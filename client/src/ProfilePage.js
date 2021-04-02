@@ -45,7 +45,7 @@ class ProfilePage extends React.Component {
   render() {
     return (
       <BackgroundWrapper>
-        <NavBar />
+        <NavBar user={this.state.user} />
         <div classname="body">
           <Content>
             <Card style={{ marginLeft: 30, marginRight: 30, marginTop: 30 }}>

@@ -6,19 +6,16 @@ import TopMovies from "./react-components/top-movies/top-movies";
 import BackgroundWrapper from "./react-components/background-wrapper/background-wrapper";
 import "./home-style.css";
 import NavBar from "./react-components/navbar/navbar";
+import { checkSession } from './actions/user'
 
 class HomePage extends React.Component {
-  state = {};
-
   render() {
-    const authenticated = localStorage["user"] != null;
-
     return (
       <BackgroundWrapper>
-        <NavBar />
+        <NavBar user={this.props.user} />
         <br />
         <Row className="content" justify="center">
-          <Col md={authenticated ? 12 : 12}>
+          <Col md={this.props.user ? 12 : 12}>
             <Row
               justify="center"
               gutter={[0, 16]}
@@ -32,7 +29,7 @@ class HomePage extends React.Component {
               </Col>
             </Row>
           </Col>
-          {!authenticated &&
+          {!this.props.user &&
             <Col md={12} lg={12}>
               <Row
                 className="login-form-container"
