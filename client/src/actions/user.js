@@ -31,7 +31,7 @@ export const login = (loginComp, app) => {
     const request = new Request(`${API_HOST}/user/login`, {
         method: "post",
         body: JSON.stringify({
-            username: loginComp.state.login.username == '' ? 'newuser' : loginComp.state.login.username,
+            username: loginComp.state.login.username == '' ? 'bassel65' : loginComp.state.login.username,
             password: loginComp.state.login.password == '' ? 'hellothere' : loginComp.state.login.password
         }),
         headers: {
@@ -76,6 +76,7 @@ export const getUser = (comp, username) => {
             }
         })
         .then(json => {
+            console.log(json);
             if (json)
                 comp.setState({ viewingUser: json });
             else

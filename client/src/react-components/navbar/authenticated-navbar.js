@@ -35,13 +35,13 @@ export default function AuthenticatedNavBar({
         </div>
         <div className="user-info-box">
           <div onClick={handleLogout} className="defaultText">{passedUserName}</div>
-          <div className="user-photo-box">
+          <MenuTab path="/profile" className="user-photo-box">
             <Avatar
               src={passedProfileImagePath}
               alt={passedUserName}
               size={55}
             />
-          </div>
+          </MenuTab>
         </div>
       </div>
     </div>

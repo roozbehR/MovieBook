@@ -437,6 +437,18 @@ app.get('/api/review/:id/comments', mongoChecker, async (req, res) => {
     }
 });
 
+// get reviews based on following users
+app.get('/api/feed', mongoChecker, authenticate, async (req, res) => {
+    try {
+        const currentUser = await User.findOne({ _id: req.session.user.id });
+        const reviews = await Review.findAllByManyUserIds(currentUser.usersIfollow);
+        res.send(reviews);
+    } catch (error) {
+        log(error);
+        res.status(500).send("Internal Server Error");
+    }
+});
+
 app.delete('/api/admin/user/:id', mongoChecker, authenticateAdmin, (req, res) => {
     const id = req.params.id;
 

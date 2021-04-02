@@ -13,7 +13,10 @@ import { checkSession } from './actions/user'
 
 class App extends React.Component {
   state = {
-    user: null,
+    user: {
+      username: null,
+      biography: null
+    },
   }
 
   componentDidMount() {

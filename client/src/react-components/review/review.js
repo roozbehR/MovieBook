@@ -13,7 +13,6 @@ import { getRandomComment } from "../../models/comment";
 class Review extends React.Component {
   state = {
     showComments: this.props.showComments ?? false,
-    comments: [getRandomComment(), getRandomComment(), getRandomComment()],
     commentButton: {
       enabled: null,
       text: null,
@@ -24,7 +23,6 @@ class Review extends React.Component {
 
   componentDidMount() {
     this.setAddComment(true);
-
   }
 
   setAddComment = (value) => {
@@ -53,16 +51,16 @@ class Review extends React.Component {
   };
 
   postComment = () => {
-    let comments = this.state.comments;
-    let newComment = getRandomComment();
+    // let comments = this.state.comments;
+    // let newComment = getRandomComment();
 
-    // Add new comment
-    newComment.text = this.state.commentText;
-    comments.push(newComment);
+    // // Add new comment
+    // newComment.text = this.state.commentText;
+    // comments.push(newComment);
 
-    this.setState({
-      comments: comments,
-    });
+    // this.setState({
+    //   comments: comments,
+    // });
 
     this.toggleAddComment();
   };
@@ -76,7 +74,7 @@ class Review extends React.Component {
   render() {
     const { Panel } = Collapse;
     const { TextArea } = Input;
-    const { user, text, rating, movie } = this.props.review;
+    const { user, review, rating, movie } = this.props.review;
     const addCommentsEnabled = this.props.addCommentEnabled && localStorage["user"] != null;
 
     const movieTitle = (
@@ -102,11 +100,11 @@ class Review extends React.Component {
         <Comment
           className="parent-comment"
           author={movieTitle}
-          content={text}
+          content={review}
           avatar={user.picture}
         >
           {this.state.showComments &&
-            this.state.comments.map((comment) => (
+            this.props.review.comments_data.map((comment) => (
               <Comment
                 author={
                   <a className="username" href={`profile/${comment.user.username}`}>
