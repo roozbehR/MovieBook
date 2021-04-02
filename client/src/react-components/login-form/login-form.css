@@ -1,5 +1,6 @@
 .login-input,
-.signup-input {
+.signup-input-email,
+.signup-input-username {
   padding-left: 100px !important;
   margin: 15px 0px !important;
   border-radius: 10px !important;
