@@ -76,7 +76,7 @@ const authenticateAdmin = async (req, res, next) => {
 const authenticate = async (req, res, next) => {
     if (req.session.user) {
         try {
-            const user = await User.findById(req.session.user);
+            const user = await User.findById(req.session.user.id);
             if (!user) {
                 res.status(401).send("Unauthorized")
             } else {
@@ -95,7 +95,7 @@ const authenticate = async (req, res, next) => {
 const unauthenticate = async (req, res, next) => {
     if (req.session.user) {
         try {
-            const user = await User.findById(req.session.user);
+            const user = await User.findById(req.session.user.id);
             if (user)
                 res.status(401).send("Unauthorized")
             else
@@ -152,7 +152,7 @@ app.get("/user/logout", mongoChecker, authenticate, (req, res) => {
         if (error) {
             res.status(500).send(error);
         } else {
-            res.send()
+            res.send(true)
         }
     });
 });
@@ -161,7 +161,14 @@ app.get("/user/logout", mongoChecker, authenticate, (req, res) => {
 app.post("/user/register", mongoChecker, unauthenticate, async (req, res) => {
     const user = new User({
         username: req.body.username,
-        password: req.body.password
+        password: req.body.password,
+        fullName: null,
+        picture: null,
+        biography: null,
+        isAdmin: false,
+        likedMovies: [],
+        followingUser: [],
+        usersIfollow: []
     });
 
     try {
@@ -197,6 +204,60 @@ app.get("/user/check-session", (req, res) => {
 /*** API Routes below ************************************/
 
 // use mongoChecker everywhere that you have/require a database connection and use authenticate everywhere you need to authenticate a user
+
+// Get user by username
+app.get('/api/user/:username', mongoChecker, authenticate, async (req, res) => {
+    const username = req.params.username;
+
+    try {
+        const currentUserId = req.session.user.id;
+        const user = await User.findByUsername(username);
+        if (user)
+            res.send({
+                username: user.username,
+                fullName: user.fullName,
+                biography: user.biography,
+                picture: user.picture,
+                isFollowing: user.followingUser.includes(currentUserId)
+            });
+        else
+            res.status(404).send("User not found");
+    } catch (error) {
+        log(error)
+        res.status(500).send("Internal Server Error");
+    }
+})
+
+// Follow/Unfollow user by their id
+app.put('/api/user/follow/:username', mongoChecker, authenticate, async (req, res) => {
+    const username = req.params.username;
+
+    try {
+        const currentUserId = req.session.user.id;
+
+        if (req.session.user.username == username) {
+            res.status(406).send("Users cannot follow themselves");
+            return;
+        }
+
+        const userToFollow = await User.findOne({ username: username });
+        if (userToFollow.followingUser.includes(currentUserId)) {
+            await User.findOneAndUpdate({ username: username }, { $pull: { followingUser: currentUserId } }, { new: true, useFindAndModify: false });
+            await User.findOneAndUpdate({ _id: currentUserId }, { $pull: { usersIfollow: userToFollow._id } }, { new: true, useFindAndModify: false });
+            res.send(false);
+        } else {
+            await User.findOneAndUpdate({ username: username }, { $push: { followingUser: currentUserId } }, { new: true, useFindAndModify: false });
+            await User.findOneAndUpdate({ _id: currentUserId }, { $push: { usersIfollow: userToFollow._id } }, { new: true, useFindAndModify: false });
+            res.send(true);
+        }
+    } catch (error) {
+        if (isMongoError(error)) {
+            res.status(500).send('Internal server error');
+        } else {
+            res.status(400).send('Bad Request');
+        }
+    }
+});
 
 app.patch('/api/admin/user/:id', mongoChecker, authenticateAdmin, async (req, res) => {
     const id = req.params.id;

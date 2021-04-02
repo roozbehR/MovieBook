@@ -16,6 +16,8 @@ import {
 import "./profile-style.css";
 import { getRandomUser } from "./models/user";
 import BackgroundWrapper from "./react-components//background-wrapper/background-wrapper";
+import { getUser } from './actions/user'
+import { followUser } from "./actions/profile";
 
 const { Content } = Layout;
 const { TabPane } = Tabs;
@@ -28,18 +30,19 @@ function callback(key) {
 class ProfilePage extends React.Component {
   state = {
     user: getRandomUser(),
-    isFollowing: false,
+    viewingUser: {
+      username: 'hello',
+      isFollowing: false
+    },
+    notFound: false
   };
 
+  componentDidMount() {
+    getUser(this, this.props.match.params.username);
+  }
+
   clicked = (e) => {
-    let isFollowing = this.state.isFollowing;
-    isFollowing = !isFollowing;
-    this.setState({ isFollowing });
-    {
-      this.state.isFollowing
-        ? message.success("Unfollowed")
-        : message.success("Following");
-    }
+    followUser(this, message, this.state.viewingUser.username);
   };
 
   render() {
@@ -64,7 +67,7 @@ class ProfilePage extends React.Component {
                     <Col style={{ marginLeft: 30 }}>
                       <Row>
                         <Col>
-                          <h2 className="name">{this.state.user.fullName}</h2>
+                          <h2 className="name">{this.state.viewingUser.username}</h2>
                         </Col>
                         <Col style={{ marginLeft: 30 }}>
                           <Button
@@ -72,7 +75,7 @@ class ProfilePage extends React.Component {
                             shape="round"
                             onClick={this.clicked}
                           >
-                            {this.state.isFollowing ? (
+                            {this.state.viewingUser.isFollowing ? (
                               <p>Unfollow</p>
                             ) : (
                               <p>+ Follow</p>

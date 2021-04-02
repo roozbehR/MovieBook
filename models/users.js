@@ -20,7 +20,8 @@ const UserSchema = new mongoose.Schema({
     biography: String,
     isAdmin: Boolean,
     likedMovies: [],
-    followingUser: []
+    followingUser: [],
+    usersIfollow: []
 });
 
 /********************************* User Middleware Below ************************************/

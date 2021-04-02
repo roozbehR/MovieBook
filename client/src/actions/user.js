@@ -56,3 +56,30 @@ export const login = (loginComp, app) => {
             console.log(error);
         });
 };
+
+// Retrieves user by username and adds to comp's viewingUser state
+export const getUser = (comp, username) => {
+    const request = new Request(`${API_HOST}/api/user/${username}`, {
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json",
+        },
+        credentials: 'include'
+    });
+
+    fetch(request)
+        .then(res => {
+            if (res.status === 200) {
+                return res.json();
+            }
+        })
+        .then(json => {
+            if (json)
+                comp.setState({ viewingUser: json });
+            else
+                comp.setState({ notFound: true })
+        })
+        .catch(error => {
+            console.log(error);
+        });
+}
