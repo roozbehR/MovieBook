@@ -22,7 +22,7 @@ export default function NavBar(props) {
     <div>
       {props.user ? (
         <AuthenticatedNavBar
-          userName={props.user.fullName}
+          userName={props.user.username}
           profileImagePath={props.user.picture}
           isAdmin={props.user.isAdmin}
         />

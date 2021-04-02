@@ -31,13 +31,13 @@ class ProfilePage extends React.Component {
   state = {
     user: getRandomUser(),
     viewingUser: {
-      username: 'hello',
+      username: null,
       isFollowing: false
     },
     notFound: false
   };
 
-  componentDidMount() {
+  componentDidMount = () => {
     getUser(this, this.props.match.params.username);
   }
 
@@ -48,7 +48,7 @@ class ProfilePage extends React.Component {
   render() {
     return (
       <BackgroundWrapper>
-        <NavBar user={this.state.user} />
+        <NavBar user={this.props.user} />
         <div classname="body">
           <Content>
             <Card style={{ marginLeft: 30, marginRight: 30, marginTop: 30 }}>

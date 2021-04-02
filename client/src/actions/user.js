@@ -17,8 +17,10 @@ export const checkSession = (app) => {
             }
         })
         .then(json => {
-            console.log(json)
-            app.setState({ user: json });
+            if (json || window.location.pathname == "/" || window.location.pathname == "/movies" || window.location.pathname == "/movie")
+                app.setState({ user: json });
+            else
+                window.location.href = "/";
         })
         .catch(error => {
             console.log(error);
@@ -77,7 +79,7 @@ export const getUser = (comp, username) => {
             if (json)
                 comp.setState({ viewingUser: json });
             else
-                comp.setState({ notFound: true })
+                window.location.href = "/";
         })
         .catch(error => {
             console.log(error);

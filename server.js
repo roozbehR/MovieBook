@@ -206,12 +206,17 @@ app.get("/user/check-session", (req, res) => {
 // use mongoChecker everywhere that you have/require a database connection and use authenticate everywhere you need to authenticate a user
 
 // Get user by username
-app.get('/api/user/:username', mongoChecker, authenticate, async (req, res) => {
+app.get('/api/user/:username?', mongoChecker, authenticate, async (req, res) => {
     const username = req.params.username;
-
     try {
         const currentUserId = req.session.user.id;
-        const user = await User.findByUsername(username);
+        let user = null;
+        if (username != "undefined") {
+            user = await User.findByUsername(username);
+        } else {
+            user = await User.findOne({ _id: currentUserId });
+        }
+
         if (user)
             res.send({
                 username: user.username,
