@@ -382,6 +382,31 @@ app.delete('/api/admin/user/:id', mongoChecker, authenticateAdmin, (req, res) =>
     
 })
 
+//Searching APIs
+
+// Search for a movie
+app.get('/api/search/movies/:name', mongoChecker, async (req, res) => {
+    const movie_name = req.params.name;
+
+    try {
+        const movies = await Movie.search(movie_name);
+        res.send(movies);
+    } catch (error) {
+        res.status(500).send("Internal Server Error Has Occured");
+    }
+})
+
+// Search for a user
+app.get('/api/search/users/:name', mongoChecker, authenticate, async (req, res) => {
+    const user_name = req.params.name;
+
+    try {
+        const users = await User.search(user_name);
+        res.send(users);
+    } catch (error) {
+        res.status(500).send("Internal Server Error Has Occured");
+    }
+})
 
 /*** Webpage routes below **********************************/
 // Serve the build

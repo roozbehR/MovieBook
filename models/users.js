@@ -8,12 +8,17 @@ const UserSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true,
+        unique: true,
         trim: true,
         minlength: 3
     },
     password: {
         type: String,
         minlength: 6
+    },
+    email: {
+        type: String,
+        unique: true,
     },
     fullName: String,
     picture: String,
@@ -79,6 +84,11 @@ UserSchema.statics.createUser = async function (user) {
         return Promise.reject(error);
     }
 }
+
+UserSchema.statics.search = async function (user_name) {
+    const User = this;
+    return User.find({ fullName: { $regex: user_name, $options: 'i' }});
+  }
 
 const User = mongoose.model('User', UserSchema)
 module.exports = { User };
