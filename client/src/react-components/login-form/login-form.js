@@ -2,7 +2,7 @@ import React from "react";
 import { Tabs, Card, Button, PageHeader, Input, message } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import "./login-form.css";
-import { login } from '../../actions/user'
+import { login, signup } from '../../actions/user'
 
 const { TabPane } = Tabs;
 
@@ -26,7 +26,18 @@ class LoginForm extends React.Component {
       : this.setState({ login: { username: this.state.login.username, password: inputValue } });
   };
 
-  setSignUpState = (e) => { };
+  setSignUpState = (e) => { 
+    
+    const inputType =  e.target.className;
+    const inputValue = e.target.value;
+    if (inputType === "ant-input signup-input-email") {
+      this.setState({signup: { username: this.state.signup.username, password: this.state.signup.password, email: inputValue}});
+    } else if (inputType === "ant-input signup-input-username") {
+      this.setState({signup: { username: inputValue, password: this.state.signup.password, email: this.state.signup.email}});
+    } else {
+      this.setState({signup: { username: this.state.signup.username, password: inputValue, email: this.state.signup.email}});
+    }
+  };
 
   handleLogin = (user) => {
     if (user) {
@@ -64,10 +75,10 @@ class LoginForm extends React.Component {
           </TabPane>
           <TabPane tab="Sign Up" key="2">
             <Card>
-              <Input className="signup-input" placeholder="Enter your email" />
-              <Input className="signup-input" placeholder="Enter your username" />
-              <Input.Password className="signup-password" placeholder="Enter your password" iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} />
-              <Button className="signup-button" type="primary" shape="round" onClick={this.handleSignUp}>
+              <Input className="signup-input-email" placeholder="Enter your email" onChange={this.setSignUpState} value={this.state.signup.email} />
+              <Input className="signup-input-username" placeholder="Enter your username" onChange={this.setSignUpState} value={this.state.signup.username} />
+              <Input.Password className="signup-password" placeholder="Enter your password" onChange={this.setSignUpState} value={this.state.signup.password} iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} />
+              <Button className="signup-button" type="primary" shape="round" onClick={() => signup(this)}>
                 Sign Up
               </Button>
             </Card>
