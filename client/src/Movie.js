@@ -7,7 +7,7 @@ class MoviePage extends React.Component {
   render() {
     return (
       <BackgroundWrapper>
-        <NavBar />
+        <NavBar user={this.props.user} />
         <div className="page-container">
           <Movie />
         </div>

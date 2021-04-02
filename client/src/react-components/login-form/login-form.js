@@ -2,8 +2,7 @@ import React from "react";
 import { Tabs, Card, Button, PageHeader, Input, message } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import "./login-form.css";
-import Password from "antd/lib/input/Password";
-import { getUsernamePassword } from "../../models/user";
+import { login } from '../../actions/user'
 
 const { TabPane } = Tabs;
 
@@ -27,14 +26,10 @@ class LoginForm extends React.Component {
       : this.setState({ login: { username: this.state.login.username, password: inputValue } });
   };
 
-  setSignUpState = (e) => {};
+  setSignUpState = (e) => { };
 
-  handleLogin = () => {
-    const username = this.state.login.username;
-    const password = this.state.login.password;
-    const user = getUsernamePassword(username, password)
-    if (user.length > 0) {
-      localStorage["user"] = JSON.stringify(user);
+  handleLogin = (user) => {
+    if (user) {
       window.location.reload();
     } else {
       message.error("Wrong username or password");
@@ -62,7 +57,7 @@ class LoginForm extends React.Component {
             <Card>
               <Input className="login-input" placeholder="Enter your username" onChange={this.setLoginState} value={this.state.login.username} />
               <Input.Password className="login-password" placeholder="Enter your password" onChange={this.setLoginState} value={this.state.login.password} iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} />
-              <Button className="login-button" type="primary" shape="round" onClick={this.handleLogin}>
+              <Button className="login-button" type="primary" shape="round" onClick={() => login(this)}>
                 Sign In
               </Button>
             </Card>

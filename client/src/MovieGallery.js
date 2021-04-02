@@ -5,10 +5,10 @@ import NavBar from "./react-components/navbar/navbar";
 
 import './App.css'
 
-export default function MovieGalleryPage() {
+export default function MovieGalleryPage(props) {
   return (
     <BackgroundWrapper>
-      <NavBar />
+      <NavBar user={props.user} />
       <div className="page-container">
         <MovieGallery />
       </div>

@@ -23,7 +23,7 @@ class Admin extends React.Component {
     curAdmin: "",
   };
 
-  componentDidMount(){
+  componentDidMount() {
     let json = localStorage.getItem("user");
     let savedUser = JSON.parse(json);
     let curAdmin = "";
@@ -31,7 +31,7 @@ class Admin extends React.Component {
       curAdmin = savedUser[0].fullName;
       this.setState({ curAdmin });
     }
-    console.log({curAdmin})
+    console.log({ curAdmin })
   };
 
   clickedUser = (val) => {
@@ -95,11 +95,11 @@ class Admin extends React.Component {
   render() {
     return (
       <BackgroundWrapper>
-        <NavBar />
+        <NavBar user={this.props.user} />
         <div className="page-container">
           <div>
             <Card>
-              <h2 className="welcome">Welcome { this.state.curAdmin }</h2>
+              <h2 className="welcome">Welcome {this.state.curAdmin}</h2>
             </Card>
             <br />
             <Tabs

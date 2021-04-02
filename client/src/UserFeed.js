@@ -7,7 +7,7 @@ class UserFeed extends React.Component {
   render() {
     return (
       <BackgroundWrapper>
-        <NavBar />
+        <NavBar user={this.props.user} />
         <div className="page-container">
           <Feed />
         </div>
