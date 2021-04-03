@@ -88,7 +88,14 @@ UserSchema.statics.createUser = async function (user) {
 UserSchema.statics.search = async function (user_name) {
     const User = this;
     return User.find({ fullName: { $regex: user_name, $options: 'i' }});
-  }
+}
+
+// Return all users
+
+UserSchema.statics.findAll = async function () {
+    const User = this;
+    return User.find({}, { password: 0});
+}
 
 const User = mongoose.model('User', UserSchema)
 module.exports = { User };
