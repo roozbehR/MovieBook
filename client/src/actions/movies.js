@@ -21,3 +21,24 @@ export const getRandomMovie = (rand) => {
             console.log(error);
         }); 
 };
+
+export const getTopMovies = (movies) => {
+	const url = `${API_HOST}/api/movie/top/movies`;
+	
+	fetch(url)
+		.then(res => {
+			if (res.status === 200) {
+			return res.json();
+		} else {
+			alert("error: cannot get top movies");
+		}
+	})
+	.then(json => {
+        console.log(json);
+		movies.setState({ movies: json });
+        console.log(movies.state.movies)
+	})
+	.catch(error => {
+		console.log(error);
+	});
+};

@@ -311,7 +311,7 @@ app.get('/api/movie/top/movies', mongoChecker, async (req, res) => {
 
     try {
         const movies = await Movie.topMovies();
-        res.send(movies);
+        res.send({ movie: movies });
     } catch (error) {
         res.status(500).send("Internal Server Error Has Occured");
     }

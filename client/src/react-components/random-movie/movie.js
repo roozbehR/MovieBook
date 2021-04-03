@@ -37,7 +37,7 @@ class Movie extends React.Component {
       <Row>
         <Col xs={10} sm={10} md={8} lg={8} xl={4}>
           <div className="post-image">
-            <img src={this.state.image}></img>
+            <img src={this.state.image} alt="No Image Available"></img>
           </div>
         </Col>
         <Col xs={14} sm={14} md={16} lg={16} xl={20}>
