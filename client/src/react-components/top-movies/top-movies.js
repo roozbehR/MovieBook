@@ -8,25 +8,23 @@ import "slick-carousel/slick/slick-theme.css";
 
 import "./style.css";
 
-import { getRandomMovie } from "../../models/movie";
+import { getTopMovies } from '../../actions/movies';
 
 class TopMovies extends React.Component {
   state = {
-    movies: [
-      getRandomMovie(),
-      getRandomMovie(),
-      getRandomMovie(),
-      getRandomMovie(),
-      getRandomMovie(),
-    ],
+    movies: []
   };
+
+  componentDidMount(){
+    getTopMovies(this)
+  }
 
   render() {
     const settings = {
       className: "center",
       centerMode: true,
       infinite: true,
-      centerPadding: "5px",
+      centerPadding: "10px",
       slidesToShow: 3,
       speed: 500,
       autoplay: true,
@@ -39,8 +37,7 @@ class TopMovies extends React.Component {
 
     return (
       <Card title="Top Movies">
-        <div>
-          <Slider {...settings}>
+        <Slider {...settings}>
             {this.state.movies.map((movie) => (
               <div key={uid(movie)}>
                 <div className="slick-overlay">
@@ -48,7 +45,7 @@ class TopMovies extends React.Component {
                     <h5>{movie.title}</h5>
                     <Rate
                       disabled="true"
-                      value={movie.rating}
+                      value={movie.tomatoes.viewer.rating}
                       allowHalf="true"
                     />
                     <Button href="movie" className="slick-button">
@@ -56,11 +53,10 @@ class TopMovies extends React.Component {
                     </Button>
                   </div>
                 </div>
-                <img className="slick-img" src={movie.image} />
+                <img className="slick-img" src={movie.poster} />
               </div>
             ))}
           </Slider>
-        </div>
       </Card>
     );
   }

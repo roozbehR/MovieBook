@@ -161,7 +161,8 @@ app.get("/user/logout", mongoChecker, authenticate, (req, res) => {
 app.post("/user/register", mongoChecker, unauthenticate, async (req, res) => {
     const user = new User({
         username: req.body.username,
-        password: req.body.password
+        password: req.body.password,
+        isAdmin: false,
     });
 
     try {
@@ -310,9 +311,9 @@ app.get('/api/movie/top/movies', mongoChecker, async (req, res) => {
 
     try {
         const movies = await Movie.topMovies();
-        res.send(movies);
+        res.send({ movie: movies });
     } catch (error) {
-        log(error);
+        res.status(500).send("Internal Server Error Has Occured");
     }
 })
 
@@ -370,6 +371,17 @@ app.get('/api/review/:id/comments', mongoChecker, async (req, res) => {
         res.status(500).send("Internal Server Error");
     }
 });
+
+// Admin APIs
+
+app.get("/api/admin/allusers", mongoChecker, async (req, res) => {
+    try {
+        const users = await User.findAll();
+        res.send(users);
+    } catch (error) {
+        log(error);
+    }
+})
 
 app.delete('/api/admin/user/:id', mongoChecker, authenticateAdmin, (req, res) => {
     const id = req.params.id;
