@@ -12,10 +12,10 @@ import { getTopMovies } from '../../actions/movies';
 
 class TopMovies extends React.Component {
   state = {
-    movies: []
+    movies: [],
   };
 
-  componentDidMount(){
+  componentWillMount(){
     getTopMovies(this)
   }
 

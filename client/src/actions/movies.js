@@ -35,7 +35,7 @@ export const getTopMovies = (movies) => {
 	})
 	.then(json => {
         console.log(json);
-		movies.setState({ movies: json });
+		movies.setState({ movies: json.movie });
         console.log(movies.state.movies)
 	})
 	.catch(error => {
