@@ -85,3 +85,4 @@ export const getSearchedMovies = searchInput => {
         console.log(error);
       });
 };
+
