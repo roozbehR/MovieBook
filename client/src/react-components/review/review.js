@@ -8,8 +8,7 @@ import {
 
 import "./style.css";
 
-import { getRandomComment } from "../../models/comment";
-import { postComment } from "../../actions/user"
+import { postComment } from "../../actions/comment"
 
 class Review extends React.Component {
   state = {
@@ -20,7 +19,8 @@ class Review extends React.Component {
       icon: null
     },
     commentText: null,
-    id: this.props.review._id
+    id: this.props.review._id,
+    comments: this.props.review.comments_data
   };
 
   componentDidMount() {
@@ -53,17 +53,7 @@ class Review extends React.Component {
   };
 
   postComment = () => {
-    // let comments = this.state.comments;
-    // let newComment = getRandomComment();
-
-    // // Add new comment
-    // newComment.text = this.state.commentText;
-    // comments.push(newComment);
-
-    // this.setState({
-    //   comments: comments,
-    // });
-
+    postComment(this, this.state.commentText);
     this.toggleAddComment();
   };
 
@@ -106,7 +96,7 @@ class Review extends React.Component {
           avatar={user.picture}
         >
           {this.state.showComments &&
-            this.props.review.comments_data.map((comment) => (
+            this.state.comments.map((comment) => (
               <Comment
                 author={
                   <a className="username" href={`profile/${comment.user.username}`}>
@@ -133,7 +123,7 @@ class Review extends React.Component {
                     <Button
                       className="btn-comment"
                       type="text"
-                      onClick={() => postComment(this)}
+                      onClick={() => this.postComment()}
                     >
                       <CheckCircleTwoTone twoToneColor="#52c41a" />
                       Post Comment

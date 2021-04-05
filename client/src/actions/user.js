@@ -86,29 +86,3 @@ export const getUser = (comp, username) => {
             console.log(error);
         });
 }
-
-export const postComment = (reviewComp) => {
-    
-    const request = new Request(`${API_HOST}/api/feed/review/${reviewComp.state.id}/comment`, {
-        method: "post",
-        body: JSON.stringify({
-            text: reviewComp.state.commentText
-        }),
-        headers: {
-            Accept: "application/json, text/plain, */*",
-            "Content-Type": "application/json",
-        },
-        credentials: 'include'
-    });
-
-    fetch(request)
-        .then(res => {
-            if (res.status === 200) {
-                return res.json();
-            }
-        })
-        .catch(error => {
-            console.log(error);
-        });
-
-}

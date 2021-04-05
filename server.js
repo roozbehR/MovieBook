@@ -133,7 +133,7 @@ app.post("/user/login", mongoChecker, unauthenticate, async (req, res) => {
 
     try {
         const user = await User.findByUsernamePassword(username, password);
-        const returnedUser = { id: user._id, username: user.username, fullName:  user.fullName, picture: user.picture };
+        const returnedUser = { id: user._id, username: user.username, fullName: user.fullName, picture: user.picture };
         req.session.user = returnedUser;
         res.send(returnedUser);
     } catch (error) {
@@ -163,7 +163,7 @@ app.post("/user/register", mongoChecker, unauthenticate, async (req, res) => {
         username: req.body.username,
         password: req.body.password,
         fullName: req.body.fullName,
-        picture: null,
+        picture: '/images/profile.png',
         biography: null,
         isAdmin: false,
         followingUser: [],
@@ -415,7 +415,8 @@ app.post('/api/movie/:id/review', mongoChecker, async (req, res) => {
         res.status(500).send("Internal Server Error");
     }
 });
-app.post('/api/feed/review/:id/comment', mongoChecker, async (req, res) => {
+
+app.post('/api/feed/review/:id/comment', mongoChecker, authenticate, async (req, res) => {
 
     const id = req.params.id;
     if (!ObjectID.isValid(id)) {
@@ -424,7 +425,7 @@ app.post('/api/feed/review/:id/comment', mongoChecker, async (req, res) => {
     }
 
     const comment = new Comment({
-        user_id: req.session.user_id,
+        user_id: req.session.user.id,
         text: req.body.text,
         date: new Date()
     })
@@ -438,9 +439,10 @@ app.post('/api/feed/review/:id/comment', mongoChecker, async (req, res) => {
         else {
             review.comments.push(newComment._id);
             const updatedReview = await review.save();
-            res.send({review: updatedReview, comment: newComment._id})
+            newComment.user = req.session.user
+            res.send({ review: updatedReview, comment: newComment })
         }
-    } catch(error) {
+    } catch (error) {
         console.log(error);
         res.status(500).send('Internal Server Error');
     }
