@@ -162,16 +162,12 @@ app.post("/user/register", mongoChecker, unauthenticate, async (req, res) => {
     const user = new User({
         username: req.body.username,
         password: req.body.password,
-<<<<<<< HEAD
         fullName: req.body.fullName,
         picture: '/images/profile.png',
         biography: null,
         isAdmin: false,
         followingUser: [],
         usersIfollow: []
-=======
-        isAdmin: false,
->>>>>>> main
     });
 
     try {

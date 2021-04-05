@@ -74,7 +74,7 @@ class ProfilePage extends React.Component {
                     <Col style={{ marginLeft: 30 }}>
                       <Row>
                         <Col>
-                          <h2 className="name">{this.state.viewingUser.username}</h2>
+                          <h2 className="name">{this.state.viewingUser.fullName}</h2>
                         </Col>
                         {this.state.viewingUser.username != this.props.user.username &&
                           <Col style={{ marginLeft: 30 }}>

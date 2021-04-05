@@ -90,13 +90,12 @@ export const getUser = (comp, username) => {
 }
 
 export const signup = (signupComp) => {
-    console.log("Here in user.js");
     const request = new Request(`${API_HOST}/user/register`, {
         method: "post",
         body: JSON.stringify({
             username: signupComp.state.signup.username === '' ? 'newuser' : signupComp.state.signup.username,
             password: signupComp.state.signup.password === '' ? 'correctPass' : signupComp.state.signup.password,
-            email: signupComp.state.signup.email === '' ? '309@mail.com' : signupComp.state.signup.email
+            fullName: signupComp.state.signup.fullName === '' ? 'Default Full Name' : signupComp.state.signup.fullName
         }),
         headers: {
             Accept: "application/json, text/plain, */*",
