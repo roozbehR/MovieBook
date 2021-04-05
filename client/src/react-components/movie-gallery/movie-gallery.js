@@ -39,21 +39,21 @@ export default function MovieGallery() {
                     <img
                         className="imageStyle"
                         src={movies.randomMovies[0].randomMovie.poster}
-                        alt="legoMovie"
+                        alt="No Image Availabl"
                     />
                   </div>
                   <div>
                     <img
                         className="imageStyle"
                         src={movies.randomMovies[1].randomMovie.poster}
-                        alt="legoMovie"
+                        alt="No Image Available"
                     />
                   </div>
                   <div>
                     <img
                         className="imageStyle"
                         src={movies.randomMovies[2].randomMovie.poster}
-                        alt="legoMovie"
+                        alt="No Image Available"
                     />
                   </div>
                 </div>
@@ -63,20 +63,20 @@ export default function MovieGallery() {
                     <img
                         className="imageStyle"
                         src={movies.randomMovies[3].randomMovie.poster}
-                        alt="legoMovie"
+                        alt="No Image Available"
                     />
                   </div>
                   <div>
                     <img
                         className="imageStyle"
                         src={movies.randomMovies[4].randomMovie.poster}
-                        alt="legoMovie"
+                        alt="No Image Available"
                     />
                   </div>
                   <img
                       className="imageStyle"
                       src={movies.randomMovies[5].randomMovie.poster}
-                      alt="legoMovie"
+                      alt="No Image Available"
                   />
                 </div>
               </div>
