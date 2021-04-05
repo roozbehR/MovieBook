@@ -16,9 +16,10 @@ class Review extends React.Component {
     commentButton: {
       enabled: null,
       text: null,
-      icon: null,
+      icon: null
     },
     commentText: null,
+    id: this.props.review._id
   };
 
   componentDidMount() {
@@ -75,7 +76,7 @@ class Review extends React.Component {
     const { Panel } = Collapse;
     const { TextArea } = Input;
     const { user, review, rating, movie } = this.props.review;
-    const addCommentsEnabled = this.props.addCommentEnabled && localStorage["user"] != null;
+    const addCommentsEnabled = this.props.addCommentEnabled;
 
     const movieTitle = (
       <div>
@@ -131,7 +132,7 @@ class Review extends React.Component {
                     <Button
                       className="btn-comment"
                       type="text"
-                      onClick={this.postComment}
+                      onClick={() => this.postComment(this)}
                     >
                       <CheckCircleTwoTone twoToneColor="#52c41a" />
                       Post Comment
