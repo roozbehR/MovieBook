@@ -9,6 +9,7 @@ import {
 import "./style.css";
 
 import { getRandomComment } from "../../models/comment";
+import { postComment } from "../../actions/user"
 
 class Review extends React.Component {
   state = {
@@ -132,7 +133,7 @@ class Review extends React.Component {
                     <Button
                       className="btn-comment"
                       type="text"
-                      onClick={() => this.postComment(this)}
+                      onClick={() => postComment(this)}
                     >
                       <CheckCircleTwoTone twoToneColor="#52c41a" />
                       Post Comment
