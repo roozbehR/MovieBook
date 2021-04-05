@@ -1,0 +1,21 @@
+.loading {
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+  padding: 30px 50px;
+  text-align: center;
+  border-radius: 4px;
+  color: white;
+  font-size: 30px;
+}
+
+.titleText {
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+  padding: 30px 50px;
+  text-align: center;
+  border-radius: 4px;
+  color: white;
+  font-size: 30px;
+}
