@@ -25,18 +25,20 @@ export default function SearchResult(){
       <BackgroundWrapper>
         <NavBar />
         <div className={styles.titleText}>Search Result</div>
-        {!movies && <div className={styles.loading}><Spin/></div>}
-        {movies &&
-        movies.slice(0, -1).map(movie => {
-          const passedProps  = {
-            sectionTitle: null,
-            imgURL: movie.poster,
-            movieTitle: movie.title,
-            screeningYear: movie.year,
-            plot: movie.plot
-          };
-          return <MovieOverview {...passedProps} />
-        })}
+        <div className={styles.resultContainer}>
+          {!movies && <div className={styles.loading}><Spin/></div>}
+          {movies &&
+          movies.slice(0, -1).map(movie => {
+            const passedProps  = {
+              sectionTitle: null,
+              imgURL: movie.poster,
+              movieTitle: movie.title,
+              screeningYear: movie.year,
+              plot: movie.plot
+            };
+            return <MovieOverview {...passedProps} />
+          })}
+        </div>
       </BackgroundWrapper>
   );
 }

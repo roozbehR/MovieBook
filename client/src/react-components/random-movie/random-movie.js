@@ -12,7 +12,6 @@ class RandomMovie extends React.Component {
 
   componentWillMount(){
     getRandomMovie(this)
-
   };
 
   render() {

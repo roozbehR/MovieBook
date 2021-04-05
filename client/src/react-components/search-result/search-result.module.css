@@ -19,3 +19,9 @@
   color: white;
   font-size: 30px;
 }
+
+.resultContainer {
+  margin-right: 120px;
+  margin-left: 120px;
+  padding-bottom: 120px;
+}
