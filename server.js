@@ -218,6 +218,7 @@ app.get('/api/user/:username?', mongoChecker, authenticate, async (req, res) => 
 
         if (user)
             res.send({
+                id: user._id,
                 username: user.username,
                 fullName: user.fullName,
                 biography: user.biography,
@@ -470,8 +471,13 @@ app.get('/api/review/:id/comments', mongoChecker, async (req, res) => {
 });
 
 // get all reviews by user
-app.get('/api/review/user', mongoChecker, authenticate, async (req, res) => {
-    const user_id = req.session.user.id;
+app.get('/api/profile/:id/reviews', mongoChecker, authenticate, async (req, res) => {
+    const user_id = req.params.id;
+
+    if (!ObjectID.isValid(user_id)) {
+        res.status(404).send("the requested user id is invalid");
+        return;
+    }
 
     try {
         const reviews = await Review.findAllByUserId(user_id, false);
@@ -483,8 +489,13 @@ app.get('/api/review/user', mongoChecker, authenticate, async (req, res) => {
 });
 
 // get all comments by user
-app.get('/api/comments/user', mongoChecker, authenticate, async (req, res) => {
-    const user_id = req.session.user.id;
+app.get('/api/profile/:id/comments', mongoChecker, authenticate, async (req, res) => {
+    const user_id = req.params.id;
+
+    if (!ObjectID.isValid(user_id)) {
+        res.status(404).send("the requested user id is invalid");
+        return;
+    }
 
     try {
         const reviews = await Review.findAllWithCommentsFromUserId(user_id);

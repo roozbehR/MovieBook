@@ -78,7 +78,6 @@ export const getUser = (comp, username) => {
             }
         })
         .then(json => {
-            console.log(json);
             if (json)
                 comp.setState({ viewingUser: json });
             else

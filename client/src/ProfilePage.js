@@ -17,7 +17,7 @@ import "./profile-style.css";
 import { getRandomUser } from "./models/user";
 import BackgroundWrapper from "./react-components//background-wrapper/background-wrapper";
 import { getUser } from './actions/user'
-import { followUser, getOwnReviews, getOwnComments } from "./actions/profile";
+import { followUser, getProfileReviews, getProfileComments } from "./actions/profile";
 import Review from './react-components/review/review'
 
 const { Content } = Layout;
@@ -46,9 +46,9 @@ class ProfilePage extends React.Component {
 
   tabChanged = (index) => {
     if (index == 2) {
-      getOwnReviews(this);
+      getProfileReviews(this, this.state.viewingUser.id);
     } else if (index == 3) {
-      getOwnComments(this);
+      getProfileComments(this, this.state.viewingUser.id);
     }
   }
 

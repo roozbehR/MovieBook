@@ -34,9 +34,9 @@ export const followUser = (comp, message, username) => {
         });
 }
 
-// Retrieves own reviews and adds to comp's reviews state
-export const getOwnReviews = (comp) => {
-    const request = new Request(`${API_HOST}/api/review/user`, {
+// Retrieves profile's reviews and adds to comp's reviews state
+export const getProfileReviews = (comp, user_id) => {
+    const request = new Request(`${API_HOST}/api/profile/${user_id}/reviews`, {
         method: "get",
         headers: {
             Accept: "application/json, text/plain, */*",
@@ -60,9 +60,9 @@ export const getOwnReviews = (comp) => {
         });
 }
 
-// Retrieves own comments within reviews and adds to comp's commentReviews state
-export const getOwnComments = (comp) => {
-    const request = new Request(`${API_HOST}/api/comments/user`, {
+// Retrieves profile's comments within reviews and adds to comp's commentReviews state
+export const getProfileComments = (comp, user_id) => {
+    const request = new Request(`${API_HOST}/api/profile/${user_id}/comments`, {
         method: "get",
         headers: {
             Accept: "application/json, text/plain, */*",
