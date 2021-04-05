@@ -164,7 +164,7 @@ app.post("/user/register", mongoChecker, unauthenticate, async (req, res) => {
         password: req.body.password,
         fullName: req.body.fullName,
         picture: '/images/profile.png',
-        biography: null,
+        biography: 'I love MovieBook!',
         isAdmin: false,
         followingUser: [],
         usersIfollow: []
