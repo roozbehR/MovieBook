@@ -33,3 +33,55 @@ export const followUser = (comp, message, username) => {
             console.log(error);
         });
 }
+
+// Retrieves own reviews and adds to comp's reviews state
+export const getOwnReviews = (comp) => {
+    const request = new Request(`${API_HOST}/api/review/user`, {
+        method: "get",
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json",
+        },
+        credentials: 'include'
+    });
+
+    fetch(request)
+        .then(res => {
+            if (res.status === 200) {
+                return res.json();
+            }
+        })
+        .then(json => {
+            comp.setState({ reviews: json });
+            console.log(comp.state)
+        })
+        .catch(error => {
+            console.log(error);
+        });
+}
+
+// Retrieves own comments within reviews and adds to comp's commentReviews state
+export const getOwnComments = (comp) => {
+    const request = new Request(`${API_HOST}/api/comments/user`, {
+        method: "get",
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json",
+        },
+        credentials: 'include'
+    });
+
+    fetch(request)
+        .then(res => {
+            if (res.status === 200) {
+                return res.json();
+            }
+        })
+        .then(json => {
+            comp.setState({ commentReviews: json });
+            console.log(comp.state.commentReviews)
+        })
+        .catch(error => {
+            console.log(error);
+        });
+}

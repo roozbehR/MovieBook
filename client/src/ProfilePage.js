@@ -17,15 +17,12 @@ import "./profile-style.css";
 import { getRandomUser } from "./models/user";
 import BackgroundWrapper from "./react-components//background-wrapper/background-wrapper";
 import { getUser } from './actions/user'
-import { followUser } from "./actions/profile";
+import { followUser, getOwnReviews, getOwnComments } from "./actions/profile";
+import Review from './react-components/review/review'
 
 const { Content } = Layout;
 const { TabPane } = Tabs;
 const { Meta } = Card;
-
-function callback(key) {
-  console.log(key);
-}
 
 class ProfilePage extends React.Component {
   state = {
@@ -34,7 +31,9 @@ class ProfilePage extends React.Component {
       username: null,
       isFollowing: false
     },
-    notFound: false
+    notFound: false,
+    reviews: [],
+    commentReviews: []
   };
 
   componentDidMount = () => {
@@ -44,6 +43,14 @@ class ProfilePage extends React.Component {
   clicked = (e) => {
     followUser(this, message, this.state.viewingUser.username);
   };
+
+  tabChanged = (index) => {
+    if (index == 2) {
+      getOwnReviews(this);
+    } else if (index == 3) {
+      getOwnComments(this);
+    }
+  }
 
   render() {
     return (
@@ -60,7 +67,7 @@ class ProfilePage extends React.Component {
                         <Avatar
                           size={256}
                           className="photo"
-                          src={this.state.user.picture}
+                          src={this.state.viewingUser.picture}
                         />
                       </span>
                     </Col>
@@ -96,11 +103,11 @@ class ProfilePage extends React.Component {
               <div className="section">
                 <Tabs
                   defaultActiveKey="1"
-                  onChange={callback}
                   size="large"
                   centered="true"
+                  onChange={this.tabChanged}
                 >
-                  {/* <TabPane tab="Favourite Movies" key="1">
+                  <TabPane tab="Favourite Movies" key="1">
                     <Row>
                       <Col span={3}>
                         <Card
@@ -154,26 +161,25 @@ class ProfilePage extends React.Component {
                         </Card>
                       </Col>
                     </Row>
-                  </TabPane> */}
-                  <TabPane tab="Reviews" key="2">
-                    <Comment
-                      avatar={
-                        <Avatar
-                          src={this.state.user.picture}
-                          alt={this.state.user.fullName}
-                        />
-                      }
-                      content={
-                        <p>
-                          Honestly think that Black Panther is one of the
-                          greatest superhero movies of our time. The casting is
-                          excellent and there is not a dull moment in the film.
-                        </p>
-                      }
-                    />
                   </TabPane>
-                  <TabPane tab="Recent Activity" key="3">
-                    <p className="name">No Activity</p>
+                  <TabPane tab="Reviews" key="2">
+                    {this.state.reviews.map(review =>
+                      <Review
+                        addCommentEnabled={false}
+                        review={review}
+                        showMovie="true"
+                      />
+                    )}
+                  </TabPane>
+                  <TabPane tab="Comments" key="3">
+                    {this.state.commentReviews.map(review =>
+                      <Review
+                        addCommentEnabled={false}
+                        showComments="true"
+                        review={review}
+                        showMovie="true"
+                      />
+                    )}
                   </TabPane>
                   <TabPane tab="Profile Info" key="4">
                     <Descriptions

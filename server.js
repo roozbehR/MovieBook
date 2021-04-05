@@ -426,6 +426,7 @@ app.post('/api/feed/review/:id/comment', mongoChecker, authenticate, async (req,
 
     const comment = new Comment({
         user_id: req.session.user.id,
+        review_id: id,
         text: req.body.text,
         date: new Date()
     })
@@ -468,11 +469,37 @@ app.get('/api/review/:id/comments', mongoChecker, async (req, res) => {
     }
 });
 
+// get all reviews by user
+app.get('/api/review/user', mongoChecker, authenticate, async (req, res) => {
+    const user_id = req.session.user.id;
+
+    try {
+        const reviews = await Review.findAllByUserId(user_id, false);
+        res.send(reviews);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// get all comments by user
+app.get('/api/comments/user', mongoChecker, authenticate, async (req, res) => {
+    const user_id = req.session.user.id;
+
+    try {
+        const reviews = await Review.findAllWithCommentsFromUserId(user_id);
+        res.send(reviews);
+    } catch (error) {
+        log(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 // get reviews based on following users
 app.get('/api/feed', mongoChecker, authenticate, async (req, res) => {
     try {
         const currentUser = await User.findOne({ _id: req.session.user.id });
-        const reviews = await Review.findAllByManyUserIds(currentUser.usersIfollow);
+        const reviews = await Review.findAllByManyUserIds(currentUser.usersIfollow.concat([req.session.user.id]));
         res.send(reviews);
     } catch (error) {
         log(error);
