@@ -133,7 +133,7 @@ app.post("/user/login", mongoChecker, unauthenticate, async (req, res) => {
 
     try {
         const user = await User.findByUsernamePassword(username, password);
-        const returnedUser = { id: user._id, username: user.username };
+        const returnedUser = { id: user._id, username: user.username, fullName:  user.fullName, picture: user.picture };
         req.session.user = returnedUser;
         res.send(returnedUser);
     } catch (error) {
@@ -162,11 +162,10 @@ app.post("/user/register", mongoChecker, unauthenticate, async (req, res) => {
     const user = new User({
         username: req.body.username,
         password: req.body.password,
-        fullName: null,
+        fullName: req.body.fullName,
         picture: null,
         biography: null,
         isAdmin: false,
-        likedMovies: [],
         followingUser: [],
         usersIfollow: []
     });
@@ -174,7 +173,7 @@ app.post("/user/register", mongoChecker, unauthenticate, async (req, res) => {
     try {
         const newUser = await User.createUser(user);
         if (newUser) {
-            const returnedUser = { id: newUser._id, username: newUser.username };
+            const returnedUser = { id: newUser._id, username: newUser.username, fullName: newUser.fullName, picture: newUser.picture };
             req.session.user = returnedUser;
             res.send(returnedUser);
         } else {
@@ -416,6 +415,36 @@ app.post('/api/movie/:id/review', mongoChecker, async (req, res) => {
         res.status(500).send("Internal Server Error");
     }
 });
+app.post('/api/feed/review/:id/comment', mongoChecker, async (req, res) => {
+
+    const id = req.params.id;
+    if (!ObjectID.isValid(id)) {
+        res.status(404).send();
+        return;
+    }
+
+    const comment = new Comment({
+        user_id: req.session.user_id,
+        text: req.body.text,
+        date: new Date()
+    })
+
+    try {
+        const review = await Review.findById(id);
+        const newComment = await comment.save();
+        if (!review) {
+            res.status(404).send('Resource not found')
+        }
+        else {
+            review.comments.push(newComment._id);
+            const updatedReview = await review.save();
+            res.send({review: updatedReview, comment: newComment._id})
+        }
+    } catch(error) {
+        console.log(error);
+        res.status(500).send('Internal Server Error');
+    }
+})
 
 // get comments based on review id
 app.get('/api/review/:id/comments', mongoChecker, async (req, res) => {
