@@ -145,7 +145,7 @@ class ProfilePage extends React.Component {
                   centered="true"
                   onChange={this.tabChanged}
                 >
-                  <TabPane tab="Favourite Movies" key="1">
+                  {/* <TabPane tab="Favourite Movies" key="1">
                     <Row>
                       {this.state.favouriteMovies.map(m =>
                         <Col span={4}>
@@ -166,7 +166,7 @@ class ProfilePage extends React.Component {
                         </Col>
                       )}
                     </Row>
-                  </TabPane>
+                  </TabPane> */}
                   <TabPane tab="Reviews" key="2">
                     {this.state.reviews.map(review =>
                       <Review
