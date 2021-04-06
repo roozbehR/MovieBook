@@ -15,7 +15,7 @@ class TopMovies extends React.Component {
     movies: [],
   };
 
-  componentWillMount(){
+  componentWillMount() {
     getTopMovies(this)
   }
 
@@ -38,25 +38,25 @@ class TopMovies extends React.Component {
     return (
       <Card title="Top Movies">
         <Slider {...settings}>
-            {this.state.movies.map((movie) => (
-              <div key={uid(movie)}>
-                <div className="slick-overlay">
-                  <div className="slick-overlay-content">
-                    <h5>{movie.title}</h5>
-                    <Rate
-                      disabled="true"
-                      value={movie.tomatoes.viewer.rating}
-                      allowHalf="true"
-                    />
-                    <Button href="movie" className="slick-button">
-                      View Movie
+          {this.state.movies.map((movie) => (
+            <div key={uid(movie)}>
+              <div className="slick-overlay">
+                <div className="slick-overlay-content">
+                  <h5>{movie.title}</h5>
+                  <Rate
+                    disabled="true"
+                    value={movie.tomatoes.viewer.rating}
+                    allowHalf="true"
+                  />
+                  <Button href={`/movie/${movie._id}`} className="slick-button">
+                    View Movie
                     </Button>
-                  </div>
                 </div>
-                <img className="slick-img" src={movie.poster} />
               </div>
-            ))}
-          </Slider>
+              <img className="slick-img" src={movie.poster ?? '/images/default_poster.jpg'} />
+            </div>
+          ))}
+        </Slider>
       </Card>
     );
   }

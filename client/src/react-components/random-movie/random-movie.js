@@ -10,7 +10,7 @@ class RandomMovie extends React.Component {
     randomMovie: "",
   };
 
-  componentWillMount(){
+  componentWillMount() {
     getRandomMovie(this)
   };
 
@@ -18,15 +18,16 @@ class RandomMovie extends React.Component {
     let passedProps = {
       sectionTitle: null,
       imgURL: this.state.randomMovie.poster,
+      movieId: this.state.randomMovie._id,
       movieTitle: this.state.randomMovie.title,
       screeningYear: this.state.randomMovie.year,
-      plot: this.state.randomMovie.plot
+      plot: this.state.randomMovie.plot,
     };
 
     return (
-        <div>
-          <MovieOverview {...passedProps} />
-        </div>
+      <div>
+        <MovieOverview {...passedProps} />
+      </div>
     );
   }
 }
