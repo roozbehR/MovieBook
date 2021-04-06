@@ -12,10 +12,7 @@ export const getRandomMovie = (rand) => {
       }
     })
     .then(json => {
-      console.log(json);
       rand.setState({ randomReviews: json.review, randomMovie: json.movie[0] });
-
-      //return json.movie[0];
     })
     .catch(error => {
       console.log(error);
