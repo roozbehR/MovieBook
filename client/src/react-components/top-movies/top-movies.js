@@ -53,7 +53,7 @@ class TopMovies extends React.Component {
                     </Button>
                 </div>
               </div>
-              <img className="slick-img" src={movie.poster} />
+              <img className="slick-img" src={movie.poster ?? '/images/default_poster.jpg'} />
             </div>
           ))}
         </Slider>
