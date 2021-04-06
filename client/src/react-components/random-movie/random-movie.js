@@ -1,29 +1,32 @@
 import React from "react";
-import { Row, Col, Card } from "antd";
-import { getRandomReview, getReview } from "../../models/review";
-import { getRandomMovie, getMovie } from "../../models/movie";
-import Movie from "./movie";
-import Review from "../review/review";
+import MovieOverview from '../movie-overview/movie-overview';
+
 import "./style.css";
+import { getRandomMovie } from '../../actions/movies';
 
 class RandomMovie extends React.Component {
   state = {
-    randomReviews: getRandomReview(),
-    randomMovie: getRandomMovie(),
+    randomReviews: "",
+    randomMovie: "",
   };
+
+  componentWillMount(){
+    getRandomMovie(this)
+  };
+
   render() {
+    let passedProps = {
+      sectionTitle: null,
+      imgURL: this.state.randomMovie.poster,
+      movieTitle: this.state.randomMovie.title,
+      screeningYear: this.state.randomMovie.year,
+      plot: this.state.randomMovie.plot
+    };
+
     return (
-      <Card title="Random Movie" className="random-movie-card">
-        <Movie
-          className="random-movie-movie"
-          movie={this.state.randomMovie}
-          description={this.sliceDescription}
-        />
-        <Review
-          className="random-movie-review"
-          review={this.state.randomReviews}
-        />
-      </Card>
+        <div>
+          <MovieOverview {...passedProps} />
+        </div>
     );
   }
 }

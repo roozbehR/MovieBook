@@ -1,3 +1,5 @@
+import { json } from "body-parser";
+
 const API_HOST = 'http://localhost:5000'
 
 // Check if user session exists
@@ -27,7 +29,7 @@ export const checkSession = (app) => {
         });
 };
 
-export const login = (loginComp, app) => {
+export const login = (loginComp) => {
     const request = new Request(`${API_HOST}/user/login`, {
         method: "post",
         body: JSON.stringify({
@@ -76,7 +78,6 @@ export const getUser = (comp, username) => {
             }
         })
         .then(json => {
-            console.log(json);
             if (json)
                 comp.setState({ viewingUser: json });
             else
@@ -86,3 +87,31 @@ export const getUser = (comp, username) => {
             console.log(error);
         });
 }
+
+export const signup = (signupComp) => {
+    const request = new Request(`${API_HOST}/user/register`, {
+        method: "post",
+        body: JSON.stringify({
+            username: signupComp.state.signup.username === '' ? 'newuser' : signupComp.state.signup.username,
+            password: signupComp.state.signup.password === '' ? 'correctPass' : signupComp.state.signup.password,
+            fullName: signupComp.state.signup.fullName === '' ? 'Default Full Name' : signupComp.state.signup.fullName
+        }),
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json",
+        },
+        credentials: 'include'
+    });
+    fetch(request)
+        .then(res => {
+            if (res.status === 200) {
+                return res.json();
+            }
+        })
+        .then(json => {
+            signupComp.handleLogin(json);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+};
