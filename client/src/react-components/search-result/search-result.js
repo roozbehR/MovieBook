@@ -34,7 +34,7 @@ export default function SearchResult(){
               imgURL: movie.poster,
               movieTitle: movie.title,
               screeningYear: movie.year,
-              plot: movie.plot
+              plot: movie.fullplot
             };
             return <MovieOverview {...passedProps} />
           })}
