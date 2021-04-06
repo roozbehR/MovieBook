@@ -133,7 +133,7 @@ app.post("/user/login", mongoChecker, unauthenticate, async (req, res) => {
 
     try {
         const user = await User.findByUsernamePassword(username, password);
-        const returnedUser = { id: user._id, username: user.username, fullName: user.fullName, picture: user.picture };
+        const returnedUser = { id: user._id, username: user.username, fullName: user.fullName, picture: user.picture, isAdmin: user.isAdmin };
         req.session.user = returnedUser;
         res.send(returnedUser);
     } catch (error) {
@@ -173,7 +173,7 @@ app.post("/user/register", mongoChecker, unauthenticate, async (req, res) => {
     try {
         const newUser = await User.createUser(user);
         if (newUser) {
-            const returnedUser = { id: newUser._id, username: newUser.username, fullName: newUser.fullName, picture: newUser.picture };
+            const returnedUser = { id: newUser._id, username: newUser.username, fullName: newUser.fullName, picture: newUser.picture, isAdmin: false };
             req.session.user = returnedUser;
             res.send(returnedUser);
         } else {
