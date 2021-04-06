@@ -17,6 +17,32 @@ const ReviewsSchema = new mongoose.Schema({
   date: Date
 });
 
+// Find review by its own id
+ReviewsSchema.statics.findOneById = async function (id, showUser, showMovie) {
+  const Review = this;
+  const review = await Review.findOne({ _id: id });
+
+  if (showUser) {
+    const user = await User.findOne({ _id: review.user_id });
+    review.user = {
+      username: user.username,
+      fullName: user.fullName,
+      picture: user.picture
+    };
+  }
+
+  if (showMovie) {
+    const movie = await Movie.findByMovieId(review.movie_id);
+    review.movie = {
+      id: movie.id,
+      poster: movie.poster,
+      title: movie.title
+    };
+  }
+
+  return review;
+}
+
 ReviewsSchema.statics.findOneByMovieId = async function (movieId) {
   const Review = this;
   return Review.findOne({ movie_id: movieId });
@@ -32,7 +58,11 @@ ReviewsSchema.statics.findOneReview = async function (movieId) {
   return Review.findOne({ movie_id: movieId });
 }
 
-ReviewsSchema.statics.findAllByManyUserIds = async function (userIds) {
+ReviewsSchema.statics.findAllByUserId = async function (userId, showComments) {
+  return this.findAllByManyUserIds([userId], showComments);
+}
+
+ReviewsSchema.statics.findAllByManyUserIds = async function (userIds, showComments = true) {
   const Review = this;
   const reviews = await Review.find({ user_id: { $in: userIds } });
 
@@ -51,15 +81,43 @@ ReviewsSchema.statics.findAllByManyUserIds = async function (userIds) {
       title: movie.title
     };
 
-    const comments = await Comment.findAllByIds(reviews[i].comments);
-    reviews[i].comments_data = comments.map(c => {
-      return {
-        user: c.user,
-        text: c.text,
-        date: c.date
-      }
-    });;
+    if (showComments) {
+      const comments = await Comment.findAllByIds(reviews[i].comments);
+      reviews[i].comments_data = comments.map(c => {
+        return {
+          user: c.user,
+          text: c.text,
+          date: c.date
+        }
+      });
+    }
   }
+  return reviews;
+}
+
+// finds all reviews that have a comment by user id and only displayed the comments from the user
+ReviewsSchema.statics.findAllWithCommentsFromUserId = async function (userId) {
+  const Review = this;
+  const comments = await Comment.findAllByUserId(userId, true)
+  const reviews = [];
+
+  for (let i = 0; i < comments.length; i++) {
+    const existingReview = reviews.filter(r => r._id.equals(comments[i].review_id));
+    if (existingReview.length > 0) {
+      existingReview[0].comments_data.push(comments[i]);
+    } else {
+      const review = await Review.findOneById(comments[i].review_id, true, true);
+      review.comments_data = [comments[i]];
+      reviews.push(review);
+    }
+  }
+  return reviews;
+}
+
+// finds all reviews with rating greater than or equal to RATING and user_id
+ReviewsSchema.statics.findAllWithGreaterRatingByUserId = async function (user_id, rating) {
+  const Review = this;
+  const reviews = await Review.find({ user_id: user_id, rating: { $gte: rating } });
   return reviews;
 }
 

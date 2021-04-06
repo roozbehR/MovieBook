@@ -32,7 +32,6 @@ class App extends React.Component {
             <Route exact path="/" render={() => <HomePage user={this.state.user} />}></Route>
             <Route exact path="/profile/:username?" render={(props) => <ProfilePage user={this.state.user} {...props} />}></Route>
             <Route path="/search/:input" render={() => <SearchResult user={this.state.user} />}></Route>
-            <Route exact path="/profile" render={() => <ProfilePage user={this.state.user} />}></Route>
             <Route
               exact
               path="/feed"

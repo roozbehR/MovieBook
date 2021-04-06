@@ -164,7 +164,7 @@ app.post("/user/register", mongoChecker, unauthenticate, async (req, res) => {
         password: req.body.password,
         fullName: req.body.fullName,
         picture: '/images/profile.png',
-        biography: null,
+        biography: 'I love MovieBook!',
         isAdmin: false,
         followingUser: [],
         usersIfollow: []
@@ -218,11 +218,13 @@ app.get('/api/user/:username?', mongoChecker, authenticate, async (req, res) => 
 
         if (user)
             res.send({
+                id: user._id,
                 username: user.username,
                 fullName: user.fullName,
                 biography: user.biography,
                 picture: user.picture,
-                isFollowing: user.followingUser.includes(currentUserId)
+                isFollowing: user.followingUser.includes(currentUserId),
+                numberOfFollowers: user.followingUser.length
             });
         else
             res.status(404).send("User not found");
@@ -426,6 +428,7 @@ app.post('/api/feed/review/:id/comment', mongoChecker, authenticate, async (req,
 
     const comment = new Comment({
         user_id: req.session.user.id,
+        review_id: id,
         text: req.body.text,
         date: new Date()
     })
@@ -468,11 +471,75 @@ app.get('/api/review/:id/comments', mongoChecker, async (req, res) => {
     }
 });
 
+// get all reviews by user
+app.get('/api/profile/:id/reviews', mongoChecker, authenticate, async (req, res) => {
+    let user_id = req.params.id;
+
+    if (!ObjectID.isValid(user_id)) {
+        user_id = req.session.user.id;
+    }
+
+    try {
+        const reviews = await Review.findAllByUserId(user_id, false);
+        res.send(reviews);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// get all comments by user
+app.get('/api/profile/:id/comments', mongoChecker, authenticate, async (req, res) => {
+    let user_id = req.params.id;
+
+    if (!ObjectID.isValid(user_id)) {
+        user_id = req.session.user.id;
+    }
+
+    try {
+        const reviews = await Review.findAllWithCommentsFromUserId(user_id);
+        res.send(reviews);
+    } catch (error) {
+        log(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// get all favourite movies by user
+app.get('/api/profile/:id/movies', mongoChecker, authenticate, async (req, res) => {
+    let user_id = req.params.id;
+
+    if (!ObjectID.isValid(user_id)) {
+        user_id = req.session.user.id;
+    }
+
+    try {
+        const reviews = await Review.findAllWithGreaterRatingByUserId(user_id, 5);
+        const movie_ids = reviews.map(r => r.movie_id);
+        const movies = await Movie.find({ _id: { $in: movie_ids } });
+        res.send(movies);
+    } catch (error) {
+        log(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// update current user's biography
+app.post('/api/profile/biography', mongoChecker, authenticate, async (req, res) => {
+    try {
+        await User.findOneAndUpdate({ _id: req.session.user.id }, { biography: req.body.bio });
+        res.send({ bio: req.body.bio });
+    } catch (error) {
+        log(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 // get reviews based on following users
 app.get('/api/feed', mongoChecker, authenticate, async (req, res) => {
     try {
         const currentUser = await User.findOne({ _id: req.session.user.id });
-        const reviews = await Review.findAllByManyUserIds(currentUser.usersIfollow);
+        const reviews = await Review.findAllByManyUserIds(currentUser.usersIfollow.concat([req.session.user.id]));
         res.send(reviews);
     } catch (error) {
         log(error);

@@ -45,7 +45,7 @@ MovieSchema.statics.topMovies = async function () {
 
 MovieSchema.statics.search = async function (movie_name) {
   const Movie = this;
-  return Movie.find({ title: { $regex: movie_name, $options: 'i' }});
+  return Movie.find({ title: { $regex: movie_name, $options: 'i' } });
 }
 
 const Movie = mongoose.model('movies', MovieSchema);

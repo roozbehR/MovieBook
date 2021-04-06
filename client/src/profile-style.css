@@ -4,7 +4,6 @@
 }
 
 .section{
-    text-align: center;
     color: white;
 }
 
@@ -56,4 +55,24 @@
 
 .ant-card-meta{
     color: white
+}
+
+.badge-followers {
+    margin-top: 7px !important;
+    margin-left: 15px !important;
+}
+
+.ant-badge-count {
+    background: #0043ff40 !important
+}
+
+.tooltip-edit-bio {
+    transform: scale(0.7);
+    margin-left: 5px;
+}
+
+.input-bio {
+    width: 700px !important;
+    background-color: #ffffff30 !important;
+    color: white !important;
 }

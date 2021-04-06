@@ -4,46 +4,69 @@ import {
   Layout,
   Divider,
   Tabs,
-  Descriptions,
+  Badge,
   Avatar,
   Card,
   Row,
   Col,
   Button,
-  Comment,
   message,
+  Tooltip,
+  Input
 } from "antd";
+import { EditOutlined, SaveOutlined, DeleteOutlined } from "@ant-design/icons";
 import "./profile-style.css";
-import { getRandomUser } from "./models/user";
 import BackgroundWrapper from "./react-components//background-wrapper/background-wrapper";
 import { getUser } from './actions/user'
-import { followUser } from "./actions/profile";
+import { followUser, getProfileReviews, getProfileComments, getProfileFavouriteMovies, updateProfileBiography } from "./actions/profile";
+import Review from './react-components/review/review'
 
 const { Content } = Layout;
 const { TabPane } = Tabs;
 const { Meta } = Card;
 
-function callback(key) {
-  console.log(key);
-}
-
 class ProfilePage extends React.Component {
   state = {
-    user: getRandomUser(),
     viewingUser: {
       username: null,
-      isFollowing: false
+      isFollowing: false,
+      numberOfFollowers: 0,
+      bigraphy: ''
     },
-    notFound: false
+    notFound: false,
+    favouriteMovies: [],
+    reviews: [],
+    commentReviews: [],
+    editBio: false,
+    editBioText: ''
   };
 
   componentDidMount = () => {
     getUser(this, this.props.match.params.username);
+    getProfileFavouriteMovies(this, this.props.match.params.username);
   }
 
   clicked = (e) => {
     followUser(this, message, this.state.viewingUser.username);
   };
+
+  tabChanged = (index) => {
+    if (index == 1) {
+      getProfileFavouriteMovies(this, this.state.viewingUser.id);
+    } else if (index == 2) {
+      getProfileReviews(this, this.state.viewingUser.id);
+    } else if (index == 3) {
+      getProfileComments(this, this.state.viewingUser.id);
+    }
+  }
+
+  toggleEditBio = () => {
+    this.setState({ editBio: !this.state.editBio, editBioText: this.state.viewingUser.biography });
+  }
+
+  handleBiographyInput = (e) => {
+    this.setState({ editBioText: e.target.value });
+  }
 
   render() {
     return (
@@ -60,15 +83,17 @@ class ProfilePage extends React.Component {
                         <Avatar
                           size={256}
                           className="photo"
-                          src={this.state.user.picture}
+                          src={this.state.viewingUser.picture}
                         />
                       </span>
                     </Col>
                     <Col style={{ marginLeft: 30 }}>
                       <Row>
                         <Col>
-                          <h2 className="name">{this.state.viewingUser.username}</h2>
+                          <h2 className="name">{this.state.viewingUser.fullName}
+                          </h2>
                         </Col>
+                        <Badge className='badge-followers' count={`${this.state.viewingUser.numberOfFollowers} Followers`} />
                         {this.state.viewingUser.username != this.props.user.username &&
                           <Col style={{ marginLeft: 30 }}>
                             <Button
@@ -84,9 +109,29 @@ class ProfilePage extends React.Component {
                             </Button>
                           </Col>
                         }
+                        {this.state.viewingUser.username == this.props.user.username && this.state.editBio &&
+                          <div>
+                            <Tooltip title="Cancel Editing Biography" className="tooltip-edit-bio" onClick={this.toggleEditBio} >
+                              <Button type="primary" shape="circle" icon={<DeleteOutlined />} />
+                            </Tooltip>
+                            <Tooltip title="Save Biography" className="tooltip-edit-bio" onClick={() => updateProfileBiography(this)} >
+                              <Button type="primary" shape="circle" icon={<SaveOutlined />} />
+                            </Tooltip>
+                          </div>
+
+                        }
+                        {this.state.viewingUser.username == this.props.user.username && !this.state.editBio &&
+                          <Tooltip title="Edit Biography" className="tooltip-edit-bio" onClick={this.toggleEditBio} >
+                            <Button type="primary" shape="circle" icon={<EditOutlined />} />
+                          </Tooltip>
+                        }
                       </Row>
                       <Row>
-                        <p>{this.state.viewingUser.biography}</p>
+                        {this.state.editBio ?
+                          <Input className="input-bio" value={this.state.editBioText} onChange={this.handleBiographyInput} maxLength={150} />
+                          :
+                          <p>{this.state.viewingUser.biography}</p>
+                        }
                       </Row>
                     </Col>
                   </Row>
@@ -96,123 +141,57 @@ class ProfilePage extends React.Component {
               <div className="section">
                 <Tabs
                   defaultActiveKey="1"
-                  onChange={callback}
                   size="large"
                   centered="true"
+                  onChange={this.tabChanged}
                 >
                   {/* <TabPane tab="Favourite Movies" key="1">
                     <Row>
-                      <Col span={3}>
-                        <Card
-                          style={{ marginLeft: "20px", maxWidth: 200 }}
-                          cover={
-                            <img
-                              alt="trailer"
-                              className="movieImage"
-                              src="https://images-na.ssl-images-amazon.com/images/M/MV5BMTg1MTY2MjYzNV5BMl5BanBnXkFtZTgwMTc4NTMwNDI@._V1_SY500_CR0,0,337,500_AL_.jpg"
+                      {this.state.favouriteMovies.map(m =>
+                        <Col span={4}>
+                          <Card
+                            style={{ marginLeft: "20px", maxWidth: 200 }}
+                            cover={
+                              <img
+                                alt="trailer"
+                                className="movieImage"
+                                src={m.poster ?? '/images/default_poster.jpg'}
+                              />
+                            }
+                          >
+                            <Meta
+                              title={<a href={`/ movie / ${m._id}`}>{m.title}</a>}
                             />
-                          }
-                        >
-                          <Meta
-                            style={{ backgroundColor: "white" }}
-                            title="Black Panther"
-                          />
-                        </Card>
-                      </Col>
-                      <Col span={3}>
-                        <Card
-                          style={{ marginLeft: "20px", maxWidth: 200 }}
-                          cover={
-                            <img
-                              alt="trailer"
-                              className="movieImage"
-                              src="https://images-na.ssl-images-amazon.com/images/M/MV5BMjI1NTk0NTc1OV5BMl5BanBnXkFtZTgwNTMwMTE4NDM@._V1_SY500_CR0,0,281,500_AL_.jpg"
-                            />
-                          }
-                        >
-                          <Meta
-                            style={{ backgroundColor: "white" }}
-                            title="Aiyaary"
-                          />
-                        </Card>
-                      </Col>
-                      <Col span={4}>
-                        <Card
-                          style={{ marginLeft: "20px", maxWidth: 200 }}
-                          cover={
-                            <img
-                              alt="trailer"
-                              className="movieImage"
-                              src="https://images-na.ssl-images-amazon.com/images/M/MV5BMjQyMjEwOTIwNV5BMl5BanBnXkFtZTgwOTkzNTMxNDM@._V1_SY500_CR0,0,337,500_AL_.jpg"
-                            />
-                          }
-                        >
-                          <Meta
-                            style={{ backgroundColor: "white" }}
-                            title="The Post"
-                          />
-                        </Card>
-                      </Col>
+                          </Card>
+                        </Col>
+                      )}
                     </Row>
                   </TabPane> */}
                   <TabPane tab="Reviews" key="2">
-                    <Comment
-                      avatar={
-                        <Avatar
-                          src={this.state.user.picture}
-                          alt={this.state.user.fullName}
-                        />
-                      }
-                      content={
-                        <p>
-                          Honestly think that Black Panther is one of the
-                          greatest superhero movies of our time. The casting is
-                          excellent and there is not a dull moment in the film.
-                        </p>
-                      }
-                    />
+                    {this.state.reviews.map(review =>
+                      <Review
+                        addCommentEnabled={false}
+                        review={review}
+                        showMovie="true"
+                      />
+                    )}
                   </TabPane>
-                  <TabPane tab="Recent Activity" key="3">
-                    <p className="name">No Activity</p>
-                  </TabPane>
-                  <TabPane tab="Profile Info" key="4">
-                    <Descriptions
-                      title="User Info"
-                      contentStyle={{ color: "white" }}
-                      labelStyle={{ color: "white" }}
-                    >
-                      <Descriptions.Item
-                        label="Username"
-                        labelStyle={{ color: "white" }}
-                      >
-                        {this.state.viewingUser.username}
-                      </Descriptions.Item>
-                      <Descriptions.Item
-                        label="Full Name"
-                        labelStyle={{ color: "white" }}
-                      >
-                        {this.state.viewingUser.fullName}
-                      </Descriptions.Item>
-                      {/* <Descriptions.Item
-                        label="Followers"
-                        labelStyle={{ color: "white" }}
-                      >
-                        {this.state.viewingUser.followingUsers.length}
-                      </Descriptions.Item>
-                      <Descriptions.Item
-                        label="Liked Movies"
-                        labelStyle={{ color: "white" }}
-                      >
-                        {this.state.viewingUser.likedMovies.length}
-                      </Descriptions.Item> */}
-                    </Descriptions>
+                  <TabPane tab="Comments" key="3">
+                    {this.state.commentReviews.map(review =>
+                      <Review
+                        addCommentEnabled={false}
+                        showComments="true"
+                        review={review}
+                        showMovie="true"
+                      />
+                    )}
                   </TabPane>
                 </Tabs>
               </div>
             </Card>
           </Content>
         </div>
-      </BackgroundWrapper>
+      </BackgroundWrapper >
     );
   }
 }
