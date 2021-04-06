@@ -8,23 +8,23 @@ import {
 
 import "./style.css";
 
-import { getRandomComment } from "../../models/comment";
+import { postComment } from "../../actions/comment"
 
 class Review extends React.Component {
   state = {
     showComments: this.props.showComments ?? false,
-    comments: [getRandomComment(), getRandomComment(), getRandomComment()],
     commentButton: {
       enabled: null,
       text: null,
-      icon: null,
+      icon: null
     },
     commentText: null,
+    id: this.props.review._id,
+    comments: this.props.review.comments_data
   };
 
   componentDidMount() {
     this.setAddComment(true);
-
   }
 
   setAddComment = (value) => {
@@ -53,17 +53,7 @@ class Review extends React.Component {
   };
 
   postComment = () => {
-    let comments = this.state.comments;
-    let newComment = getRandomComment();
-
-    // Add new comment
-    newComment.text = this.state.commentText;
-    comments.push(newComment);
-
-    this.setState({
-      comments: comments,
-    });
-
+    postComment(this, this.state.commentText);
     this.toggleAddComment();
   };
 
@@ -76,12 +66,12 @@ class Review extends React.Component {
   render() {
     const { Panel } = Collapse;
     const { TextArea } = Input;
-    const { user, text, rating, movie } = this.props.review;
-    const addCommentsEnabled = this.props.addCommentEnabled && localStorage["user"] != null;
+    const { user, review, rating, movie } = this.props.review;
+    const addCommentsEnabled = this.props.addCommentEnabled;
 
     const movieTitle = (
       <div>
-        <a href="profile" className="username">
+        <a href={`profile/${user.username}`} className="username">
           {user.fullName}
         </a>
         {this.props.showMovie &&
@@ -102,15 +92,15 @@ class Review extends React.Component {
         <Comment
           className="parent-comment"
           author={movieTitle}
-          content={text}
+          content={review}
           avatar={user.picture}
         >
           {this.state.showComments &&
             this.state.comments.map((comment) => (
               <Comment
                 author={
-                  <a className="username" href="profile">
-                    {comment.user.username}
+                  <a className="username" href={`profile/${comment.user.username}`}>
+                    {comment.user.fullName}
                   </a>
                 }
                 content={comment.text}
@@ -133,7 +123,7 @@ class Review extends React.Component {
                     <Button
                       className="btn-comment"
                       type="text"
-                      onClick={this.postComment}
+                      onClick={() => this.postComment()}
                     >
                       <CheckCircleTwoTone twoToneColor="#52c41a" />
                       Post Comment

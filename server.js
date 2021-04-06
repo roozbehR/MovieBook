@@ -76,7 +76,7 @@ const authenticateAdmin = async (req, res, next) => {
 const authenticate = async (req, res, next) => {
     if (req.session.user) {
         try {
-            const user = await User.findById(req.session.user);
+            const user = await User.findById(req.session.user.id);
             if (!user) {
                 res.status(401).send("Unauthorized")
             } else {
@@ -95,7 +95,7 @@ const authenticate = async (req, res, next) => {
 const unauthenticate = async (req, res, next) => {
     if (req.session.user) {
         try {
-            const user = await User.findById(req.session.user);
+            const user = await User.findById(req.session.user.id);
             if (user)
                 res.status(401).send("Unauthorized")
             else
@@ -133,7 +133,7 @@ app.post("/user/login", mongoChecker, unauthenticate, async (req, res) => {
 
     try {
         const user = await User.findByUsernamePassword(username, password);
-        const returnedUser = { id: user._id, username: user.username };
+        const returnedUser = { id: user._id, username: user.username, fullName: user.fullName, picture: user.picture };
         req.session.user = returnedUser;
         res.send(returnedUser);
     } catch (error) {
@@ -152,7 +152,7 @@ app.get("/user/logout", mongoChecker, authenticate, (req, res) => {
         if (error) {
             res.status(500).send(error);
         } else {
-            res.send()
+            res.send(true)
         }
     });
 });
@@ -162,13 +162,18 @@ app.post("/user/register", mongoChecker, unauthenticate, async (req, res) => {
     const user = new User({
         username: req.body.username,
         password: req.body.password,
+        fullName: req.body.fullName,
+        picture: '/images/profile.png',
+        biography: null,
         isAdmin: false,
+        followingUser: [],
+        usersIfollow: []
     });
 
     try {
         const newUser = await User.createUser(user);
         if (newUser) {
-            const returnedUser = { id: newUser._id, username: newUser.username };
+            const returnedUser = { id: newUser._id, username: newUser.username, fullName: newUser.fullName, picture: newUser.picture };
             req.session.user = returnedUser;
             res.send(returnedUser);
         } else {
@@ -198,6 +203,65 @@ app.get("/user/check-session", (req, res) => {
 /*** API Routes below ************************************/
 
 // use mongoChecker everywhere that you have/require a database connection and use authenticate everywhere you need to authenticate a user
+
+// Get user by username
+app.get('/api/user/:username?', mongoChecker, authenticate, async (req, res) => {
+    const username = req.params.username;
+    try {
+        const currentUserId = req.session.user.id;
+        let user = null;
+        if (username != "undefined") {
+            user = await User.findByUsername(username);
+        } else {
+            user = await User.findOne({ _id: currentUserId });
+        }
+
+        if (user)
+            res.send({
+                username: user.username,
+                fullName: user.fullName,
+                biography: user.biography,
+                picture: user.picture,
+                isFollowing: user.followingUser.includes(currentUserId)
+            });
+        else
+            res.status(404).send("User not found");
+    } catch (error) {
+        log(error)
+        res.status(500).send("Internal Server Error");
+    }
+})
+
+// Follow/Unfollow user by their id
+app.put('/api/user/follow/:username', mongoChecker, authenticate, async (req, res) => {
+    const username = req.params.username;
+
+    try {
+        const currentUserId = req.session.user.id;
+
+        if (req.session.user.username == username) {
+            res.status(406).send("Users cannot follow themselves");
+            return;
+        }
+
+        const userToFollow = await User.findOne({ username: username });
+        if (userToFollow.followingUser.includes(currentUserId)) {
+            await User.findOneAndUpdate({ username: username }, { $pull: { followingUser: currentUserId } }, { new: true, useFindAndModify: false });
+            await User.findOneAndUpdate({ _id: currentUserId }, { $pull: { usersIfollow: userToFollow._id } }, { new: true, useFindAndModify: false });
+            res.send(false);
+        } else {
+            await User.findOneAndUpdate({ username: username }, { $push: { followingUser: currentUserId } }, { new: true, useFindAndModify: false });
+            await User.findOneAndUpdate({ _id: currentUserId }, { $push: { usersIfollow: userToFollow._id } }, { new: true, useFindAndModify: false });
+            res.send(true);
+        }
+    } catch (error) {
+        if (isMongoError(error)) {
+            res.status(500).send('Internal server error');
+        } else {
+            res.status(400).send('Bad Request');
+        }
+    }
+});
 
 app.patch('/api/admin/user/:id', mongoChecker, authenticateAdmin, async (req, res) => {
     const id = req.params.id;
@@ -352,6 +416,38 @@ app.post('/api/movie/:id/review', mongoChecker, async (req, res) => {
     }
 });
 
+app.post('/api/feed/review/:id/comment', mongoChecker, authenticate, async (req, res) => {
+
+    const id = req.params.id;
+    if (!ObjectID.isValid(id)) {
+        res.status(404).send();
+        return;
+    }
+
+    const comment = new Comment({
+        user_id: req.session.user.id,
+        text: req.body.text,
+        date: new Date()
+    })
+
+    try {
+        const review = await Review.findById(id);
+        const newComment = await comment.save();
+        if (!review) {
+            res.status(404).send('Resource not found')
+        }
+        else {
+            review.comments.push(newComment._id);
+            const updatedReview = await review.save();
+            newComment.user = req.session.user
+            res.send({ review: updatedReview, comment: newComment })
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Internal Server Error');
+    }
+})
+
 // get comments based on review id
 app.get('/api/review/:id/comments', mongoChecker, async (req, res) => {
     const review_id = req.params.id;
@@ -372,8 +468,19 @@ app.get('/api/review/:id/comments', mongoChecker, async (req, res) => {
     }
 });
 
-// Admin APIs
+// get reviews based on following users
+app.get('/api/feed', mongoChecker, authenticate, async (req, res) => {
+    try {
+        const currentUser = await User.findOne({ _id: req.session.user.id });
+        const reviews = await Review.findAllByManyUserIds(currentUser.usersIfollow);
+        res.send(reviews);
+    } catch (error) {
+        log(error);
+        res.status(500).send("Internal Server Error");
+    }
+});
 
+// Admin APIs
 app.get("/api/admin/allusers", mongoChecker, async (req, res) => {
     try {
         const users = await User.findAll();

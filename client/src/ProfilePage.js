@@ -16,6 +16,8 @@ import {
 import "./profile-style.css";
 import { getRandomUser } from "./models/user";
 import BackgroundWrapper from "./react-components//background-wrapper/background-wrapper";
+import { getUser } from './actions/user'
+import { followUser } from "./actions/profile";
 
 const { Content } = Layout;
 const { TabPane } = Tabs;
@@ -28,24 +30,25 @@ function callback(key) {
 class ProfilePage extends React.Component {
   state = {
     user: getRandomUser(),
-    isFollowing: false,
+    viewingUser: {
+      username: null,
+      isFollowing: false
+    },
+    notFound: false
   };
 
+  componentDidMount = () => {
+    getUser(this, this.props.match.params.username);
+  }
+
   clicked = (e) => {
-    let isFollowing = this.state.isFollowing;
-    isFollowing = !isFollowing;
-    this.setState({ isFollowing });
-    {
-      this.state.isFollowing
-        ? message.success("Unfollowed")
-        : message.success("Following");
-    }
+    followUser(this, message, this.state.viewingUser.username);
   };
 
   render() {
     return (
       <BackgroundWrapper>
-        <NavBar user={this.state.user} />
+        <NavBar user={this.props.user} />
         <div classname="body">
           <Content>
             <Card style={{ marginLeft: 30, marginRight: 30, marginTop: 30 }}>
@@ -64,24 +67,26 @@ class ProfilePage extends React.Component {
                     <Col style={{ marginLeft: 30 }}>
                       <Row>
                         <Col>
-                          <h2 className="name">{this.state.user.fullName}</h2>
+                          <h2 className="name">{this.state.viewingUser.username}</h2>
                         </Col>
-                        <Col style={{ marginLeft: 30 }}>
-                          <Button
-                            type="primary"
-                            shape="round"
-                            onClick={this.clicked}
-                          >
-                            {this.state.isFollowing ? (
-                              <p>Unfollow</p>
-                            ) : (
-                              <p>+ Follow</p>
-                            )}
-                          </Button>
-                        </Col>
+                        {this.state.viewingUser.username != this.props.user.username &&
+                          <Col style={{ marginLeft: 30 }}>
+                            <Button
+                              type="primary"
+                              shape="round"
+                              onClick={this.clicked}
+                            >
+                              {this.state.viewingUser.isFollowing ? (
+                                <p>Unfollow</p>
+                              ) : (
+                                <p>+ Follow</p>
+                              )}
+                            </Button>
+                          </Col>
+                        }
                       </Row>
                       <Row>
-                        <p>{this.state.user.biography}</p>
+                        <p>{this.state.viewingUser.biography}</p>
                       </Row>
                     </Col>
                   </Row>
@@ -95,7 +100,7 @@ class ProfilePage extends React.Component {
                   size="large"
                   centered="true"
                 >
-                  <TabPane tab="Favourite Movies" key="1">
+                  {/* <TabPane tab="Favourite Movies" key="1">
                     <Row>
                       <Col span={3}>
                         <Card
@@ -149,7 +154,7 @@ class ProfilePage extends React.Component {
                         </Card>
                       </Col>
                     </Row>
-                  </TabPane>
+                  </TabPane> */}
                   <TabPane tab="Reviews" key="2">
                     <Comment
                       avatar={
@@ -180,26 +185,26 @@ class ProfilePage extends React.Component {
                         label="Username"
                         labelStyle={{ color: "white" }}
                       >
-                        {this.state.user.username}
+                        {this.state.viewingUser.username}
                       </Descriptions.Item>
                       <Descriptions.Item
                         label="Full Name"
                         labelStyle={{ color: "white" }}
                       >
-                        {this.state.user.fullName}
+                        {this.state.viewingUser.fullName}
                       </Descriptions.Item>
-                      <Descriptions.Item
+                      {/* <Descriptions.Item
                         label="Followers"
                         labelStyle={{ color: "white" }}
                       >
-                        {this.state.user.followingUsers.length}
+                        {this.state.viewingUser.followingUsers.length}
                       </Descriptions.Item>
                       <Descriptions.Item
                         label="Liked Movies"
                         labelStyle={{ color: "white" }}
                       >
-                        {this.state.user.likedMovies.length}
-                      </Descriptions.Item>
+                        {this.state.viewingUser.likedMovies.length}
+                      </Descriptions.Item> */}
                     </Descriptions>
                   </TabPane>
                 </Tabs>

@@ -19,8 +19,10 @@ export const checkSession = (app) => {
             }
         })
         .then(json => {
-            console.log(json)
-            app.setState({ user: json });
+            if (json || window.location.pathname == "/" || window.location.pathname == "/movies" || window.location.pathname == "/movie")
+                app.setState({ user: json });
+            else
+                window.location.href = "/";
         })
         .catch(error => {
             console.log(error);
@@ -31,7 +33,7 @@ export const login = (loginComp) => {
     const request = new Request(`${API_HOST}/user/login`, {
         method: "post",
         body: JSON.stringify({
-            username: loginComp.state.login.username == '' ? 'newuser' : loginComp.state.login.username,
+            username: loginComp.state.login.username == '' ? 'bassel65' : loginComp.state.login.username,
             password: loginComp.state.login.password == '' ? 'hellothere' : loginComp.state.login.password
         }),
         headers: {
@@ -59,14 +61,40 @@ export const login = (loginComp) => {
         });
 };
 
+// Retrieves user by username and adds to comp's viewingUser state
+export const getUser = (comp, username) => {
+    const request = new Request(`${API_HOST}/api/user/${username}`, {
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json",
+        },
+        credentials: 'include'
+    });
+
+    fetch(request)
+        .then(res => {
+            if (res.status === 200) {
+                return res.json();
+            }
+        })
+        .then(json => {
+            if (json)
+                comp.setState({ viewingUser: json });
+            else
+                window.location.href = "/";
+        })
+        .catch(error => {
+            console.log(error);
+        });
+}
+
 export const signup = (signupComp) => {
-    console.log("Here in user.js");
     const request = new Request(`${API_HOST}/user/register`, {
         method: "post",
         body: JSON.stringify({
             username: signupComp.state.signup.username === '' ? 'newuser' : signupComp.state.signup.username,
             password: signupComp.state.signup.password === '' ? 'correctPass' : signupComp.state.signup.password,
-            email: signupComp.state.signup.email === '' ? '309@mail.com' : signupComp.state.signup.email
+            fullName: signupComp.state.signup.fullName === '' ? 'Default Full Name' : signupComp.state.signup.fullName
         }),
         headers: {
             Accept: "application/json, text/plain, */*",
@@ -75,15 +103,15 @@ export const signup = (signupComp) => {
         credentials: 'include'
     });
     fetch(request)
-    .then(res => {
-        if (res.status === 200) {
-            return res.json();
-        }
-    })
-    .then(json => {
-        signupComp.handleLogin(json);
-    })
-    .catch(error => {
-        console.log(error);
-    });
+        .then(res => {
+            if (res.status === 200) {
+                return res.json();
+            }
+        })
+        .then(json => {
+            signupComp.handleLogin(json);
+        })
+        .catch(error => {
+            console.log(error);
+        });
 };

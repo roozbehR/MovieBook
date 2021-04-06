@@ -6,21 +6,17 @@ import {
   CheckCircleTwoTone,
 } from "@ant-design/icons";
 import "./style.css";
-
-import { getRandomMovie } from "../../models/movie";
-import { getRandomReview } from "../../models/review";
-
+import { getFeed } from '../../actions/feed'
 import Review from "../review/review";
 
 class Feed extends React.Component {
   state = {
-    reviews: [
-      getRandomReview(),
-      getRandomReview(),
-      getRandomReview(),
-      getRandomReview(),
-    ],
+    reviews: [],
   };
+
+  componentDidMount() {
+    getFeed(this);
+  }
 
   render() {
     return (

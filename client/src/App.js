@@ -14,7 +14,10 @@ import { checkSession } from './actions/user'
 
 class App extends React.Component {
   state = {
-    user: null
+    user: {
+      username: null,
+      biography: null
+    },
   }
 
   componentDidMount() {
@@ -27,6 +30,7 @@ class App extends React.Component {
         <BrowserRouter>
           <Switch>
             <Route exact path="/" render={() => <HomePage user={this.state.user} />}></Route>
+            <Route exact path="/profile/:username?" render={(props) => <ProfilePage user={this.state.user} {...props} />}></Route>
             <Route path="/search/:input" render={() => <SearchResult user={this.state.user} />}></Route>
             <Route exact path="/profile" render={() => <ProfilePage user={this.state.user} />}></Route>
             <Route
