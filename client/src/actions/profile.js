@@ -20,6 +20,7 @@ export const followUser = (comp, message, username) => {
         .then(json => {
             let updatedViewingUser = { ...comp.state.viewingUser };
             updatedViewingUser.isFollowing = !updatedViewingUser.isFollowing;
+            updatedViewingUser.numberOfFollowers += (updatedViewingUser.isFollowing ? 1 : -1);
 
             comp.setState({ viewingUser: updatedViewingUser });
             {
@@ -80,6 +81,62 @@ export const getProfileComments = (comp, user_id) => {
         .then(json => {
             comp.setState({ commentReviews: json });
             console.log(comp.state.commentReviews)
+        })
+        .catch(error => {
+            console.log(error);
+        });
+}
+
+// Retrieves profile's favourite movies and adds to comp's state
+export const getProfileFavouriteMovies = (comp, user_id) => {
+    const request = new Request(`${API_HOST}/api/profile/${user_id}/movies`, {
+        method: "get",
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json",
+        },
+        credentials: 'include'
+    });
+
+    fetch(request)
+        .then(res => {
+            if (res.status === 200) {
+                return res.json();
+            }
+        })
+        .then(json => {
+            console.log(json);
+            comp.setState({ favouriteMovies: json });
+        })
+        .catch(error => {
+            console.log(error);
+        });
+}
+
+// Retrieves profile's favourite movies and adds to comp's state
+export const updateProfileBiography = (comp) => {
+    const request = new Request(`${API_HOST}/api/profile/biography`, {
+        method: "post",
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json",
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+            bio: comp.state.editBioText
+        })
+    });
+
+    fetch(request)
+        .then(res => {
+            if (res.status === 200) {
+                return res.json();
+            }
+        })
+        .then(json => {
+            const viewingUser = { ...comp.state.viewingUser };
+            viewingUser.biography = json.bio;
+            comp.setState({ viewingUser: viewingUser, editBio: false });
         })
         .catch(error => {
             console.log(error);

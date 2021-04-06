@@ -114,6 +114,13 @@ ReviewsSchema.statics.findAllWithCommentsFromUserId = async function (userId) {
   return reviews;
 }
 
+// finds all reviews with rating greater than or equal to RATING and user_id
+ReviewsSchema.statics.findAllWithGreaterRatingByUserId = async function (user_id, rating) {
+  const Review = this;
+  const reviews = await Review.find({ user_id: user_id, rating: { $gte: rating } });
+  return reviews;
+}
+
 const Review = mongoose.model('Review', ReviewsSchema);
 
 module.exports = { Review };
