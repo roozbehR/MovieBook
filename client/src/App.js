@@ -9,6 +9,7 @@ import MovieGallery from "./MovieGallery";
 import Admin from "./AdminPanel";
 import UserFeed from "./UserFeed";
 import Movie from './Movie'
+import SearchResult from './react-components/search-result/search-result';
 import { checkSession } from './actions/user'
 
 class App extends React.Component {
@@ -26,6 +27,7 @@ class App extends React.Component {
         <BrowserRouter>
           <Switch>
             <Route exact path="/" render={() => <HomePage user={this.state.user} />}></Route>
+            <Route path="/search/:input" render={() => <SearchResult user={this.state.user} />}></Route>
             <Route exact path="/profile" render={() => <ProfilePage user={this.state.user} />}></Route>
             <Route
               exact

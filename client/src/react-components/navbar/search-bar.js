@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {useHistory} from "react-router-dom";
 import "./styles.css";
 
 export default function SearchBar() {
@@ -6,6 +7,12 @@ export default function SearchBar() {
   const updateInput = async (input) => {
     setInput(input);
   };
+
+  const history = useHistory();
+  const onClickSearchButton = input => {
+    history.push(`search/${input}`);
+  };
+
   return (
     <div className="search-bar-box">
       <input
@@ -16,7 +23,7 @@ export default function SearchBar() {
         onChange={(e) => updateInput(e.target.value)}
       />
       <div className="search-button-box">
-        <button className="button">SEARCH</button>
+        <button className="button" onClick={() => onClickSearchButton(input)}>SEARCH</button>
       </div>
     </div>
   );
