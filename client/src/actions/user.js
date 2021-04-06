@@ -19,7 +19,7 @@ export const checkSession = (app) => {
             }
         })
         .then(json => {
-            if (json || window.location.pathname == "/" || window.location.pathname == "/movies" || window.location.pathname == "/movie")
+            if (json || window.location.pathname == "/" || window.location.pathname == "/movies" || window.location.pathname.startsWith("/movie") || window.location.pathname.startsWith("/search"))
                 app.setState({ user: json });
             else
                 window.location.href = "/";

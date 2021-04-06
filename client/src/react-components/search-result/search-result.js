@@ -1,14 +1,14 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom'
-import {getSearchedMovies} from '../../actions/movies';
+import { getSearchedMovies } from '../../actions/movies';
 import MovieOverview from '../movie-overview/movie-overview';
 import BackgroundWrapper from '../background-wrapper/background-wrapper';
 import NavBar from '../navbar/navbar';
-import {Spin} from 'antd';
+import { Spin } from 'antd';
 import styles from "./search-result.module.css";
 
-export default function SearchResult(){
-  const {input} = useParams();
+export default function SearchResult() {
+  const { input } = useParams();
   const [movies, setMovies] = useState();
 
   const fetchSearchedMovies = async () => {
@@ -22,23 +22,24 @@ export default function SearchResult(){
   }, []);
 
   return (
-      <BackgroundWrapper>
-        <NavBar />
-        <div className={styles.titleText}>Search Result</div>
-        <div className={styles.resultContainer}>
-          {!movies && <div className={styles.loading}><Spin/></div>}
-          {movies &&
+    <BackgroundWrapper>
+      <NavBar />
+      <div className={styles.titleText}>Search Result</div>
+      <div className={styles.resultContainer}>
+        {!movies && <div className={styles.loading}><Spin /></div>}
+        {movies &&
           movies.slice(0, -1).map(movie => {
-            const passedProps  = {
+            const passedProps = {
               sectionTitle: null,
               imgURL: movie.poster,
+              movieId: movie._id,
               movieTitle: movie.title,
               screeningYear: movie.year,
               plot: movie.fullplot
             };
             return <MovieOverview {...passedProps} />
           })}
-        </div>
-      </BackgroundWrapper>
+      </div>
+    </BackgroundWrapper>
   );
 }

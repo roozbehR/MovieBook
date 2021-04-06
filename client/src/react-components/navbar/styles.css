@@ -28,6 +28,7 @@
   padding-left: 15px;
   border-radius: 30px;
   position: relative;
+  outline: none;
 }
 
 .not-authed-search-box{
@@ -61,6 +62,7 @@
   padding: 0 16px;
   color: #fff;
   background: #0A2544;
+  outline: none;
 }
 
 .header-menu{
