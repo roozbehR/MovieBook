@@ -1,3 +1,5 @@
+import { json } from "body-parser";
+
 const API_HOST = 'http://localhost:5000'
 
 export const getRandomMovie = (rand) => {
@@ -81,3 +83,23 @@ export const getSearchedMovies = searchInput => {
     });
 };
 
+
+export const getReviewsForMovie = (movieComp, id) => {
+  const url = `${API_HOST}/api/movies/${id}/reviews`
+  
+  return fetch(url)
+  .then(res => {
+    if (res.status === 200) {
+      return res.json();
+    } else {
+      alert("error: cannot get reviews for the movie")
+    }
+  })
+  .then(json => {
+    movieComp.setState({ reviews: json.reviews});
+
+  })
+  .catch(error => {
+    console.log(error);
+  });
+};
