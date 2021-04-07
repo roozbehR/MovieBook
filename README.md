@@ -175,6 +175,15 @@ users can also add comments to others' reviews.
 
 ![User Feed](documentationImages/user-feed/feed.png)
 
+### Searching for Movies
+To search for a movie, simply enter in a word or phrase of the movie title into the search bar (in the navigation bar) and click search.
+
+The search bar looks like:  
+![search bar](documentationImages/search.PNG)
+
+When you click on search you are directed to a new page that will show the movie results.
+![search results](documentationImages/search_results.png)
+
 ### Logging Out
 
 To log out, simply click on your name in the Navigation bar and you will be redirected to the log in page.
@@ -192,14 +201,16 @@ An example of the Admin Tab in the navigation bar is below:
 
 The Admin panel has two tabs:
 - Users
-- Movies
+- Add Movies
 
 The users table can be used to promote users to admins or remote admin to regular users.
-The admin just needs to click on the button.
+The admin just needs to click on the button. Other feature is that Admins can delete users, to do this they just need to click on the delete button.
+![DElete](documentationImages/delete.PNG)
 
-For movies, admins are able to update the description of the movies.
-When an Admin clicks on edit (to edit the movie description), a popup appears with the current description of the movie and a textbox to edit the description.  
-![Edit](documentationImages/admin/edit-description.png)
+
+For movies, admins are able to add movies.
+The admin can fill in the form and then they are able to submit it and the movie is stored in the data base
+![add movie](documentationImages/addmovie.PNG)
 
 The description will only be updated if the user clicks on *OK*.
 
