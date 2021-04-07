@@ -56,7 +56,7 @@ const mongoChecker = (req, res, next) => {
 const authenticateAdmin = async (req, res, next) => {
     if (req.session.user) {
         try {
-            const user = await User.findById(req.session.user);
+            const user = await User.findById(req.session.user.id);
             if (user && user.isAdmin) {
                 req.user = user;
                 next();
@@ -265,34 +265,7 @@ app.put('/api/user/follow/:username', mongoChecker, authenticate, async (req, re
     }
 });
 
-app.put('/api/admin/user/:id', mongoChecker, async (req,res) =>{
-    const id = req.params.id;
-
-    if (!ObjectID.isValid(id)) {
-        res.status(404).send();
-        return;
-    }
-
-    const value = req.body.isAdmin
-
-    try {
-        const user = await User.findOneAndUpdate({ _id: id }, { $set: { isAdmin: value }}, { new: true, useFindAndModify: false })
-        if (!user) {
-            res.status(404).send('Resource not found');
-        } else {
-            res.send(user);
-        }
-    } catch (error) {
-        if (isMongoError(error)) {
-            res.status(500).send('Internal server error');
-        } else {
-            res.status(400).send('Bad Request');
-        }
-    }
-
-})
-
-/*app.patch('/api/admin/user/:id', mongoChecker, async (req, res) => {
+app.patch('/api/admin/user/:id', mongoChecker, authenticateAdmin, async (req, res) => {
     const id = req.params.id;
 
     if (!ObjectID.isValid(id)) {
@@ -320,7 +293,7 @@ app.put('/api/admin/user/:id', mongoChecker, async (req,res) =>{
             res.status(400).send('Bad Request');
         }
     }
-})*/
+})
 
 //helper function for fetching comments corresponding to review id
 const fetchCommentsByReviewId = async comment_ids => {
@@ -578,13 +551,13 @@ app.get('/api/feed', mongoChecker, authenticate, async (req, res) => {
 app.get("/api/admin/allusers", mongoChecker, async (req, res) => {
     try {
         const users = await User.findAll();
-        res.send({user: users});
+        res.send(users);
     } catch (error) {
         log(error);
     }
 })
 
-app.delete('/api/admin/user/:id', mongoChecker, async (req, res) => {
+app.delete('/api/admin/user/:id', mongoChecker, authenticateAdmin, (req, res) => {
     const id = req.params.id;
 
     if (!ObjectID.isValid(id)) {
@@ -605,33 +578,6 @@ app.delete('/api/admin/user/:id', mongoChecker, async (req, res) => {
         })
 
 })
-
-app.post('/api/admin/addmovie', mongoChecker, async (req, res) => {
-    const movie = new Movie({
-        title: req.body.title,
-        fullplot: req.body.plot,
-        plot: req.body.plot,
-        runtime: req.body.runtime,
-        year: req.body.year,
-        poster: req.body.poster
-    });
-
-    try {
-        const newMovie = await Movie.createMovie(movie);
-        if (newMovie) {
-            res.send(newMovie);
-        } else {
-            res.send({ exists: true });
-        }
-    } catch (error) {
-        if (isMongoError(error)) {
-            res.status(500).send('Internal server error')
-        } else {
-            log(error)
-            res.status(400).send('Bad Request');
-        }
-    }
-});
 
 //Searching APIs
 
