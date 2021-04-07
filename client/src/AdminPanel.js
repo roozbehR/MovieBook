@@ -26,6 +26,7 @@ class Admin extends React.Component {
     movie_runtime: "",
     movie_poster: "",
     users: [],
+    addedMovie: "",
   };
 
   componentWillMount() {
@@ -75,7 +76,7 @@ class Admin extends React.Component {
   submitMovie = (event) => {
     event.preventDefault();
     const val_year = parseInt(this.state.movie_year);
-    const val_runtime = parserInt(this.state.movie_runtime)
+    const val_runtime = parseInt(this.state.movie_runtime);
     addMovie(this.state.movie_title, this.state.movie_plot, val_year, val_runtime, this.state.movie_poster);
     this.setState({movie_title: "", movie_plot: "", movie_year: "", movie_poster: "", movie_runtime: ""});
     message.success("Movie Added");

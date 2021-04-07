@@ -81,6 +81,30 @@ export const getSearchedMovies = searchInput => {
     });
 };
 
-export const addMovie = (title, plot, year, runtime, poster) => {
-  const request = new Request(`${API_HOST}/api/admin/addmovie`)
+export const addMovie = (movtitle, movplot, movyear, movruntime, movposter) => {
+  const request = new Request(`${API_HOST}/api/admin/addmovie`, {
+    method: "post",
+    body: JSON.stringify({
+      title: movtitle,
+      plot: movplot,
+      year: movyear,
+      runtime: movruntime,
+      poster: movposter
+    }),
+    headers: {
+      Accept: "application/json, text/plain, */*",
+      "Content-Type": "application/json",
+    },
+    credentials: 'include'
+  });
+
+  fetch(request)
+    .then(res => {
+      if (res.status === 200) {
+        return res.json();
+      }
+    })
+    .catch (error => {
+      console.log(error)
+    })
 };
