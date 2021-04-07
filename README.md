@@ -205,7 +205,8 @@ The Admin panel has two tabs:
 - Add Movies
 
 The users table can be used to promote users to admins or remote admin to regular users.
-The admin just needs to click on the button. Other feature is that Admins can delete users, to do this they just need to click on the delete button.
+The admin just needs to click on the button. Other feature is that Admins can delete users, to do this they just need to click on the delete button.  
+
 ![DElete](documentationImages/delete.PNG)
 
 
