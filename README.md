@@ -738,8 +738,18 @@ POST http://localhost:5000/api/profile/biography
 ```
 
 #### Get User Feed
+This is GET request used to get all the reviews by people who the logged in user is following. This is used to populate the user feed.
 
-
+*Example Call*
+```
+GET http://localhost:5000/api/feed
+```
+There is no Request body required.
+*Example Response*
+```
+[]
+```
+**An empty array is return if the user is not following anyone or if the users that they are following have not left any reviews**
 #### Admin APIs
 **These routes will only work if the user is an Admin (Please use the admin user to test)**  
 ##### Getting all Users
@@ -753,7 +763,22 @@ There is no request body to this request.
 
 *Example Response*
 ```
-
+{
+    "user": [
+        {
+            "likedMovies": [],
+            "followingUser": [
+                "606785445048bb1d7c886c05",
+                "60673dc4a3aad9116bd1d2f8"
+            ],
+            "usersIfollow": [],
+            "_id": "60631931ae924a0807a7a951",
+            "username": "bassel10",
+            "__v": 0,
+            "fullName": "Default Fullname",
+            "picture": "/images/profile.png",
+            "isAdmin": true
+        },
 ```
 **This returns an array of users, the sample shown above is not complete.**
 ##### Delete User
@@ -765,6 +790,23 @@ DELETE http://localhost:5000/api/admin/user/606e1507c7b52310b6ae0a68
 ```
 
 There is no request body in this request.
+
+*Example Response*
+```
+{
+    "likedMovies": [],
+    "followingUser": [],
+    "usersIfollow": [],
+    "_id": "606e1507c7b52310b6ae0a68",
+    "username": "user123",
+    "password": "$2a$10$VA65Vs3Q7Lv0lK8cw1ss6u3sYjNRt48KKnR3GTHHimcOe.zUJQ0r6",
+    "fullName": "user 123",
+    "picture": "/images/profile.png",
+    "biography": "I love MovieBook!",
+    "isAdmin": false,
+    "__v": 0
+}
+```
 
 ##### Update User (Admin Rights)
 A PUT request used to update the *isAdmin* property of a user, to elevate or demote them.   
@@ -801,6 +843,48 @@ PUT http://localhost:5000/api/admin/user/60631931ae924a0807a7a951
 }
 ```
 ##### Add Movie
+This POST request is used to add a movie to the database. The endpoint is `/api/admin/addmovie`.  
+*Example Call*
+```
+POST http://localhost:5000/api/admin/addmovie
+```
+
+The request body needs 5 attributes:
+- "title": "value1"
+- "plot": "value2"
+- "runtime": int1
+- "year": int2
+- "poster": "value3"
+
+*Example Request Body*
+```
+{
+    "title": "jaws3",
+    "plot": "a killer shark looks to attack beachgoes",
+    "runtime": 91,
+    "year": 1996,
+    "poster": "/images/15.jpg"
+}
+```
+
+*Example Response*
+```
+{
+    "genres": [],
+    "cast": [],
+    "countries": [],
+    "directors": [],
+    "writers": [],
+    "_id": "606e28d5367d391659dca850",
+    "title": "jaws3",
+    "fullplot": "a killer shark looks to attack beachgoes",
+    "plot": "a killer shark looks to attack beachgoes",
+    "runtime": 91,
+    "year": 1996,
+    "poster": "/images/15.jpg",
+    "__v": 0
+}
+```
 
 #### Search Functionality
 
