@@ -9,7 +9,7 @@ class MoviePage extends React.Component {
       <BackgroundWrapper>
         <NavBar user={this.props.user} />
         <div className="page-container">
-          <Movie />
+          <Movie {...this.props}/>
         </div>
       </BackgroundWrapper>
     );
