@@ -11,16 +11,12 @@ import { getRandomMovie } from "../../models/movie";
 import { getRandomReview } from "../../models/review";
 
 import Review from "../review/review";
+import { getReviewsForMovie } from "../../actions/movies"
 
 class Movie extends React.Component {
   state = {
     movie: getRandomMovie(),
-    reviews: [
-      getRandomReview(),
-      getRandomReview(),
-      getRandomReview(),
-      getRandomReview(),
-    ],
+    reviews: [],
     reviewButton: {
       enabled: null,
       text: null,
@@ -29,6 +25,9 @@ class Movie extends React.Component {
     reviewText: null,
     reviewRating: 0,
   };
+  componentWillMount() {
+    getReviewsForMovie(this, this.props.match.params.movie_id);
+  }
 
   componentDidMount() {
     this.setAddReview(true);
@@ -91,7 +90,6 @@ class Movie extends React.Component {
   render() {
     const { Panel } = Collapse;
     const { TextArea } = Input;
-    const userAuthenticated = localStorage["user"] != null;
 
     return (
       <Card title="Movie">
@@ -120,7 +118,7 @@ class Movie extends React.Component {
         </Row>
 
         <Divider>Reviews</Divider>
-        {userAuthenticated &&
+        {this.props.user &&
           <div>
             <Row>
               <Col span={24}>
