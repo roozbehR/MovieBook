@@ -524,6 +524,29 @@ app.get('/api/profile/:id/movies', mongoChecker, authenticate, async (req, res) 
     }
 });
 
+app.get("/api/movies/:id/reviews", mongoChecker, async (req, res) => {
+    const id = req.params.id;
+
+    if (!ObjectID.isValid(id)) {
+        res.status(404).send("the requested movie id is invalid");
+        return;
+    }
+
+    try {
+        const movie = await Movie.findByMovieId(id);
+        if (!movie) {
+            res.status(404).send("Resourece not found");
+        } else {
+            const reviews = await Review.findAllByMovieId(id);
+            res.status(200).send({reviews: reviews});
+        }
+    } catch (error) {
+        log(error);
+        res.status(500).send("Internal Server Error");
+    }
+
+})
+
 // update current user's biography
 app.post('/api/profile/biography', mongoChecker, authenticate, async (req, res) => {
     try {
