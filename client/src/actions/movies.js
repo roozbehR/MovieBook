@@ -81,3 +81,6 @@ export const getSearchedMovies = searchInput => {
     });
 };
 
+export const addMovie = (title, plot, year, runtime, poster) => {
+  const request = new Request(`${API_HOST}/api/admin/addmovie`)
+};

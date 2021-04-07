@@ -3,7 +3,7 @@ import NavBar from "./react-components/navbar/navbar";
 import { Tabs, Card, Button, Modal, message, Form, Input, InputNumber } from "antd";
 import "./admin-style.css";
 import { getAllUsers, deleteUser, toggleAdmin } from "./actions/user";
-import { getAllMovies } from "./models/movie";
+import { addMovie } from "./actions/movies";
 import { uid } from "react-uid";
 import BackgroundWrapper from "./react-components/background-wrapper/background-wrapper";
 
@@ -20,14 +20,12 @@ const layout = {
 
 class Admin extends React.Component {
   state = {
-    movie: {
-      title: "",
-      plot: "",
-      year: "",
-      runtime: ""
-    },
+    movie_title: "",
+    movie_plot: "",
+    movie_year: "",
+    movie_runtime: "",
+    movie_poster: "",
     users: [],
-    deleteStatus: "",
   };
 
   componentWillMount() {
@@ -49,42 +47,39 @@ class Admin extends React.Component {
     message.success("User Updated");
   };
 
-  clickedMovie = (val) => {
-    console.log("clicked");
-    console.log(val);
-    let movies = [...this.state.movies];
-    let movi = { ...movies[val - 1] };
-    this.setState({ movi });
-    let isModalVisible = true;
-    this.setState({ isModalVisible });
+  handleChangeTitle = (event) => {
+    let val = event.target.value;
+    this.setState({movie_title: val})
   };
 
-  handleChange = (event) => {
-    let input = event.target.name;
-    let item = event.target.value;
-    console.log(input);
-    console.log(item); 
-    if (input === "title"){
-      this.setState({ movie: { title: item } });
-    }
-    if (input === "plot"){
-      this.setState({ movie: { plot: item } });
-    }
-    if (input === "year"){
-      this.setState({ movie: { year: item } });
-    }
-    if (input === "runtime"){
-      this.setState({ movie: { runtime: item } });
-    }
-    console.log("title")
-    console.log(this.state.movie.title)
-    console.log("plot")
-    console.log(this.state.movie.plot)
-    console.log("year")
-    console.log(this.state.movie.year)
-    //this.setState({ movDesc });
+  handleChangePlot = (event) => {
+    let val = event.target.value;
+    this.setState({movie_plot: val})
   };
 
+  handleChangePoster = (event) => {
+    let val = event.target.value;
+    this.setState({movie_poster: val})
+  }
+
+  handleChangeYear = (event) => {
+    let val = event.target.value;
+    this.setState({movie_year: val})
+  }
+
+  handleChangeRuntime = (event) => {
+    let val = event.target.value;
+    this.setState({movie_runtime: val})
+  }
+ 
+  submitMovie = (event) => {
+    event.preventDefault();
+    const val_year = parseInt(this.state.movie_year);
+    const val_runtime = parserInt(this.state.movie_runtime)
+    addMovie(this.state.movie_title, this.state.movie_plot, val_year, val_runtime, this.state.movie_poster);
+    this.setState({movie_title: "", movie_plot: "", movie_year: "", movie_poster: "", movie_runtime: ""});
+    message.success("Movie Added");
+  }
 
   render() {
     return (
@@ -152,25 +147,39 @@ class Admin extends React.Component {
                 </Card>
               </TabPane>
               <TabPane tab="Add Movie" key="2">
-                <form>
-                  <label for="movie_title">Movie Title</label>
-                  <input type="text" id="movie_title" name="title" onChange={this.handleChange} value={this.state.movie.title}/>
-                  <br/>
-                  <label for="movie_plot">Movie Plot</label>
-                  <textarea type="text" id="movie_plot" name="plot" onChange={this.handleChange} value={this.state.movie.plot}/>
-                  <br/>
-                  <label for="movie_year">Release Year</label>
-                  <input type="text" id="movie_year" name="year" onChange={this.handleChange} value={this.state.movie.year}/>
-                  <br/>
-                  <label for="movie_runtime">Runtime</label>
-                  <input type="text" id="movie_runtime" name="runtime" onChange={this.handleChange} value={this.state.movie.runtime}/>
-                  
-                  <br/>
-                  </form>
-                  {this.state.movie.title}<br></br>
-                  {this.state.movie.plot}<br></br>
-                  {this.state.movie.year}<br></br>
-                  {this.state.movie.runtime}<br></br>
+                <span>
+                  <Card style={{ marginLeft: 30, marginTop: 30, width: 400}}>
+                    <div>
+                      <h3 className="welcome">Adding a Movie</h3> 
+                      <span>
+                      <form className="add_movie">
+                      <label for="movie_title">Movie Title</label>
+                      <br/>
+                      <input type="text" id="movie_title" name="title" onChange={this.handleChangeTitle} value={this.state.movie_title}/>
+                      <br/>
+                      <label for="movie_plot">Movie Plot</label>
+                      <br/>
+                      <textarea type="text" id="movie_plot" name="plot" onChange={this.handleChangePlot} value={this.state.movie_plot}/>
+                      <br/>
+                      <label for="movie_year">Release Year</label>
+                      <br/>
+                      <input type="text" id="movie_year" name="year" onChange={this.handleChangeYear} value={this.state.movie_year}/>
+                      <br/>
+                      <label for="movie_runtime">Runtime</label>
+                      <br/>
+                      <input type="text" id="movie_runtime" name="runtime" onChange={this.handleChangeRuntime} value={this.state.movie_runtime}/>
+                      <br/>
+                      <label for="movie_poster">Poster URL</label>
+                      <br/>
+                      <input type="text" id="movie_poster" name="poster" onChange={this.handleChangePoster} value={this.state.movie_poster}/>
+                      <br/>
+                      <br/>
+                      <input type="submit" value="Add Movie" onClick={this.submitMovie}/>
+                      </form>
+                      </span>
+                    </div>
+                  </Card>
+                </span>
               </TabPane>
             </Tabs>
           </div>

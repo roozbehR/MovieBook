@@ -606,6 +606,33 @@ app.delete('/api/admin/user/:id', mongoChecker, async (req, res) => {
 
 })
 
+app.post('/api/admin/addmovie', mongoChecker, async (req, res) => {
+    const movie = new Movie({
+        title: req.body.title,
+        fullplot: req.body.plot,
+        plot: req.body.plot,
+        runtime: req.body.runtime,
+        year: req.body.year,
+        poster: req.body.poster
+    });
+
+    try {
+        const newMovie = await Movie.createMovie(movie);
+        if (newMovie) {
+            res.send(newMovie);
+        } else {
+            res.send({ exists: true });
+        }
+    } catch (error) {
+        if (isMongoError(error)) {
+            res.status(500).send('Internal server error')
+        } else {
+            log(error)
+            res.status(400).send('Bad Request');
+        }
+    }
+});
+
 //Searching APIs
 
 // Search for a movie
