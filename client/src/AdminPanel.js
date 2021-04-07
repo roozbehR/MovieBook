@@ -2,7 +2,7 @@ import React from "react";
 import NavBar from "./react-components/navbar/navbar";
 import { Tabs, Card, Button, Modal, message, Form, Input, InputNumber } from "antd";
 import "./admin-style.css";
-import { getAllUsers, deleteUser } from "./actions/user";
+import { getAllUsers, deleteUser, toggleAdmin } from "./actions/user";
 import { getAllMovies } from "./models/movie";
 import { uid } from "react-uid";
 import BackgroundWrapper from "./react-components/background-wrapper/background-wrapper";
@@ -32,33 +32,21 @@ class Admin extends React.Component {
 
   componentWillMount() {
     getAllUsers(this);
-    console.log(this.state.users);
   };
 
   clickedDelete = (val) => {
-    console.log("delete");
-    console.log(val);
     deleteUser(val);
     getAllUsers(this);
+    message.success("User Deleted");
   };
 
   clickedUser = (val) => {
-
-    console.log("clicked");
-    console.log(val);
-
-    let users = [...this.state.users];
-    let user = { ...users[val - 1] };
-    user.isAdmin = !user.isAdmin;
-    users[val - 1] = user;
-    this.setState({ users });
-    {
-      user.isAdmin ? (
-        message.success("Promoted")
-      ) : (
-        message.success("Demoted")
-      )
-    }
+    const id = val._id;
+    const ad = val.isAdmin;
+    const update_ad = !ad;
+    toggleAdmin(id, update_ad);
+    getAllUsers(this);
+    message.success("User Updated");
   };
 
   clickedMovie = (val) => {
@@ -69,30 +57,6 @@ class Admin extends React.Component {
     this.setState({ movi });
     let isModalVisible = true;
     this.setState({ isModalVisible });
-  };
-
-  handleOk = () => {
-    console.log("Ok");
-    let movieDescr = this.state.movDesc;
-    let movi = this.state.movi;
-    let movies = [...this.state.movies];
-    movi.description = movieDescr;
-    movies[movi.id - 1] = movi;
-    this.setState({ movi });
-    movies[movi.id - 1] = movi;
-    this.setState({ movies })
-    let isModalVisible = false;
-    let movDesc = "";
-    this.setState({ movDesc });
-    this.setState({ isModalVisible });
-    message.success("Description Updated");
-  };
-
-  handleCancel = () => {
-    console.log("Cancel");
-    let isModalVisible = false;
-    this.setState({ isModalVisible });
-    message.error("Action Cancelled");
   };
 
   handleChange = (event) => {
@@ -162,7 +126,7 @@ class Admin extends React.Component {
                               <Button
                                 type="primary"
                                 shape="round"
-                                onClick={() => this.clickedUser(user.id)}
+                                onClick={() => this.clickedUser(user)}
                               >
                                 {user.isAdmin ? (
                                   <p>Demote to User</p>

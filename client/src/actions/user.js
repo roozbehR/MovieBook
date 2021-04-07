@@ -133,9 +133,7 @@ export const getAllUsers = (user) => {
             }
         })
         .then(json => {
-            console.log(json);
             user.setState({users: json.user});
-            console.log(user.state.users);
         })
         .catch(error => {
             console.log(error);
@@ -144,7 +142,6 @@ export const getAllUsers = (user) => {
 };
 
 export const deleteUser = (user) => {
-    console.log(user)
     const request = new Request(`${API_HOST}/api/admin/user/${user}`, {
         method: "delete",
         headers: {
@@ -153,6 +150,30 @@ export const deleteUser = (user) => {
         },
         credentials: 'include'
     });
+    fetch(request)
+        .then(res => {
+            if(res.status === 200){
+                return res.status
+            }
+        })
+        .catch(error => {
+            console.log(error)
+        });
+};
+
+export const toggleAdmin = (user, val) => {
+    const request = new Request(`${API_HOST}/api/admin/user/${user}`, {
+        method: "put",
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json",
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+            isAdmin: val
+        })
+    });
+
     fetch(request)
         .then(res => {
             if(res.status === 200){
