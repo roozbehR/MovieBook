@@ -265,7 +265,34 @@ app.put('/api/user/follow/:username', mongoChecker, authenticate, async (req, re
     }
 });
 
-app.patch('/api/admin/user/:id', mongoChecker, authenticateAdmin, async (req, res) => {
+app.put('/api/admin/user/:id', mongoChecker, async (req,res) =>{
+    const id = req.params.id;
+
+    if (!ObjectID.isValid(id)) {
+        res.status(404).send();
+        return;
+    }
+
+    const value = req.body.isAdmin
+
+    try {
+        const user = await User.findOneAndUpdate({ _id: id }, { $set: { isAdmin: value }}, { new: true, useFindAndModify: false })
+        if (!user) {
+            res.status(404).send('Resource not found');
+        } else {
+            res.send(user);
+        }
+    } catch (error) {
+        if (isMongoError(error)) {
+            res.status(500).send('Internal server error');
+        } else {
+            res.status(400).send('Bad Request');
+        }
+    }
+
+})
+
+/*app.patch('/api/admin/user/:id', mongoChecker, async (req, res) => {
     const id = req.params.id;
 
     if (!ObjectID.isValid(id)) {
@@ -293,7 +320,7 @@ app.patch('/api/admin/user/:id', mongoChecker, authenticateAdmin, async (req, re
             res.status(400).send('Bad Request');
         }
     }
-})
+})*/
 
 //helper function for fetching comments corresponding to review id
 const fetchCommentsByReviewId = async comment_ids => {
@@ -551,13 +578,13 @@ app.get('/api/feed', mongoChecker, authenticate, async (req, res) => {
 app.get("/api/admin/allusers", mongoChecker, async (req, res) => {
     try {
         const users = await User.findAll();
-        res.send(users);
+        res.send({user: users});
     } catch (error) {
         log(error);
     }
 })
 
-app.delete('/api/admin/user/:id', mongoChecker, authenticateAdmin, (req, res) => {
+app.delete('/api/admin/user/:id', mongoChecker, async (req, res) => {
     const id = req.params.id;
 
     if (!ObjectID.isValid(id)) {

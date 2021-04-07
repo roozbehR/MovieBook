@@ -17,6 +17,8 @@ Here is how to setup the web application and user it.
   - [Administration Panel](#administration-panel-admins-only)
 - [Libraries & Frameworks Used](#libraries--frameworks-used)
 
+## Heroku Link
+
 ## Setting up MovieBook
 
 From CLI run the command `git clone https://github.com/csc309-winter-2021/team02.git`
@@ -162,6 +164,8 @@ When an Admin clicks on edit (to edit the movie description), a popup appears wi
 ![Edit](documentationImages/admin/edit-description.png)
 
 The description will only be updated if the user clicks on *OK*.
+
+## Backend Routes & Middleware
 
 ## Libraries & Frameworks Used
 - React

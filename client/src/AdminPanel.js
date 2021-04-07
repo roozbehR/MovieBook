@@ -1,8 +1,8 @@
 import React from "react";
 import NavBar from "./react-components/navbar/navbar";
-import { Tabs, Card, Button, Modal, message } from "antd";
+import { Tabs, Card, Button, Modal, message, Form, Input, InputNumber } from "antd";
 import "./admin-style.css";
-import { getAllUsers } from "./models/user";
+import { getAllUsers, deleteUser } from "./actions/user";
 import { getAllMovies } from "./models/movie";
 import { uid } from "react-uid";
 import BackgroundWrapper from "./react-components/background-wrapper/background-wrapper";
@@ -13,28 +13,37 @@ function callback(key) {
   console.log(key);
 }
 
+const layout = {
+  labelCol: { span: 8 },
+  wrapperCol: { span: 16 },
+};
+
 class Admin extends React.Component {
   state = {
-    users: getAllUsers(),
-    movies: getAllMovies(),
-    movi: "",
-    isModalVisible: false,
-    movDesc: "",
-    curAdmin: "",
+    movie: {
+      title: "",
+      plot: "",
+      year: "",
+      runtime: ""
+    },
+    users: [],
+    deleteStatus: "",
   };
 
-  componentDidMount() {
-    let json = localStorage.getItem("user");
-    let savedUser = JSON.parse(json);
-    let curAdmin = "";
-    if (savedUser) {
-      curAdmin = savedUser[0].fullName;
-      this.setState({ curAdmin });
-    }
-    console.log({ curAdmin })
+  componentWillMount() {
+    getAllUsers(this);
+    console.log(this.state.users);
+  };
+
+  clickedDelete = (val) => {
+    console.log("delete");
+    console.log(val);
+    deleteUser(val);
+    getAllUsers(this);
   };
 
   clickedUser = (val) => {
+
     console.log("clicked");
     console.log(val);
 
@@ -87,10 +96,31 @@ class Admin extends React.Component {
   };
 
   handleChange = (event) => {
-    let movDesc = event.target.value;
-    //console.log(movDesc)
-    this.setState({ movDesc });
+    let input = event.target.name;
+    let item = event.target.value;
+    console.log(input);
+    console.log(item); 
+    if (input === "title"){
+      this.setState({ movie: { title: item } });
+    }
+    if (input === "plot"){
+      this.setState({ movie: { plot: item } });
+    }
+    if (input === "year"){
+      this.setState({ movie: { year: item } });
+    }
+    if (input === "runtime"){
+      this.setState({ movie: { runtime: item } });
+    }
+    console.log("title")
+    console.log(this.state.movie.title)
+    console.log("plot")
+    console.log(this.state.movie.plot)
+    console.log("year")
+    console.log(this.state.movie.year)
+    //this.setState({ movDesc });
   };
+
 
   render() {
     return (
@@ -99,7 +129,7 @@ class Admin extends React.Component {
         <div className="page-container">
           <div>
             <Card>
-              <h2 className="welcome">Welcome {this.state.curAdmin}</h2>
+              <h2 className="welcome">Welcome</h2>
             </Card>
             <br />
             <Tabs
@@ -118,6 +148,7 @@ class Admin extends React.Component {
                         <th className="cell">Username</th>
                         <th className="cell">Admin Rights</th>
                         <th className="cell">Switch Role</th>
+                        <th className="cell">Delete</th>
                       </tr>
                       {this.state.users.map((user) => {
                         return (
@@ -140,6 +171,15 @@ class Admin extends React.Component {
                                 )}
                               </Button>
                             </td>
+                            <td className="cell">
+                              <Button
+                                type="primary"
+                                shape="round"
+                                onClick={() => this.clickedDelete(user._id)}
+                              >
+                                <p>Delete User</p>
+                              </Button>
+                            </td>
                           </tr>
                         );
                       })}
@@ -147,54 +187,26 @@ class Admin extends React.Component {
                   </table>
                 </Card>
               </TabPane>
-              <TabPane tab="Movies" key="2">
-                <Card style={{ marginLeft: 30, marginTop: 30, marginRight: 30 }}>
-                  <table className="Table">
-                    <tbody>
-                      <tr>
-                        <th className="cell">Title</th>
-                        <th className="cell">Year Released</th>
-                        <th className="cell">Rating</th>
-                        <th className="cell">Edit</th>
-                      </tr>
-                      {this.state.movies.map((movie) => {
-                        return (
-                          <tr key={uid(movie)}>
-                            <td className="cell">{movie.title}</td>
-                            <td className="cell">{movie.year}</td>
-                            <td className="cell">{movie.rating}</td>
-                            <td className="cell">
-                              {movie.isAdmin ? <p>Yes</p> : <p>No</p>}
-                            </td>
-                            <td className="cell">
-                              <Button
-                                type="primary"
-                                shape="round"
-                                onClick={() => this.clickedMovie(movie.id)}
-                              >
-                                Edit
-                            </Button>
-                              <Modal
-                                title={this.state.movi.title}
-                                visible={this.state.isModalVisible}
-                                onOk={this.handleOk}
-                                onCancel={this.handleCancel}
-                              >
-                                <h2>Current Description</h2>
-                                <p>{this.state.movi.description}</p>
-                                <h2>New Description</h2>
-                                <textarea
-                                  value={this.state.movDesc}
-                                  onChange={this.handleChange}
-                                ></textarea>
-                              </Modal>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                </Card>
+              <TabPane tab="Add Movie" key="2">
+                <form>
+                  <label for="movie_title">Movie Title</label>
+                  <input type="text" id="movie_title" name="title" onChange={this.handleChange} value={this.state.movie.title}/>
+                  <br/>
+                  <label for="movie_plot">Movie Plot</label>
+                  <textarea type="text" id="movie_plot" name="plot" onChange={this.handleChange} value={this.state.movie.plot}/>
+                  <br/>
+                  <label for="movie_year">Release Year</label>
+                  <input type="text" id="movie_year" name="year" onChange={this.handleChange} value={this.state.movie.year}/>
+                  <br/>
+                  <label for="movie_runtime">Runtime</label>
+                  <input type="text" id="movie_runtime" name="runtime" onChange={this.handleChange} value={this.state.movie.runtime}/>
+                  
+                  <br/>
+                  </form>
+                  {this.state.movie.title}<br></br>
+                  {this.state.movie.plot}<br></br>
+                  {this.state.movie.year}<br></br>
+                  {this.state.movie.runtime}<br></br>
               </TabPane>
             </Tabs>
           </div>

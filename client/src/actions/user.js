@@ -115,3 +115,51 @@ export const signup = (signupComp) => {
             console.log(error);
         });
 };
+
+export const getAllUsers = (user) => {
+    const url = `${API_HOST}/api/admin/allusers`;
+  const request = new Request(`${API_HOST}/api/admin/allusers`, {
+    method: "get",
+    headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+        },
+    });
+
+    fetch(url)
+        .then(res => {
+            if (res.status === 200) {
+                return res.json();
+            }
+        })
+        .then(json => {
+            console.log(json);
+            user.setState({users: json.user});
+            console.log(user.state.users);
+        })
+        .catch(error => {
+            console.log(error);
+        })
+
+};
+
+export const deleteUser = (user) => {
+    console.log(user)
+    const request = new Request(`${API_HOST}/api/admin/user/${user}`, {
+        method: "delete",
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json",
+        },
+        credentials: 'include'
+    });
+    fetch(request)
+        .then(res => {
+            if(res.status === 200){
+                return res.status
+            }
+        })
+        .catch(error => {
+            console.log(error)
+        });
+};
