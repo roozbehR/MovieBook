@@ -575,7 +575,7 @@ app.get('/api/feed', mongoChecker, authenticate, async (req, res) => {
 });
 
 // Admin APIs
-app.get("/api/admin/allusers", mongoChecker, authenticateAdmin, (req, res) => {
+app.get("/api/admin/allusers", mongoChecker, authenticateAdmin, async (req, res) => {
     try {
         const users = await User.findAll();
         res.send({user: users});
@@ -584,7 +584,7 @@ app.get("/api/admin/allusers", mongoChecker, authenticateAdmin, (req, res) => {
     }
 })
 
-app.delete('/api/admin/user/:id', mongoChecker, authenticateAdmin, (req, res) => {
+app.delete('/api/admin/user/:id', mongoChecker, authenticateAdmin, async (req, res) => {
     const id = req.params.id;
 
     if (!ObjectID.isValid(id)) {
@@ -606,7 +606,7 @@ app.delete('/api/admin/user/:id', mongoChecker, authenticateAdmin, (req, res) =>
 
 })
 
-app.post('/api/admin/addmovie', mongoChecker, authenticateAdmin, (req, res) => {
+app.post('/api/admin/addmovie', mongoChecker, authenticateAdmin, async (req, res) => {
     const movie = new Movie({
         title: req.body.title,
         fullplot: req.body.plot,
