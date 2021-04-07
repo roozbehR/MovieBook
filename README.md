@@ -23,14 +23,14 @@ Here is how to setup the web application and user it.
 - [Backend Routes & Middleware](#backend-routes---middleware)
   * [Middleware](#middleware)
     + [mongoChecker](#mongochecker)
-      - [authenticateAdmin](#authenticateadmin)
+    + [authenticateAdmin](#authenticateadmin)
     + [authenticate](#authenticate)
     + [unauthenticate](#unauthenticate)
   * [Backend Routes](#backend-routes)
     + [Logging in and out](#logging-in-and-out)
       - [Log in](#log-in)
       - [Log Out](#log-out)
-  * [Registering a user](#registering-a-user)
+    + [Registering a user](#registering-a-user)
     + [Getting user details](#getting-user-details)
     + [Follow a user](#follow-a-user)
     + [Get Movie by ID](#get-movie-by-id)
@@ -217,7 +217,7 @@ We created three different sete of middleware that are used with our routes. The
 
 mongoChecker is used to ensure that the connection to mongo is up and running.
 
-##### authenticateAdmin
+#### authenticateAdmin
 
 authenticateAdmin is used as middleware for routes for the Admin panel, these routes are allow to be used by users that are Admins.  
 The middleware checks the current session for the user to see a session exists and if the user is an admin by checking if the *user.isAdmin* propery is set to true.
@@ -277,7 +277,7 @@ This deletes the session from the database, to stop the user from logging in aga
 true
 ```
 
-### Registering a user
+#### Registering a user
 This route is connected to the sign up form. It is a post route that hits the endpoint `/user/register`.
 
 *Example Call*

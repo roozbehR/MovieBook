@@ -117,7 +117,6 @@ export const signup = (signupComp) => {
 };
 
 export const getAllUsers = (user) => {
-    const url = `${API_HOST}/api/admin/allusers`;
   const request = new Request(`${API_HOST}/api/admin/allusers`, {
     method: "get",
     headers: {
@@ -127,7 +126,7 @@ export const getAllUsers = (user) => {
 	credentials: 'include',	
     });
 
-    fetch(url)
+    fetch(request)
         .then(res => {
             if (res.status === 200) {
                 return res.json();
