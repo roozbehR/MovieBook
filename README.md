@@ -18,6 +18,7 @@ Here is how to setup the web application and user it.
       - [Leaving a comment](#leaving-a-comment)
   * [Viewing Profiles](#viewing-profiles)
   * [Viewing User Feed](#viewing-user-feed)
+  * [Searching for Movies](#searching-for-movies)
   * [Logging Out](#logging-out)
   * [Administration Panel **(Admins Only)**](#administration-panel----admins-only---)
 - [Backend Routes & Middleware](#backend-routes---middleware)
@@ -182,7 +183,7 @@ The search bar looks like:
 ![search bar](documentationImages/search.PNG)
 
 When you click on search you are directed to a new page that will show the movie results.
-![search results](documentationImages/search_results.png)
+![search results](documentationImages/searchresults.png)
 
 ### Logging Out
 
@@ -210,7 +211,7 @@ The admin just needs to click on the button. Other feature is that Admins can de
 
 For movies, admins are able to add movies.
 The admin can fill in the form and then they are able to submit it and the movie is stored in the data base
-![add movie](documentationImages/addmovie.PNG)
+![add movie](documentationImages/addmovie.png)
 
 The description will only be updated if the user clicks on *OK*.
 
