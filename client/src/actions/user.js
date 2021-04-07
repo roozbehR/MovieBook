@@ -124,6 +124,7 @@ export const getAllUsers = (user) => {
         Accept: "application/json, text/plain, */*",
         "Content-Type": "application/json",
         },
+	credentials: 'include',	
     });
 
     fetch(url)
