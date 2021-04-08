@@ -56,7 +56,7 @@ Here is how to setup the web application and user it.
 
 ## Heroku Link
 
-
+http://moviebook309.herokuapp.com/
 
 ## Setting up MovieBook
 
@@ -105,7 +105,7 @@ Then click on the **Sign In** button
 ![Sign in Button](documentationImages/logging-in/sign-in-button.png)
 
 If the login in successful you will be authenticated to have access to different pages.
-To sign out, you may click on the user's name in the navigation bar.
+To sign out, you may click on the log out button in the navigation bar.
 
 ### Looking at Movies
 
@@ -121,8 +121,6 @@ For example, you can click on *View Movie* in top movies
 
 This will take you the movie page.  
 ![Movie Page](documentationImages/movies/individual/movie-page.png)
-
-*Note: the movie that will show up is currently random but this will display the movie that is clicked once the back-end is implemented*
 
 Here you will be able to view details and leave a comment or post *only if you are authenticated*. If not, then you can still
 the view the movie
@@ -152,12 +150,11 @@ We can visit profiles from the reviews page or in the random movie review by cli
 
 Clicking on this will take us to the user profile.
 
-Here you will see an image of the user, a follow button and several tabs.
+Here you will see an image of the user, a follow button, number of followers, and several tabs.
 The tabs show:
-- Favourite Movies
-- Review
-- Recent Activity
-- Profile Info
+- Favourite Movies, based on 5-star rating reviews
+- Reviews
+- Comments
 
 An example of a user profile is below:  
 ![User Profile](documentationImages/profiles/profile.png)
@@ -166,8 +163,6 @@ The follow button will toggle to the state of follow, that means that if you are
 clicking on the button will update the state.
 
 ![User Profile](documentationImages/profiles/follow-toggle.png)
-
-*Note: the user that will show up is currently random but this will display the user that is clicked once the back-end is implemented*
 
 ### Viewing User Feed
 
@@ -187,15 +182,14 @@ When you click on search you are directed to a new page that will show the movie
 
 ### Logging Out
 
-To log out, simply click on your name in the Navigation bar and you will be redirected to the log in page.
-*When you hover over the name it will turn red*
+To log out, simply click on the log out button in the Navigation bar and you will be redirected to the log in page.
 
 ![Log Out](documentationImages/signout/signout.png)
 
 ### Administration Panel **(Admins Only)**
 
 The admin panel is only available through the admin tab in the navigation bar (only appears for admins).
-It can also be viewed from `http:localhost:3000/admin`
+It can also be viewed from `/admin`
 
 An example of the Admin Tab in the navigation bar is below:  
 ![Admin Navbar](documentationImages/admin/admin-navbar.png)
@@ -204,14 +198,14 @@ The Admin panel has two tabs:
 - Users
 - Add Movies
 
-The users table can be used to promote users to admins or remote admin to regular users.
+The users table can be used to promote users to admins or demote admin to regular users.
 The admin just needs to click on the button. Other feature is that Admins can delete users, to do this they just need to click on the delete button.  
 
 ![DElete](documentationImages/delete.PNG)
 
 
 For movies, admins are able to add movies.
-The admin can fill in the form and then they are able to submit it and the movie is stored in the data base
+The admin can fill in the form and then they are able to submit it and the movie is stored in the database
 ![add movie](documentationImages/addmovie.png)
 
 The description will only be updated if the user clicks on *OK*.
@@ -225,6 +219,7 @@ We created three different sete of middleware that are used with our routes. The
 1. authenticateAdmin
 1. authenticate
 1. unauthenticate
+1. multipartMiddleware 
 
 #### mongoChecker
 
@@ -242,6 +237,10 @@ authenticate is used to make sure that a use is logged in, this is for requestin
 #### unauthenticate
 
 Is middleware for unauthenticated users.
+
+#### multipartMiddleware 
+
+Middleware used for uploading images to acces them from the request
 
 ### Backend Routes
 #### Logging in and out
@@ -760,7 +759,7 @@ No Request Body is required.
 []
 ```
 
-**For this used since they have not reviews a movie, they do not have any favourite movies, so the array is empty**
+**For this example used since they have not reviews a movie, they do not have any favourite movies, so the array is empty**
 
 #### Update User Biography
 This is a POST request that is used to update the biography of user. The biography is displayed to other users.
@@ -785,6 +784,13 @@ POST http://localhost:5000/api/profile/biography
     "bio": "hello, welcome to my Profile"
 }
 ```
+
+#### Update User Picture
+This is a POST request that is used to update the profile picture user.
+
+The endpoint used is `/api/profile/picture`.  
+
+*Calls cannot be made to this endpoint from Postman since it expects an image to be uploaded from an HTML form*
 
 #### Get User Feed
 This is GET request used to get all the reviews by people who the logged in user is following. This is used to populate the user feed.
@@ -1016,3 +1022,6 @@ The response to this should be an array of movies with a name that matches the U
 - React
 - Ant Design
 - React Slick
+- Cloudinary
+- MongoDB
+- Express
