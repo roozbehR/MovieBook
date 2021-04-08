@@ -44,6 +44,7 @@ Here is how to setup the web application and user it.
     + [Get all comments by a User](#get-all-comments-by-a-user)
     + [Get User's Favourite Movies](#get-user-s-favourite-movies)
     + [Update User Biography](#update-user-biography)
+    + [Update User Picture](#update-user-picture)
     + [Get User Feed](#get-user-feed)
     + [Admin APIs](#admin-apis)
       - [Getting all Users](#getting-all-users)
