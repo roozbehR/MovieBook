@@ -10,7 +10,7 @@ export const getFeed = (comp) => {
         credentials: 'include'
     });
 
-    fetch(request)
+    return fetch(request)
         .then(res => {
             if (res.status === 200) {
                 return res.json();
@@ -19,8 +19,10 @@ export const getFeed = (comp) => {
         .then(json => {
             console.log(json);
             comp.setState({ reviews: json });
+            return "fetched feed";
         })
         .catch(error => {
             console.log(error);
+            return error;
         });
 }
