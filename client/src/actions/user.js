@@ -1,6 +1,6 @@
 import { json } from "body-parser";
 
-const API_HOST = 'http://moviebookapp.herokuapp.com'
+const API_HOST = 'http://localhost:5000'
 
 // Check if user session exists
 export const checkSession = (app) => {
@@ -75,8 +75,8 @@ export const logout = () => {
             }
         })
         .then(json => {
-          console.log("logout successful")
-          console.log(json);
+            console.log("logout successful")
+            console.log(json);
         })
         .catch(error => {
             console.log(error);
