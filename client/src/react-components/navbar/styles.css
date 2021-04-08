@@ -92,6 +92,6 @@
   cursor: pointer;
 }
 .logoutButtonPosition{
-  position: absolute;
-  right: -175px;
+  position: relative;
+  right: -100px;
 }
