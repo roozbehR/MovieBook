@@ -10,7 +10,7 @@ const app = express();
 
 // enable CORS if in development, for React local development server to connect to the web server.
 const cors = require('cors')
-app.use(cors({ origin: 'http://localhost:3000', credentials: true })); // enable for development only
+app.use(cors({ credentials: true })); // enable for development only
 
 // mongoose and mongo connection
 const { mongoose } = require("./db/mongoose");
@@ -112,11 +112,11 @@ const unauthenticate = async (req, res, next) => {
 // Create a session and session cookie
 app.use(
     session({
-        secret: process.env.SESSION_SECRET || "our hardcoded secret", // make a SESSION_SECRET environment variable when deploying (for example, on heroku)
+        secret: process.env.SESSION_SECRET || "BMRS", // make a SESSION_SECRET environment variable when deploying (for example, on heroku)
         resave: false,
         saveUninitialized: false,
         cookie: {
-            expires: 60000,
+            expires: 6000000,
             httpOnly: true
         },
         // store the sessions on the database in production
@@ -265,7 +265,7 @@ app.put('/api/user/follow/:username', mongoChecker, authenticate, async (req, re
     }
 });
 
-app.put('/api/admin/user/:id', mongoChecker, authenticateAdmin, async (req,res) =>{
+app.put('/api/admin/user/:id', mongoChecker, authenticateAdmin, async (req, res) => {
     const id = req.params.id;
 
     if (!ObjectID.isValid(id)) {
@@ -276,7 +276,7 @@ app.put('/api/admin/user/:id', mongoChecker, authenticateAdmin, async (req,res) 
     const value = req.body.isAdmin
 
     try {
-        const user = await User.findOneAndUpdate({ _id: id }, { $set: { isAdmin: value }}, { new: true, useFindAndModify: false })
+        const user = await User.findOneAndUpdate({ _id: id }, { $set: { isAdmin: value } }, { new: true, useFindAndModify: false })
         if (!user) {
             res.status(404).send('Resource not found');
         } else {
@@ -599,7 +599,7 @@ app.get('/api/feed', mongoChecker, authenticate, async (req, res) => {
 app.get("/api/admin/allusers", mongoChecker, authenticateAdmin, async (req, res) => {
     try {
         const users = await User.findAll();
-        res.send({user: users});
+        res.send({ user: users });
     } catch (error) {
         log(error);
     }
