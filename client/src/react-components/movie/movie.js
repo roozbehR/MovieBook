@@ -11,7 +11,7 @@ import { getRandomMovie } from "../../models/movie";
 import { getRandomReview } from "../../models/review";
 
 import Review from "../review/review";
-import { getReviewsForMovie, postReviewForMovie } from "../../actions/movies"
+import { getReviewsForMovie, postReviewForMovie, getMovie } from "../../actions/movies"
 
 class Movie extends React.Component {
   state = {
@@ -83,7 +83,7 @@ class Movie extends React.Component {
         <Row>
           <Col xs={10} sm={10} md={8} lg={8} xl={4}>
             <div className="post-image">
-              <img src={this.state.movie.image ?? '/images/default_poster.jpg'}></img>
+              <img src={this.state.movie.poster ?? '/images/default_poster.jpg'}></img>
             </div>
           </Col>
           <Col xs={14} sm={14} md={16} lg={16} xl={20}>
