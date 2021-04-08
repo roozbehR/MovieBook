@@ -1,4 +1,4 @@
-const API_HOST = 'http://moviebookapp.herokuapp.com'
+const API_HOST = 'http://localhost:5000'
 
 // Retrives user by username and adds to comp's viewingUser state
 export const followUser = (comp, message, username) => {
