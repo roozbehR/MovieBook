@@ -83,7 +83,6 @@ export const getSearchedMovies = searchInput => {
         });
 };
 
-
 export const getReviewsForMovie = (movieComp, id) => {
     const url = `${API_HOST}/api/movies/${id}/reviews`
 
@@ -138,3 +137,31 @@ export const postReviewForMovie = (comp, movie_id, text, rating) => {
             console.log(error);
         });
 }
+
+export const addMovie = (movtitle, movplot, movyear, movruntime, movposter) => {
+  const request = new Request(`${API_HOST}/api/admin/addmovie`, {
+    method: "post",
+    body: JSON.stringify({
+      title: movtitle,
+      plot: movplot,
+      year: movyear,
+      runtime: movruntime,
+      poster: movposter
+    }),
+    headers: {
+      Accept: "application/json, text/plain, */*",
+      "Content-Type": "application/json",
+    },
+    credentials: 'include'
+  });
+
+  fetch(request)
+    .then(res => {
+      if (res.status === 200) {
+        return res.json();
+      }
+    })
+    .catch (error => {
+      console.log(error)
+    })
+};
