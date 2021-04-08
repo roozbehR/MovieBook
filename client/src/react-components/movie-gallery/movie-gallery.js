@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
-import "./style.css";
-import { Card, Spin } from 'antd'
+import { Card } from 'antd'
+import LoadingSpin from '../loading-spin/loading-spin';
 import { getHookRandomMovie } from '../../actions/movies';
+
+import "./style.css";
 
 export default function MovieGallery() {
   const [movies, setMovies] = useState({ randomMovies: [] });
@@ -27,7 +29,7 @@ export default function MovieGallery() {
 
   return (
     <div>
-      {movies.randomMovies.length === 0 && <div className="loading"><Spin /></div>}
+      {movies.randomMovies.length === 0 && <div><LoadingSpin /></div>}
       {movies.randomMovies.length !== 0 && (
         <Card title="Recent Movies">
           {console.log(movies)}

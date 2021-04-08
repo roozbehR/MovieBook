@@ -26,7 +26,7 @@ class RandomMovie extends React.Component {
 
     return (
       <div>
-        <MovieOverview {...passedProps} />
+        {this.state.randomMovie !== "" && <MovieOverview {...passedProps}/>}
       </div>
     );
   }
