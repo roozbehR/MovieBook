@@ -1,6 +1,6 @@
 import { json } from "body-parser";
 
-const API_HOST = 'http://localhost:5000'
+const API_HOST = 'http://moviebookapp.herokuapp.com'
 
 export const getRandomMovie = (rand) => {
     const url = `${API_HOST}/api/movie/random/movie`
@@ -139,29 +139,29 @@ export const postReviewForMovie = (comp, movie_id, text, rating) => {
 }
 
 export const addMovie = (movtitle, movplot, movyear, movruntime, movposter) => {
-  const request = new Request(`${API_HOST}/api/admin/addmovie`, {
-    method: "post",
-    body: JSON.stringify({
-      title: movtitle,
-      plot: movplot,
-      year: movyear,
-      runtime: movruntime,
-      poster: movposter
-    }),
-    headers: {
-      Accept: "application/json, text/plain, */*",
-      "Content-Type": "application/json",
-    },
-    credentials: 'include'
-  });
+    const request = new Request(`${API_HOST}/api/admin/addmovie`, {
+        method: "post",
+        body: JSON.stringify({
+            title: movtitle,
+            plot: movplot,
+            year: movyear,
+            runtime: movruntime,
+            poster: movposter
+        }),
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json",
+        },
+        credentials: 'include'
+    });
 
-  fetch(request)
-    .then(res => {
-      if (res.status === 200) {
-        return res.json();
-      }
-    })
-    .catch (error => {
-      console.log(error)
-    })
+    fetch(request)
+        .then(res => {
+            if (res.status === 200) {
+                return res.json();
+            }
+        })
+        .catch(error => {
+            console.log(error)
+        })
 };

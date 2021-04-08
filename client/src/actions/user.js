@@ -1,6 +1,6 @@
 import { json } from "body-parser";
 
-const API_HOST = 'http://localhost:5000'
+const API_HOST = 'http://moviebookapp.herokuapp.com'
 
 // Check if user session exists
 export const checkSession = (app) => {
@@ -117,13 +117,13 @@ export const signup = (signupComp) => {
 };
 
 export const getAllUsers = (user) => {
-  const request = new Request(`${API_HOST}/api/admin/allusers`, {
-    method: "get",
-    headers: {
-        Accept: "application/json, text/plain, */*",
-        "Content-Type": "application/json",
+    const request = new Request(`${API_HOST}/api/admin/allusers`, {
+        method: "get",
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json",
         },
-	credentials: 'include',	
+        credentials: 'include',
     });
 
     fetch(request)
@@ -133,7 +133,7 @@ export const getAllUsers = (user) => {
             }
         })
         .then(json => {
-            user.setState({users: json.user});
+            user.setState({ users: json.user });
         })
         .catch(error => {
             console.log(error);
@@ -152,7 +152,7 @@ export const deleteUser = (user) => {
     });
     fetch(request)
         .then(res => {
-            if(res.status === 200){
+            if (res.status === 200) {
                 return res.status
             }
         })
@@ -176,7 +176,7 @@ export const toggleAdmin = (user, val) => {
 
     fetch(request)
         .then(res => {
-            if(res.status === 200){
+            if (res.status === 200) {
                 return res.status
             }
         })
