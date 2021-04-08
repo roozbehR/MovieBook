@@ -15,3 +15,19 @@
     margin: 5px;
     padding: 100;
 }
+
+.add_movie {
+    margin-left: 60px;
+}
+
+input[type=text]{
+    color:black;
+}
+
+textarea{
+    color:black;
+}
+
+input[type=submit]{
+    color:black;
+}

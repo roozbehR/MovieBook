@@ -48,5 +48,17 @@ MovieSchema.statics.search = async function (movie_name) {
   return Movie.find({ title: { $regex: movie_name, $options: 'i' } });
 }
 
+MovieSchema.statics.createMovie = async function (movie) {
+  const Movie = this;
+  try {
+    const mov = await Movie.findOne({ title: movie.title });
+    if (mov)
+      return Promise.resolve(false)
+    return movie.save();
+  } catch (error) {
+    return Promise.reject(error);
+  }
+}
+
 const Movie = mongoose.model('movies', MovieSchema);
 module.exports = { Movie }
