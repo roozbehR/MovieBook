@@ -1,13 +1,16 @@
 import React from "react";
 import SearchBar from "./search-bar";
 import { MenuTab } from "./menu-tab";
-import "./styles.css";
 import { Avatar, message } from "antd";
+import LogoutButton from './logout-button';
 
-export default function AuthenticatedNavBar({
-  userName,
-  profileImagePath,
-  isAdmin,
+import "./styles.css";
+
+export default function AuthenticatedNavBar(
+    {
+      userName,
+      profileImagePath,
+      isAdmin,
 }) {
 
   // if userName and profileImagePath are not passed, set default values
@@ -37,6 +40,10 @@ export default function AuthenticatedNavBar({
               size={55}
             />
           </a>
+          </MenuTab>
+          <div className="logoutButtonPosition">
+            <LogoutButton />
+          </div>
         </div>
       </div>
     </div>
