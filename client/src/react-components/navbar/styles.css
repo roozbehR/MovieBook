@@ -77,5 +77,21 @@
 }
 
 .user-photo-box{
-  padding-left: 30px;
+  padding-left: 50px;
+}
+
+.logoutButtonStyle {
+  min-width: 80px;
+  line-height: 32px;
+  border-radius: 20px;
+  border: none;
+  padding: 0 16px;
+  color: #fff;
+  background: #85144b;
+  outline: none;
+  cursor: pointer;
+}
+.logoutButtonPosition{
+  position: relative;
+  right: -100px;
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { NotAuthenticatedNavBar } from "./not-authenticated-navbar";
 import AuthenticatedNavBar from "./authenticated-navbar";
 import "./styles.css";
@@ -11,6 +11,7 @@ export default function NavBar(props) {
           userName={props.user.username}
           profileImagePath={props.user.picture}
           isAdmin={props.user.isAdmin}
+          passedProps={props}
         />
       ) : (
         <NotAuthenticatedNavBar />
