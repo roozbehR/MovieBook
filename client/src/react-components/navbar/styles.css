@@ -79,3 +79,8 @@
 .user-photo-box{
   padding-left: 30px;
 }
+
+.usernameText {
+  cursor: default;
+  color: white !important;
+}

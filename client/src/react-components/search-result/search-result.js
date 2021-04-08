@@ -7,7 +7,7 @@ import NavBar from '../navbar/navbar';
 import { Spin } from 'antd';
 import styles from "./search-result.module.css";
 
-export default function SearchResult() {
+export default function SearchResult(props) {
   const { input } = useParams();
   const [movies, setMovies] = useState();
 
@@ -23,7 +23,7 @@ export default function SearchResult() {
 
   return (
     <BackgroundWrapper>
-      <NavBar />
+      <NavBar user={props.user} />
       <div className={styles.titleText}>Search Result</div>
       <div className={styles.resultContainer}>
         {!movies && <div className={styles.loading}><Spin /></div>}

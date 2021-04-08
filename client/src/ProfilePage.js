@@ -14,11 +14,11 @@ import {
   Tooltip,
   Input
 } from "antd";
-import { EditOutlined, SaveOutlined, DeleteOutlined } from "@ant-design/icons";
+import { EditOutlined, SaveOutlined, DeleteOutlined, UploadOutlined } from "@ant-design/icons";
 import "./profile-style.css";
 import BackgroundWrapper from "./react-components//background-wrapper/background-wrapper";
 import { getUser } from './actions/user'
-import { followUser, getProfileReviews, getProfileComments, getProfileFavouriteMovies, updateProfileBiography } from "./actions/profile";
+import { followUser, getProfileReviews, getProfileComments, getProfileFavouriteMovies, updateProfileBiography, postProfilePicture } from "./actions/profile";
 import Review from './react-components/review/review'
 
 const { Content } = Layout;
@@ -68,6 +68,16 @@ class ProfilePage extends React.Component {
     this.setState({ editBioText: e.target.value });
   }
 
+  openUploadDialogue = () => {
+    if (this.state.viewingUser.username == this.props.user.username)
+      document.getElementById('uploadImage').click();
+  }
+
+  uploadImage = () => {
+    if (this.state.viewingUser.username == this.props.user.username)
+      document.getElementById('buttonUploadImage').click();
+  }
+
   render() {
     return (
       <BackgroundWrapper>
@@ -79,10 +89,9 @@ class ProfilePage extends React.Component {
                 <div className="Biograph">
                   <Row>
                     <Col>
-                      <span className="profilephoto">
+                      <span className="profile-hoto">
                         <Avatar
                           size={256}
-                          className="photo"
                           src={this.state.viewingUser.picture}
                         />
                       </span>
@@ -121,9 +130,14 @@ class ProfilePage extends React.Component {
 
                         }
                         {this.state.viewingUser.username == this.props.user.username && !this.state.editBio &&
-                          <Tooltip title="Edit Biography" className="tooltip-edit-bio" onClick={this.toggleEditBio} >
-                            <Button type="primary" shape="circle" icon={<EditOutlined />} />
-                          </Tooltip>
+                          <div>
+                            <Tooltip title="Edit Biography" className="tooltip-edit-bio" onClick={this.toggleEditBio} >
+                              <Button type="primary" shape="circle" icon={<EditOutlined />} />
+                            </Tooltip>
+                            <Tooltip title="Upload Profile Picture" className="tooltip-edit-bio" onClick={this.openUploadDialogue}>
+                              <Button type="primary" shape="circle" icon={<UploadOutlined />} />
+                            </Tooltip>
+                          </div>
                         }
                       </Row>
                       <Row>
@@ -145,7 +159,7 @@ class ProfilePage extends React.Component {
                   centered="true"
                   onChange={this.tabChanged}
                 >
-                  {/* <TabPane tab="Favourite Movies" key="1">
+                  <TabPane tab="Favourite Movies" key="1">
                     <Row>
                       {this.state.favouriteMovies.map(m =>
                         <Col span={4}>
@@ -160,13 +174,13 @@ class ProfilePage extends React.Component {
                             }
                           >
                             <Meta
-                              title={<a href={`/ movie / ${m._id}`}>{m.title}</a>}
+                              title={<a href={`/movie/${m._id}`}>{m.title}</a>}
                             />
                           </Card>
                         </Col>
                       )}
                     </Row>
-                  </TabPane> */}
+                  </TabPane>
                   <TabPane tab="Reviews" key="2">
                     {this.state.reviews.map(review =>
                       <Review
@@ -190,6 +204,15 @@ class ProfilePage extends React.Component {
               </div>
             </Card>
           </Content>
+        </div>
+        <div className="upload-material">
+          <form onSubmit={(e) => {
+            e.preventDefault();
+            postProfilePicture(this, e.target);
+          }}>
+            <input id="uploadImage" onChange={this.uploadImage} name="image" type="file" />
+            <button id="buttonUploadImage" type="submit">Upload</button>
+          </form>
         </div>
       </BackgroundWrapper >
     );

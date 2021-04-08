@@ -1,4 +1,5 @@
-const API_HOST = 'https://moviebook309.herokuapp.com'
+// const API_HOST = 'https://moviebook309.herokuapp.com'
+const API_HOST = 'http://localhost:5000'
 
 // Retrives user by username and adds to comp's viewingUser state
 export const followUser = (comp, message, username) => {
@@ -142,3 +143,32 @@ export const updateProfileBiography = (comp) => {
             console.log(error);
         });
 }
+
+export const postProfilePicture = (comp, form) => {
+    const imageData = new FormData(form);
+
+    const request = new Request(`${API_HOST}/api/profile/picture`, {
+        method: "post",
+        credentials: 'include',
+        body: imageData
+    });
+
+    // Send the request with fetch()
+    fetch(request)
+        .then(function (res) {
+            // Handle response we get from the API.
+            // Usually check the error codes to see what happened.
+            if (res.status === 200) {
+                return res.json();
+            }
+        })
+        .then(json => {
+            const viewingUser = comp.state.viewingUser;
+            viewingUser.picture = json.picture
+            comp.setState({ viewingUser: viewingUser });
+            window.location.reload();
+        })
+        .catch(error => {
+            console.log(error);
+        });
+};

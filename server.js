@@ -10,7 +10,8 @@ const app = express();
 
 // enable CORS if in development, for React local development server to connect to the web server.
 const cors = require('cors')
-app.use(cors({ credentials: true })); // enable for development only
+// app.use(cors({ credentials: true })); // enable for development only
+app.use(cors({ origin: 'http://localhost:3000', credentials: true })); // enable for development only
 
 // mongoose and mongo connection
 const { mongoose } = require("./db/mongoose");
@@ -35,6 +36,18 @@ app.use(bodyParser.urlencoded({ extended: true })); // parsing URL-encoded form 
 const session = require("express-session");
 const MongoStore = require('connect-mongo') // to store session information on the database in production
 
+// multipart middleware: allows you to access uploaded file from req.file
+const multipart = require('connect-multiparty');
+const multipartMiddleware = multipart();
+
+// cloudinary: configure using credentials found on your Cloudinary Dashboard
+// sign up for a free account here: https://cloudinary.com/users/register/free
+const cloudinary = require('cloudinary');
+cloudinary.config({
+    cloud_name: 'basselashi',
+    api_key: '212773972643529',
+    api_secret: 'VQpwlIrQT8U4970HvMAN0aqGAbk'
+});
 
 function isMongoError(error) { // checks for first error returned by promise rejection if Mongo database suddently disconnects
     return typeof error === 'object' && error !== null && error.name === "MongoNetworkError"
@@ -190,9 +203,12 @@ app.post("/user/register", mongoChecker, unauthenticate, async (req, res) => {
 });
 
 // A route to check if a user is logged in on the session
-app.get("/user/check-session", (req, res) => {
+app.get("/user/check-session", mongoChecker, async (req, res) => {
     if (req.session.user) {
-        res.send(req.session.user);
+        const user = await User.findByUsername(req.session.user.username);
+        const returnedUser = { id: user._id, username: user.username, fullName: user.fullName, picture: user.picture, isAdmin: user.isAdmin };
+        req.session.user = returnedUser;
+        res.send(returnedUser);
     } else {
         res.status(401).send();
     }
@@ -292,35 +308,6 @@ app.put('/api/admin/user/:id', mongoChecker, authenticateAdmin, async (req, res)
 
 })
 
-/*app.patch('/api/admin/user/:id', mongoChecker, authenticateAdmin, async (req, res) => {
-    const id = req.params.id;
-
-    if (!ObjectID.isValid(id)) {
-        res.status(404).send();
-        return;
-    }
-
-    const fieldsToUpdate = {};
-    req.body.map((change) => {
-        const propertyToChange = change.path.substr(1);
-        fieldsToUpdate[propertyToChange] = change.value;
-    })
-
-    try {
-        const user = await User.findOneAndUpdate({ _id: id }, { $set: fieldsToUpdate }, { new: true, useFindAndModify: false })
-        if (!user) {
-            res.status(404).send('Resource not found');
-        } else {
-            res.send(user);
-        }
-    } catch (error) {
-        if (isMongoError(error)) {
-            res.status(500).send('Internal server error');
-        } else {
-            res.status(400).send('Bad Request');
-        }
-    }
-})*/
 
 //helper function for fetching comments corresponding to review id
 const fetchCommentsByReviewId = async comment_ids => {
@@ -581,6 +568,24 @@ app.post('/api/profile/biography', mongoChecker, authenticate, async (req, res) 
         log(error);
         res.status(500).send('Internal Server Error');
     }
+});
+
+// a POST route to *create* an image
+app.post("/api/profile/picture", mongoChecker, authenticate, multipartMiddleware, async (req, res) => {
+    // Use uploader.upload API to upload image to cloudinary server.
+    cloudinary.uploader.upload(
+        req.files.image.path, // req.files contains uploaded files
+        async function (result) {
+            try {
+                const user = await User.findOne({ _id: req.session.user.id });
+                user.picture = result.url;
+                await user.save();
+                res.status(200).send(user);
+            } catch (error) {
+                console.log(error);
+                res.status(500).send("Internal Server Error");
+            }
+        });
 });
 
 // get reviews based on following users

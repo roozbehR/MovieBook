@@ -76,3 +76,11 @@
     background-color: #ffffff30 !important;
     color: white !important;
 }
+
+.upload-material {
+    display:none;
+}
+
+.current-photo {
+    cursor: pointer;
+}
