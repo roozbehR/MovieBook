@@ -1,4 +1,4 @@
-const API_HOST = 'http://moviebookapp.herokuapp.com'
+const API_HOST = 'https://moviebook309.herokuapp.com'
 
 export const postComment = (reviewComp, commentText) => {
 

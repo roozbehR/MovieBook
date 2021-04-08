@@ -1,6 +1,6 @@
 import { json } from "body-parser";
 
-const API_HOST = 'http://moviebookapp.herokuapp.com'
+const API_HOST = 'https://moviebook309.herokuapp.com'
 
 export const getRandomMovie = (rand) => {
     const url = `${API_HOST}/api/movie/random/movie`
