@@ -33,6 +33,9 @@ class Feed extends React.Component {
                 />
               </div>
             ))}
+            {this.state.reviews.length == 0 &&
+              <center><i>No reviews found in your feed, start following users to view their reviews!</i></center>
+            }
           </Col>
         </Row>
       </Card>
