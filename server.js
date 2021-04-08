@@ -400,19 +400,18 @@ app.post('/api/movie/:id/review', mongoChecker, async (req, res) => {
         return;
     }
 
-    log(req.body);
-
     const requested_review = new Review({
         rating: req.body.rating,
-        user_id: req.body.user_id,
+        user_id: "606b34fe019bae1765a273f7",
         movie_id: movie_id,
         review: req.body.review,
         comments: [],
+        comments_data: []
     });
 
     try {
         const output = await requested_review.save();
-        res.send(output);
+        res.status(200).send({ review: output });
     } catch (error) {
         res.status(500).send("Internal Server Error");
     }
