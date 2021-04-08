@@ -57,7 +57,7 @@ Here is how to setup the web application and user it.
 
 ## Heroku Link
 
-http://moviebook309.herokuapp.com/
+https://moviebook309.herokuapp.com/
 
 ## Setting up MovieBook
 
