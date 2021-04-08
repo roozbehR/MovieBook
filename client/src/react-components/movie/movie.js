@@ -11,7 +11,7 @@ import { getRandomMovie } from "../../models/movie";
 import { getRandomReview } from "../../models/review";
 
 import Review from "../review/review";
-import { getReviewsForMovie } from "../../actions/movies"
+import { getReviewsForMovie, postReviewForMovie } from "../../actions/movies"
 
 class Movie extends React.Component {
   state = {
@@ -71,20 +71,7 @@ class Movie extends React.Component {
   };
 
   postReview = () => {
-    let reviews = this.state.reviews;
-    let newReview = getRandomReview();
-
-    // Add new review
-    newReview.rating = this.state.reviewRating;
-    newReview.text = this.state.reviewText;
-    newReview.comments = [];
-    reviews = [newReview].concat(reviews);
-
-    this.setState({
-      reviews: reviews,
-    });
-
-    this.toggleAddReview();
+    postReviewForMovie(this, this.props.match.params.movie_id, this.state.reviewText, this.state.reviewRating)
   };
 
   render() {

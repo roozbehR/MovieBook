@@ -388,11 +388,10 @@ app.get('/api/movie/top/movies', mongoChecker, async (req, res) => {
 Request body expects:
 {
     "rating" Number <rating of the movie>
-    "user_id" ObjectId <unique user id>
     "review": string <review text>
 }
 */
-app.post('/api/movie/:id/review', mongoChecker, async (req, res) => {
+app.post('/api/movie/:id/review', mongoChecker, authenticate, async (req, res) => {
     const movie_id = req.params.id;
 
     if (!ObjectID.isValid(movie_id)) {
@@ -402,16 +401,16 @@ app.post('/api/movie/:id/review', mongoChecker, async (req, res) => {
 
     const requested_review = new Review({
         rating: req.body.rating,
-        user_id: "606b34fe019bae1765a273f7",
+        user_id: req.session.user.id,
         movie_id: movie_id,
         review: req.body.review,
-        comments: [],
-        comments_data: []
+        comments: []
     });
 
     try {
-        const output = await requested_review.save();
-        res.status(200).send({ review: output });
+        const review = await requested_review.save();
+        review.user = req.session.user;
+        res.status(200).send(review);
     } catch (error) {
         res.status(500).send("Internal Server Error");
     }
@@ -537,7 +536,7 @@ app.get("/api/movies/:id/reviews", mongoChecker, async (req, res) => {
             res.status(404).send("Resourece not found");
         } else {
             const reviews = await Review.findAllByMovieId(id);
-            res.status(200).send({reviews: reviews});
+            res.status(200).send({ reviews: reviews });
         }
     } catch (error) {
         log(error);
