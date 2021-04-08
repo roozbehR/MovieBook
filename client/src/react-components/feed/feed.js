@@ -19,30 +19,9 @@ class Feed extends React.Component {
 
   render() {
     return (
-// <<<<<<< HEAD
-//         <div>
-//           <Card title="Feed">
-//             {!this.state.fetchedFeed && <LoadingSpin/>}
-//             {this.state.fetchedFeed &&
-//             <Row>
-//               <Col span={24}>
-//                 {this.state.reviews.map((review) => (
-//                     <div>
-//                       <Review
-//                           showComments="true"
-//                           addCommentEnabled="true"
-//                           review={review}
-//                           showMovie="true"
-//                       />
-//                     </div>
-//                 ))}
-//               </Col>
-//             </Row>
-//             }
-//           </Card>
-//         </div>
-// =======
       <Card title="Feed">
+        {!this.state.fetchedFeed && <LoadingSpin/>}
+        {this.state.fetchedFeed &&
         <Row>
           <Col span={24}>
             {this.state.reviews.map((review) => (
@@ -60,6 +39,7 @@ class Feed extends React.Component {
             }
           </Col>
         </Row>
+        }
       </Card>
     );
   }
