@@ -61,6 +61,28 @@ export const login = (loginComp) => {
         });
 };
 
+
+export const logout = () => {
+    const url = new Request(`${API_HOST}/user/logout`, {
+        method: "get",
+        credentials: 'include'
+    });
+
+    fetch(url)
+        .then(res => {
+            if (res.status === 200) {
+                return res.json();
+            }
+        })
+        .then(json => {
+          console.log("logout successful")
+          console.log(json);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+};
+
 // Retrieves user by username and adds to comp's viewingUser state
 export const getUser = (comp, username) => {
     const request = new Request(`${API_HOST}/api/user/${username}`, {
