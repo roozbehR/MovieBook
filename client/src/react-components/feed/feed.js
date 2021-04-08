@@ -19,27 +19,48 @@ class Feed extends React.Component {
 
   render() {
     return (
-        <div>
-          <Card title="Feed">
-            {!this.state.fetchedFeed && <LoadingSpin/>}
-            {this.state.fetchedFeed &&
-            <Row>
-              <Col span={24}>
-                {this.state.reviews.map((review) => (
-                    <div>
-                      <Review
-                          showComments="true"
-                          addCommentEnabled="true"
-                          review={review}
-                          showMovie="true"
-                      />
-                    </div>
-                ))}
-              </Col>
-            </Row>
+// <<<<<<< HEAD
+//         <div>
+//           <Card title="Feed">
+//             {!this.state.fetchedFeed && <LoadingSpin/>}
+//             {this.state.fetchedFeed &&
+//             <Row>
+//               <Col span={24}>
+//                 {this.state.reviews.map((review) => (
+//                     <div>
+//                       <Review
+//                           showComments="true"
+//                           addCommentEnabled="true"
+//                           review={review}
+//                           showMovie="true"
+//                       />
+//                     </div>
+//                 ))}
+//               </Col>
+//             </Row>
+//             }
+//           </Card>
+//         </div>
+// =======
+      <Card title="Feed">
+        <Row>
+          <Col span={24}>
+            {this.state.reviews.map((review) => (
+              <div>
+                <Review
+                  showComments="true"
+                  addCommentEnabled="true"
+                  review={review}
+                  showMovie="true"
+                />
+              </div>
+            ))}
+            {this.state.reviews.length == 0 &&
+              <center><i>No reviews found in your feed, start following users to view their reviews!</i></center>
             }
-          </Card>
-        </div>
+          </Col>
+        </Row>
+      </Card>
     );
   }
 }

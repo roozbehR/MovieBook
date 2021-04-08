@@ -11,16 +11,12 @@ import { getRandomMovie } from "../../models/movie";
 import { getRandomReview } from "../../models/review";
 
 import Review from "../review/review";
+import { getReviewsForMovie, postReviewForMovie } from "../../actions/movies"
 
 class Movie extends React.Component {
   state = {
     movie: getRandomMovie(),
-    reviews: [
-      getRandomReview(),
-      getRandomReview(),
-      getRandomReview(),
-      getRandomReview(),
-    ],
+    reviews: [],
     reviewButton: {
       enabled: null,
       text: null,
@@ -29,6 +25,9 @@ class Movie extends React.Component {
     reviewText: null,
     reviewRating: 0,
   };
+  componentWillMount() {
+    getReviewsForMovie(this, this.props.match.params.movie_id);
+  }
 
   componentDidMount() {
     this.setAddReview(true);
@@ -72,26 +71,12 @@ class Movie extends React.Component {
   };
 
   postReview = () => {
-    let reviews = this.state.reviews;
-    let newReview = getRandomReview();
-
-    // Add new review
-    newReview.rating = this.state.reviewRating;
-    newReview.text = this.state.reviewText;
-    newReview.comments = [];
-    reviews = [newReview].concat(reviews);
-
-    this.setState({
-      reviews: reviews,
-    });
-
-    this.toggleAddReview();
+    postReviewForMovie(this, this.props.match.params.movie_id, this.state.reviewText, this.state.reviewRating)
   };
 
   render() {
     const { Panel } = Collapse;
     const { TextArea } = Input;
-    const userAuthenticated = localStorage["user"] != null;
 
     return (
       <Card title="Movie">
@@ -120,7 +105,7 @@ class Movie extends React.Component {
         </Row>
 
         <Divider>Reviews</Divider>
-        {userAuthenticated &&
+        {this.props.user &&
           <div>
             <Row>
               <Col span={24}>
@@ -163,13 +148,16 @@ class Movie extends React.Component {
             {this.state.reviews.map((review) => (
               <Review
                 showComments="true"
-                addCommentEnabled="true"
+                addCommentEnabled={this.props.user}
                 review={review}
               />
             ))}
+            {this.state.reviews.length == 0 &&
+              <center><i>No reviews found for this movie</i></center>
+            }
           </Col>
         </Row>
-      </Card>
+      </Card >
     );
   }
 }

@@ -1,4 +1,4 @@
-const API_HOST = 'http://localhost:5000'
+const API_HOST = 'http://moviebookapp.herokuapp.com'
 
 // Retrieves user feed and adds to comp's state
 export const getFeed = (comp) => {

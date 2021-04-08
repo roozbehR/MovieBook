@@ -38,7 +38,7 @@ class App extends React.Component {
               render={() => <UserFeed user={this.state.user} />}
             ></Route>
             <Route exact path="/movies" render={() => <MovieGallery user={this.state.user} />}></Route>
-            <Route exact path="/movie" render={() => <Movie user={this.state.user} />}></Route>
+            <Route exact path="/movie/:movie_id?" render={(props) => <Movie user={this.state.user} {...props} />}></Route>
             <Route exact path="/admin" render={() => <Admin user={this.state.user} />}></Route>
           </Switch>
         </BrowserRouter>
