@@ -96,6 +96,7 @@ export const getReviewsForMovie = (movieComp, id) => {
         })
         .then(json => {
             movieComp.setState({ reviews: json.reviews });
+            movieComp.setState({ movie: json.movie });
 
         })
         .catch(error => {
