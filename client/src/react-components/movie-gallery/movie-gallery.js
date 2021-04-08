@@ -35,7 +35,7 @@ export default function MovieGallery() {
             <div className="imagesContainer">
               <div className="row">
                 <div>
-                  <a href={movies.randomMovies[0].randomMovie._id}>
+                  <a href={"/movie/" + movies.randomMovies[0].randomMovie._id}>
                     <img
                       className="imageStyle"
                       src={movies.randomMovies[0].randomMovie.poster ?? 'images/default_poster.jpg'}
@@ -44,7 +44,7 @@ export default function MovieGallery() {
                   </a>
                 </div>
                 <div>
-                  <a href={movies.randomMovies[1].randomMovie._id}>
+                  <a href={"/movie/" + movies.randomMovies[1].randomMovie._id}>
                     <img
                       className="imageStyle"
                       src={movies.randomMovies[1].randomMovie.poster ?? 'images/default_poster.jpg'}
@@ -53,7 +53,7 @@ export default function MovieGallery() {
                   </a>
                 </div>
                 <div>
-                  <a href={movies.randomMovies[2].randomMovie._id}>
+                  <a href={"/movie/" + movies.randomMovies[2].randomMovie._id}>
                     <img
                       className="imageStyle"
                       src={movies.randomMovies[2].randomMovie.poster ?? 'images/default_poster.jpg'}
@@ -65,7 +65,7 @@ export default function MovieGallery() {
 
               <div className="row">
                 <div>
-                  <a href={movies.randomMovies[3].randomMovie._id}>
+                  <a href={"/movie/" + movies.randomMovies[3].randomMovie._id}>
                     <img
                       className="imageStyle"
                       src={movies.randomMovies[3].randomMovie.poster ?? 'images/default_poster.jpg'}
@@ -74,7 +74,7 @@ export default function MovieGallery() {
                   </a>
                 </div>
                 <div>
-                  <a href={movies.randomMovies[4].randomMovie._id}>
+                  <a href={"/movie/" + movies.randomMovies[4].randomMovie._id}>
                     <img
                       className="imageStyle"
                       src={movies.randomMovies[4].randomMovie.poster ?? 'images/default_poster.jpg'}
@@ -82,7 +82,7 @@ export default function MovieGallery() {
                     />
                   </a>
                 </div>
-                <a href={movies.randomMovies[5].randomMovie._id}>
+                <a href={"/movie/" + movies.randomMovies[5].randomMovie._id}>
                   <img
                     className="imageStyle"
                     src={movies.randomMovies[5].randomMovie.poster ?? 'images/default_poster.jpg'}
