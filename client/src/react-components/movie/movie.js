@@ -148,13 +148,16 @@ class Movie extends React.Component {
             {this.state.reviews.map((review) => (
               <Review
                 showComments="true"
-                addCommentEnabled="true"
+                addCommentEnabled={this.props.user}
                 review={review}
               />
             ))}
+            {this.state.reviews.length == 0 &&
+              <center><i>No reviews found for this movie</i></center>
+            }
           </Col>
         </Row>
-      </Card>
+      </Card >
     );
   }
 }
