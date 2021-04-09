@@ -12,11 +12,6 @@ export default function AuthenticatedNavBar(
       profileImagePath,
       isAdmin,
 }) {
-  const handleLogout = async () => {
-    localStorage.removeItem("user");
-    window.location.reload();
-    message.success("Promoted")
-  };
 
   // if userName and profileImagePath are not passed, set default values
   const passedUserName = userName ? userName : "John doe";
@@ -37,13 +32,14 @@ export default function AuthenticatedNavBar(
           <SearchBar />
         </div>
         <div className="user-info-box">
-          <div onClick={handleLogout} className="defaultText">{passedUserName}</div>
-          <MenuTab path="/profile" className="user-photo-box">
+          <div className="defaultText usernameText">{passedUserName}</div>
+          <a href="/profile" className="user-photo-box">
             <Avatar
               src={passedProfileImagePath}
               alt={passedUserName}
               size={55}
             />
+          </a>
           </MenuTab>
           <div className="logoutButtonPosition">
             <LogoutButton />

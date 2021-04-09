@@ -30,7 +30,7 @@ function CardContents({ imgURL, movieId, movieTitle, screeningYear, plot }) {
       <Col xs={14} sm={14} md={16} lg={16} xl={20}>
         <div className="movie-des">
           <h3 className="movie-name">
-            <a href={`movie/${movieId}`}>{movieTitle}</a>
+            <a href={`/movie/${movieId}`}>{movieTitle}</a>
           </h3>
           <p className="release-date">
             {screeningYear}{" "}

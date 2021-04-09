@@ -1,5 +1,6 @@
 import { json } from "body-parser";
 
+// const API_HOST = 'https://moviebook309.herokuapp.com'
 const API_HOST = 'http://localhost:5000'
 
 export const getRandomMovie = (rand) => {

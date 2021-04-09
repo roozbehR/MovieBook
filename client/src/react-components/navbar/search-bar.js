@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 import "./styles.css";
 
 export default function SearchBar() {
@@ -8,10 +7,9 @@ export default function SearchBar() {
     setInput(input);
   };
 
-  const history = useHistory();
   const onClickSearchButton = input => {
     if (input !== '')
-      history.push(`/search/${input}`);
+      window.location.href = `/search/${input}`;
   };
 
   return (
