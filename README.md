@@ -17,6 +17,9 @@ Here is how to setup the web application and user it.
       - [Leaving a Review](#leaving-a-review)
       - [Leaving a comment](#leaving-a-comment)
   * [Viewing Profiles](#viewing-profiles)
+  * [Updating Own Profile](#updating-own-profile)
+    + [Updating Biography](#updating-biography)
+    + [Uploading a new Picture](#uploading-a-new-picture)
   * [Viewing User Feed](#viewing-user-feed)
   * [Searching for Movies](#searching-for-movies)
   * [Logging Out](#logging-out)
@@ -164,6 +167,20 @@ The follow button will toggle to the state of follow, that means that if you are
 clicking on the button will update the state.
 
 ![User Profile](documentationImages/profiles/follow-toggle.png)
+
+### Updating Own Profile
+
+You can update the following on your profile
+- Your biography
+- Your profile picture
+
+##### Updating Biography
+Simply click on the "Edit" icon beside the number of followers displayed on your profile page, an input box will appear where you can enter your biography. To save, click on the "Save" icon above or "Delete" icon to cancel.
+
+![User Profile](documentationImages/profiles/update-bio.png)
+
+##### Uploading a new Picture
+Beside the edit biography button, you may click on the "Upload" icon to upload a new profile picture. An upload dialogue will be displayed, you may select a picture. Once selected, the image will be uploaded and the webpage will refresh with the newly uploaded picture.
 
 ### Viewing User Feed
 
