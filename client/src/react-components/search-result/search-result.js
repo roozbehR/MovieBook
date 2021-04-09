@@ -28,7 +28,7 @@ export default function SearchResult(props) {
       <div className={styles.resultContainer}>
         {!movies && <div className={styles.loading}><Spin /></div>}
         {movies &&
-          movies.slice(0, -1).map(movie => {
+          movies.map(movie => {
             const passedProps = {
               sectionTitle: null,
               imgURL: movie.poster,

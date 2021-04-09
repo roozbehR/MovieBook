@@ -20,6 +20,7 @@ import BackgroundWrapper from "./react-components//background-wrapper/background
 import { getUser } from './actions/user'
 import { followUser, getProfileReviews, getProfileComments, getProfileFavouriteMovies, updateProfileBiography, postProfilePicture } from "./actions/profile";
 import Review from './react-components/review/review'
+import LoadingSpin from './react-components/loading-spin/loading-spin';
 
 const { Content } = Layout;
 const { TabPane } = Tabs;
@@ -38,7 +39,9 @@ class ProfilePage extends React.Component {
     reviews: [],
     commentReviews: [],
     editBio: false,
-    editBioText: ''
+    editBioText: '',
+    fetchedReview: false,
+    fetchedComment: false,
   };
 
   componentDidMount = () => {
@@ -54,9 +57,9 @@ class ProfilePage extends React.Component {
     if (index == 1) {
       getProfileFavouriteMovies(this, this.state.viewingUser.id);
     } else if (index == 2) {
-      getProfileReviews(this, this.state.viewingUser.id);
+      getProfileReviews(this, this.state.viewingUser.id).then(() => this.setState({fetchedReview: true}));
     } else if (index == 3) {
-      getProfileComments(this, this.state.viewingUser.id);
+      getProfileComments(this, this.state.viewingUser.id).then(() => this.setState({fetchedComment: true}));
     }
   }
 
@@ -68,8 +71,7 @@ class ProfilePage extends React.Component {
     this.setState({ editBioText: e.target.value });
   }
 
-  openUploadDialogue = () => {
-    if (this.state.viewingUser.username == this.props.user.username)
+  openUploadDialogue = () => { if (this.state.viewingUser.username == this.props.user.username)
       document.getElementById('uploadImage').click();
   }
 
@@ -182,22 +184,29 @@ class ProfilePage extends React.Component {
                     </Row>
                   </TabPane>
                   <TabPane tab="Reviews" key="2">
-                    {this.state.reviews.map(review =>
+                    {!this.state.fetchedReview && <LoadingSpin />}
+                    {this.state.fetchedReview && (this.state.reviews == null || this.state.reviews.length === 0) ?
+                    <div className="fetch-error-text">No Reviews!</div> : this.state.reviews &&
+                      this.state.reviews.map(review =>
                       <Review
                         addCommentEnabled={false}
                         review={review}
                         showMovie="true"
-                      />
-                    )}
+                      />)
+                      }
                   </TabPane>
                   <TabPane tab="Comments" key="3">
-                    {this.state.commentReviews.map(review =>
-                      <Review
-                        addCommentEnabled={false}
-                        showComments="true"
-                        review={review}
-                        showMovie="true"
-                      />
+                    {!this.state.fetchedComment && <LoadingSpin />}
+                    {this.state.fetchedComment && ((this.state.commentReviews === undefined || this.state.commentReviews.length === 0)?
+                       <div className="fetch-error-text">No Comments!</div> : this.state.commentReviews &&
+                        this.state.commentReviews.map(review =>
+                            <Review
+                                addCommentEnabled={false}
+                                showComments="true"
+                                review={review}
+                                showMovie="true"
+                            />
+                        )
                     )}
                   </TabPane>
                 </Tabs>

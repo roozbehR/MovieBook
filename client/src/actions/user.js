@@ -149,7 +149,7 @@ export const getAllUsers = (user) => {
         credentials: 'include',
     });
 
-    fetch(request)
+    return fetch(request)
         .then(res => {
             if (res.status === 200) {
                 return res.json();
@@ -157,6 +157,7 @@ export const getAllUsers = (user) => {
         })
         .then(json => {
             user.setState({ users: json.user });
+            return "fetched all users"
         })
         .catch(error => {
             console.log(error);
@@ -173,7 +174,7 @@ export const deleteUser = (user) => {
         },
         credentials: 'include'
     });
-    fetch(request)
+    return fetch(request)
         .then(res => {
             if (res.status === 200) {
                 return res.status
