@@ -6,6 +6,7 @@ import { getAllUsers, deleteUser, toggleAdmin } from "./actions/user";
 import { addMovie } from "./actions/movies";
 import { uid } from "react-uid";
 import BackgroundWrapper from "./react-components/background-wrapper/background-wrapper";
+import LoadingSpin from './react-components/loading-spin/loading-spin';
 
 const { TabPane } = Tabs;
 
@@ -27,10 +28,11 @@ class Admin extends React.Component {
     movie_poster: "",
     users: [],
     addedMovie: "",
+    fetchedAllUsers: false,
   };
 
   componentWillMount() {
-    getAllUsers(this);
+    getAllUsers(this).then(() => this.setState({fetchedAllUsers: true}));
   };
 
   clickedDelete = (val) => {
@@ -100,18 +102,20 @@ class Admin extends React.Component {
               tabBarStyle={{ marginLeft: 30, marginTop: 30, marginRight: 30 }}
             >
               <TabPane tab="Users" key="1">
+                {!this.state.fetchedAllUsers && <LoadingSpin />}
+                {this.state.fetchedAllUsers &&
                 <Card style={{ marginLeft: 30, marginTop: 30, marginRight: 30 }}>
                   <table className="Table">
                     <tbody>
-                      <tr>
-                        <th className="cell">Full Name</th>
-                        <th className="cell">Username</th>
-                        <th className="cell">Admin Rights</th>
-                        <th className="cell">Switch Role</th>
-                        <th className="cell">Delete</th>
-                      </tr>
-                      {this.state.users.map((user) => {
-                        return (
+                    <tr>
+                      <th className="cell">Full Name</th>
+                      <th className="cell">Username</th>
+                      <th className="cell">Admin Rights</th>
+                      <th className="cell">Switch Role</th>
+                      <th className="cell">Delete</th>
+                    </tr>
+                    {this.state.users.map((user) => {
+                      return (
                           <tr key={uid(user)}>
                             <td className="cell">{user.fullName}</td>
                             <td className="cell">{user.username}</td>
@@ -120,32 +124,33 @@ class Admin extends React.Component {
                             </td>
                             <td className="cell">
                               <Button
-                                type="primary"
-                                shape="round"
-                                onClick={() => this.clickedUser(user)}
+                                  type="primary"
+                                  shape="round"
+                                  onClick={() => this.clickedUser(user)}
                               >
                                 {user.isAdmin ? (
-                                  <p>Demote to User</p>
+                                    <p>Demote to User</p>
                                 ) : (
-                                  <p>Promote to Admin</p>
+                                    <p>Promote to Admin</p>
                                 )}
                               </Button>
                             </td>
                             <td className="cell">
                               <Button
-                                type="primary"
-                                shape="round"
-                                onClick={() => this.clickedDelete(user._id)}
+                                  type="primary"
+                                  shape="round"
+                                  onClick={() => this.clickedDelete(user._id)}
                               >
                                 <p>Delete User</p>
                               </Button>
                             </td>
                           </tr>
-                        );
-                      })}
+                      );
+                    })}
                     </tbody>
                   </table>
                 </Card>
+                }
               </TabPane>
               <TabPane tab="Add Movie" key="2">
                 <span>
