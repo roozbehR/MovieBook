@@ -3,6 +3,7 @@ import SearchBar from "./search-bar";
 import { MenuTab } from "./menu-tab";
 import { Avatar, message } from "antd";
 import LogoutButton from './logout-button';
+import {Spin} from "antd";
 
 import "./styles.css";
 
@@ -14,10 +15,8 @@ export default function AuthenticatedNavBar(
 }) {
 
   // if userName and profileImagePath are not passed, set default values
-  const passedUserName = userName ? userName : "John doe";
-  const passedProfileImagePath = profileImagePath
-    ? profileImagePath
-    : "https://randomuser.me/api/portraits/men/30.jpg";
+  const passedUserName = userName ? userName : <Spin/>;
+  const passedProfileImagePath = profileImagePath ? profileImagePath : <Spin/>;
 
   return (
     <div className="flex-box">
@@ -40,7 +39,6 @@ export default function AuthenticatedNavBar(
               size={55}
             />
           </a>
-          {/*</MenuTab>*/}
           <div className="logoutButtonPosition">
             <LogoutButton />
           </div>
