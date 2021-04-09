@@ -84,7 +84,7 @@ export const getSearchedMovies = searchInput => {
         });
 };
 
-export const getReviewsForMovie = (movieComp, id) => {
+export const getMovieWithReviews = (movieComp, id) => {
     const url = `${API_HOST}/api/movies/${id}/reviews`
 
     return fetch(url)
@@ -98,7 +98,6 @@ export const getReviewsForMovie = (movieComp, id) => {
         .then(json => {
             movieComp.setState({ reviews: json.reviews });
             movieComp.setState({ movie: json.movie });
-
         })
         .catch(error => {
             console.log(error);

@@ -8,10 +8,9 @@ import {
 import "./style.css";
 
 import { getRandomMovie } from "../../models/movie";
-import { getRandomReview } from "../../models/review";
 
 import Review from "../review/review";
-import { getReviewsForMovie, postReviewForMovie, getMovie } from "../../actions/movies"
+import { getMovieWithReviews, postReviewForMovie } from "../../actions/movies"
 
 class Movie extends React.Component {
   state = {
@@ -26,7 +25,7 @@ class Movie extends React.Component {
     reviewRating: 0,
   };
   componentWillMount() {
-    getReviewsForMovie(this, this.props.match.params.movie_id);
+    getMovieWithReviews(this, this.props.match.params.movie_id);
   }
 
   componentDidMount() {
@@ -99,7 +98,7 @@ class Movie extends React.Component {
                   />
                 </span>
               </p>
-              <p className="description">{this.state.movie.description}</p>
+              <p className="description">{this.state.movie.fullplot}</p>
             </div>
           </Col>
         </Row>
