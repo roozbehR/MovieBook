@@ -60,7 +60,7 @@ Here is how to setup the web application and user it.
 
 ## Heroku Link
 
-https://moviebook309.herokuapp.com/
+https://moviebook309.herokuapp.com/ (Ensure that it is running in https as some requests may not work)
 
 ## Setting up MovieBook
 
