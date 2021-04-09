@@ -165,6 +165,20 @@ clicking on the button will update the state.
 
 ![User Profile](documentationImages/profiles/follow-toggle.png)
 
+### Updating Own Profile
+
+You can update the following on your profile
+- Your biography
+- Your profile picture
+
+##### Updating Biography
+Simply click on the "Edit" icon beside the number of followers displayed on your profile page, an input box will appear where you can enter your biography. To save, click on the "Save" icon above or "Delete" icon to cancel.
+
+![User Profile](documentationImages/profiles/update-bio.png)
+
+##### Uploading a new Picture
+Beside the edit biography button, you may click on the "Upload" icon to upload a new profile picture. An upload dialogue will be displayed, you may select a picture. Once selected, the image will be uploaded and the webpage will refresh with the newly uploaded picture.
+
 ### Viewing User Feed
 
 User feed displays reviews on movies from users that the authenticated user follows. As shown in the individual movie page,
