@@ -170,7 +170,7 @@ clicking on the button will update the state.
 
 ### Updating Own Profile
 
-You can update the following on your profile
+To access your profile, click on your profile picture in the navigation bar. You can update the following on your profile
 - Your biography
 - Your profile picture
 
