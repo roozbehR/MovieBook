@@ -5,7 +5,7 @@ import {logout} from '../../actions/user';
 export default function LogoutButton() {
   const reloadWaitTime = async () => setTimeout(()=>{
     console.log("waiting for reload");
-  }, 2500);
+  }, 2500000);
 
   const postLogout = async () => {
     return logout();
