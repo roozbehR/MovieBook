@@ -11,8 +11,8 @@ const app = express();
 // enable CORS if in development, for React local development server to connect to the web server.
 const cors = require('cors')
 
-// app.use(cors({ credentials: true })); // enable for development only
-app.use(cors({ origin: 'http://localhost:3000', credentials: true })); // enable for development only
+app.use(cors({ credentials: true }));
+// app.use(cors({ origin: 'http://localhost:3000', credentials: true })); // enable for development only
 
 
 // mongoose and mongo connection
