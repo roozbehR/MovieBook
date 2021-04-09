@@ -21,6 +21,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    document.title = 'MovieBook'
     checkSession(this);
   }
 

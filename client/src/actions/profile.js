@@ -55,7 +55,6 @@ export const getProfileReviews = (comp, user_id) => {
         })
         .then(json => {
             comp.setState({ reviews: json });
-            console.log(comp.state)
             return 'fetched reviews';
         })
         .catch(error => {
@@ -108,8 +107,7 @@ export const getProfileFavouriteMovies = (comp, user_id) => {
             }
         })
         .then(json => {
-            console.log(json);
-            comp.setState({ favouriteMovies: json });
+            comp.setState({ favouriteMovies: json, fetchedMovies: true });
         })
         .catch(error => {
             console.log(error);

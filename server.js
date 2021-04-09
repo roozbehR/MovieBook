@@ -11,8 +11,8 @@ const app = express();
 // enable CORS if in development, for React local development server to connect to the web server.
 const cors = require('cors')
 
-app.use(cors({ credentials: true }));
-// app.use(cors({ origin: 'http://localhost:3000', credentials: true })); // enable for development only
+// app.use(cors({ credentials: true }));
+app.use(cors({ origin: 'http://localhost:3000', credentials: true })); // enable for development only
 
 
 // mongoose and mongo connection
@@ -283,6 +283,11 @@ app.put('/api/user/follow/:username', mongoChecker, authenticate, async (req, re
     }
 });
 
+/* Update user admin rank
+{
+    isAdmin: <true/false>
+}
+*/
 app.put('/api/admin/user/:id', mongoChecker, authenticateAdmin, async (req, res) => {
     const id = req.params.id;
 
@@ -309,7 +314,6 @@ app.put('/api/admin/user/:id', mongoChecker, authenticateAdmin, async (req, res)
     }
 
 })
-
 
 //helper function for fetching comments corresponding to review id
 const fetchCommentsByReviewId = async comment_ids => {
@@ -674,18 +678,6 @@ app.get('/api/search/movies/:name', mongoChecker, async (req, res) => {
         res.status(500).send("Internal Server Error Has Occured");
     }
 })
-
-// Search for a user
-/*app.get('/api/search/users/:name', mongoChecker, authenticate, async (req, res) => {
-    const user_name = req.params.name;
-
-    try {
-        const users = await User.search(user_name);
-        res.send(users);
-    } catch (error) {
-        res.status(500).send("Internal Server Error Has Occured");
-    }
-})*/
 
 /*** Webpage routes below **********************************/
 // Serve the build

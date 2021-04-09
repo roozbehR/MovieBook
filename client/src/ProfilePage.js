@@ -46,7 +46,6 @@ class ProfilePage extends React.Component {
 
   componentDidMount = () => {
     getUser(this, this.props.match.params.username);
-    getProfileFavouriteMovies(this, this.props.match.params.username);
   }
 
   clicked = (e) => {
@@ -57,9 +56,9 @@ class ProfilePage extends React.Component {
     if (index == 1) {
       getProfileFavouriteMovies(this, this.state.viewingUser.id);
     } else if (index == 2) {
-      getProfileReviews(this, this.state.viewingUser.id).then(() => this.setState({fetchedReview: true}));
+      getProfileReviews(this, this.state.viewingUser.id).then(() => this.setState({ fetchedReview: true }));
     } else if (index == 3) {
-      getProfileComments(this, this.state.viewingUser.id).then(() => this.setState({fetchedComment: true}));
+      getProfileComments(this, this.state.viewingUser.id).then(() => this.setState({ fetchedComment: true }));
     }
   }
 
@@ -71,7 +70,8 @@ class ProfilePage extends React.Component {
     this.setState({ editBioText: e.target.value });
   }
 
-  openUploadDialogue = () => { if (this.state.viewingUser.username == this.props.user.username)
+  openUploadDialogue = () => {
+    if (this.state.viewingUser.username == this.props.user.username)
       document.getElementById('uploadImage').click();
   }
 
@@ -162,51 +162,57 @@ class ProfilePage extends React.Component {
                   onChange={this.tabChanged}
                 >
                   <TabPane tab="Favourite Movies" key="1">
-                    <Row>
-                      {this.state.favouriteMovies.map(m =>
-                        <Col span={4}>
-                          <Card
-                            style={{ marginLeft: "20px", maxWidth: 200 }}
-                            cover={
-                              <img
-                                alt="trailer"
-                                className="movieImage"
-                                src={m.poster ?? '/images/default_poster.jpg'}
+                    {!this.state.fetchedMovies && <LoadingSpin />}
+                    {this.state.fetchedMovies &&
+                      <Row>
+                        {this.state.favouriteMovies.length == 0 &&
+                          <center><i>No favourite movies found!</i></center>
+                        }
+                        {this.state.favouriteMovies.map(m =>
+                          <Col span={4}>
+                            <Card
+                              style={{ marginLeft: "20px", maxWidth: 200 }}
+                              cover={
+                                <img
+                                  alt="trailer"
+                                  className="movieImage"
+                                  src={m.poster ?? '/images/default_poster.jpg'}
+                                />
+                              }
+                            >
+                              <Meta
+                                title={<a href={`/movie/${m._id}`}>{m.title}</a>}
                               />
-                            }
-                          >
-                            <Meta
-                              title={<a href={`/movie/${m._id}`}>{m.title}</a>}
-                            />
-                          </Card>
-                        </Col>
-                      )}
-                    </Row>
+                            </Card>
+                          </Col>
+                        )}
+                      </Row>
+                    }
                   </TabPane>
                   <TabPane tab="Reviews" key="2">
                     {!this.state.fetchedReview && <LoadingSpin />}
                     {this.state.fetchedReview && (this.state.reviews == null || this.state.reviews.length === 0) ?
-                    <div className="fetch-error-text">No Reviews!</div> : this.state.reviews &&
+                      <div className="fetch-error-text">No Reviews!</div> : this.state.reviews &&
                       this.state.reviews.map(review =>
-                      <Review
-                        addCommentEnabled={false}
-                        review={review}
-                        showMovie="true"
-                      />)
-                      }
+                        <Review
+                          addCommentEnabled={false}
+                          review={review}
+                          showMovie="true"
+                        />)
+                    }
                   </TabPane>
                   <TabPane tab="Comments" key="3">
                     {!this.state.fetchedComment && <LoadingSpin />}
-                    {this.state.fetchedComment && ((this.state.commentReviews === undefined || this.state.commentReviews.length === 0)?
-                       <div className="fetch-error-text">No Comments!</div> : this.state.commentReviews &&
-                        this.state.commentReviews.map(review =>
-                            <Review
-                                addCommentEnabled={false}
-                                showComments="true"
-                                review={review}
-                                showMovie="true"
-                            />
-                        )
+                    {this.state.fetchedComment && ((this.state.commentReviews === undefined || this.state.commentReviews.length === 0) ?
+                      <div className="fetch-error-text">No Comments!</div> : this.state.commentReviews &&
+                      this.state.commentReviews.map(review =>
+                        <Review
+                          addCommentEnabled={false}
+                          showComments="true"
+                          review={review}
+                          showMovie="true"
+                        />
+                      )
                     )}
                   </TabPane>
                 </Tabs>
