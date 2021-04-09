@@ -174,7 +174,7 @@ export const deleteUser = (user) => {
         },
         credentials: 'include'
     });
-    fetch(request)
+    return fetch(request)
         .then(res => {
             if (res.status === 200) {
                 return res.status
