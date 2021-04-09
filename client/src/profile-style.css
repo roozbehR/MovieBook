@@ -1,5 +1,5 @@
 .test{
-    
+
     text-align: center;
 }
 
@@ -42,7 +42,7 @@
 
 .ant-comment-content {
     color: white;
-    
+
 }
 
 .ant-tabs-tab{
@@ -83,4 +83,10 @@
 
 .current-photo {
     cursor: pointer;
+}
+
+.fetch-error-text{
+    color: white;
+    text-align: center;
+    font-weight: bold;
 }

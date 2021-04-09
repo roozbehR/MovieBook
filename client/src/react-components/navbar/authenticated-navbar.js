@@ -40,7 +40,7 @@ export default function AuthenticatedNavBar(
               size={55}
             />
           </a>
-          </MenuTab>
+          {/*</MenuTab>*/}
           <div className="logoutButtonPosition">
             <LogoutButton />
           </div>

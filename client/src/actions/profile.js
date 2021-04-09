@@ -47,7 +47,7 @@ export const getProfileReviews = (comp, user_id) => {
         credentials: 'include'
     });
 
-    fetch(request)
+    return fetch(request)
         .then(res => {
             if (res.status === 200) {
                 return res.json();
@@ -56,6 +56,7 @@ export const getProfileReviews = (comp, user_id) => {
         .then(json => {
             comp.setState({ reviews: json });
             console.log(comp.state)
+            return 'fetched reviews';
         })
         .catch(error => {
             console.log(error);
@@ -73,7 +74,7 @@ export const getProfileComments = (comp, user_id) => {
         credentials: 'include'
     });
 
-    fetch(request)
+    return fetch(request)
         .then(res => {
             if (res.status === 200) {
                 return res.json();
@@ -82,6 +83,7 @@ export const getProfileComments = (comp, user_id) => {
         .then(json => {
             comp.setState({ commentReviews: json });
             console.log(comp.state.commentReviews)
+            return "fetched comments"
         })
         .catch(error => {
             console.log(error);

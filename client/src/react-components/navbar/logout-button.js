@@ -12,7 +12,7 @@ export default function LogoutButton() {
   }
   const onClickLogoutButton = ()=> {
     postLogout().then(()=> {
-      reloadWaitTime().then(() => window.location.reload())
+      reloadWaitTime().then(() => window.location.href = `/`)
     });
   };
 
