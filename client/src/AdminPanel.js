@@ -37,7 +37,7 @@ class Admin extends React.Component {
 
   clickedDelete = (val) => {
     deleteUser(val);
-    getAllUsers(this);
+    getAllUsers(this).then();
     message.success("User Deleted");
   };
 
